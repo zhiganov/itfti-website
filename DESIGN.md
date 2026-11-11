@@ -82,7 +82,7 @@ The site is one impression of the ItFtI seal. The seal itself is the only frame:
 
 There is one ink and one paper. Everything is red on near-white. Shape is square. Depth is flat. The real seal logo is the focal image on the home page.
 
-Status is told by line form, not by colour or badges. A solid rule means it exists today. A dashed rule means it is a proposal.
+Status is told by line form, not by colour or badges. A solid rule means it is built and usable today. A dashed rule means a draft not yet adopted, or something planned.
 
 **Key Characteristics:**
 - One ink, one paper, no second colour.
@@ -109,7 +109,7 @@ One red on one paper. Tints are not used except for a code wash.
 
 **The No Texture Rule.** Do not imitate ink bleed, stamp grain or paper texture. The seal is the real asset; the page does not fake its material.
 
-**The Line Form Rule.** Status is carried by rule style. Solid 8px rule: exists today. Dashed 8px rule: proposal. Never use colour or a badge for status.
+**The Line Form Rule.** Status is carried by rule style. Solid 8px rule: built and usable today. Dashed 8px rule: draft not yet adopted, or planned. Never use colour or a badge for status.
 
 ## Typography
 
@@ -148,7 +148,7 @@ Flat. No box-shadows at all. Depth comes from thick rules and filled blocks. Hov
 
 ## Shapes
 
-Square. Radius is 0 everywhere. Borders are 2px (rows), 3px to 4px (blocks, frames, ghost buttons) and 8px (status rules, two-sided panels). Dashed is used only for proposal status.
+Square. Radius is 0 everywhere. Borders are 2px (rows), 3px to 4px (blocks, frames, ghost buttons) and 8px (status rules, two-sided panels). Dashed is used only for draft or planned status.
 
 ## Components
 
@@ -176,12 +176,12 @@ A heading link over a short line, topped by an 8px rule: solid for ItF, dashed f
 
 ### Do:
 - **Do** use only #890405 on #f7f5f2, with #5e0203 for hover.
-- **Do** mark what exists with a solid 8px rule and proposals with a dashed 8px rule.
+- **Do** mark what is built with a solid 8px rule, and drafts or planned work with a dashed 8px rule.
 - **Do** use the real seal logo asset as the focal image.
 - **Do** keep every page on the shared 12-column grid.
 - **Do** keep corners square and depth flat.
 - **Do** let the seal be the only frame on the page.
-- **Do** keep copy honest about status: ItF is experimental, FtI is a proposal.
+- **Do** keep copy honest about status: ItF is experimental; FtI is draft 0.1 with no funder adoption yet.
 
 ### Don't:
 - **Don't** add a second colour, grey ramp, tint or gradient.

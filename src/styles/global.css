@@ -76,7 +76,7 @@ td code { white-space: nowrap; }
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
 
-/* Status as line form: a solid rule is something that exists today, a dashed rule is a proposal. */
+/* Status as line form: a solid rule is built and usable today; a dashed rule is a draft not yet adopted, or planned. */
 .rule-solid { border-top: 8px solid var(--red); }
 .rule-dash { border-top: 8px dashed var(--red); }
 

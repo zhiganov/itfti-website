@@ -7,7 +7,7 @@ related_targets: ["src/pages/itf.astro","src/pages/fti.astro"]
 
 # Landing page (itfti.org) with /itf and /fti
 
-Mode: Persuade. Audience: builders and funders, equally. Action: builders install ItF from GitHub; funders read the FtI idea (no contact route yet). Constraints: honest status everywhere (ItF experimental v0, FtI proposal only, no funder adoption); avoid startup-SaaS, charity/NGO, faux-Asian pastiche and any overclaiming. Chosen sketch: `.impeccable/mocks/decision/assigned-v2.html` (revised after Artem said the first version did not follow the logo).
+Mode: Persuade. Audience: builders and funders, equally. Action: builders copy the install command on the page; funders read how the FtI file format and MCP server work (no contact route yet). Constraints: honest status everywhere (ItF experimental v0, FtI draft 0.1, no funder adoption); avoid startup-SaaS, charity/NGO, faux-Asian pastiche and any overclaiming. Chosen sketch: `.impeccable/mocks/decision/assigned-v2.html` (revised after Artem said the first version did not follow the logo).
 
 ## Direction contract
 
@@ -15,7 +15,7 @@ THESIS: The page is the seal. It refuses the category's split hero and feature-c
 
 OWN-WORLD: One ink only, seal red #890405, on near-white paper #f7f5f2. The seal is the only frame on the page (Artem removed the viewport frame, 2026-11-11). Zilla Slab 700 for headlines and the I-t-F-t-I letter navigation in framed blocks (current one filled); Libre Franklin for body. Solid red rules mark what exists, dashed red rules mark proposal-stage work. Buttons are filled red slabs with paper text.
 
-STORY: Builders see a free, open-source agent skill and how to install it; funders see a proposal to publish what they support in a readable file; both see exactly what exists today and what does not.
+STORY: Builders see a free, open-source agent skill and how to install it; funders see a draft file format for publishing what they support, and the MCP server that reads it; both see exactly what exists today and what does not.
 
 FIRST VIEWPORT: Unframed page; letter nav top left, itfti.org top right; the full seal left at about 620px; headline "Find the way from impact to funding." right; two lanes (ItF solid rule, FtI dashed rule); "Install ItF" slab button bottom right, jumping to copyable install commands on the same page.
 

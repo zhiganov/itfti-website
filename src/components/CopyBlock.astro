@@ -1,0 +1,53 @@
+---
+// A shell block with a one-click copy button, in the same style as the install commands.
+interface Props { code: string; label?: string }
+const { code, label = "Copy" } = Astro.props;
+---
+<div class="code" data-copyblock>
+  <pre><code>{code}</code></pre>
+  <button type="button" class="copy" data-copy={code}>{label}</button>
+</div>
+
+<style>
+  .code { position: relative; background: var(--red-wash); min-width: 0; max-width: 760px; }
+  pre {
+    margin: 0;
+    padding: 18px 92px 18px 20px;
+    overflow-x: auto;
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--red);
+    scrollbar-color: var(--red) var(--red-wash);
+  }
+  pre code { background: none; padding: 0; white-space: pre; }
+  .copy {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font: 700 0.95rem/1 var(--display);
+    color: var(--paper);
+    background: var(--red);
+    border: 0;
+    padding: 9px 14px;
+    cursor: pointer;
+    min-width: 72px;
+  }
+  .copy:hover { background: var(--red-deep); }
+  @media (max-width: 720px) {
+    pre { font-size: 0.78rem; padding: 52px 14px 14px; }
+  }
+</style>
+
+<script>
+  for (const b of document.querySelectorAll<HTMLButtonElement>("[data-copyblock] [data-copy]")) {
+    b.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(b.dataset.copy ?? "");
+        b.textContent = "Copied";
+      } catch {
+        b.textContent = "Select and copy";
+      }
+      setTimeout(() => (b.textContent = "Copy"), 2000);
+    });
+  }
+</script>

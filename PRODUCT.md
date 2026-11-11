@@ -22,7 +22,7 @@ Two audiences, equally weighted (confirmed by Artem, 2026-11-10):
 ItFtI joins two projects by Artem Zhiganov:
 
 - **Impact to Funding (ItF):** an open-source skill for your AI agent (Codex CLI, Claude Code, OpenCode). It helps people explore where their skills could be useful, develop shared work, learn what difference the work makes, and explain what would help it continue. Start from your situation; no theory of change, project, evidence or fundraising goal is needed. Repo: https://github.com/zhiganov/impact-to-funding
-- **Funding to Impact (FtI):** a proposal-stage idea for funders. Funders would publish their priorities, eligibility, support, availability, process, evidence expectations and freshness in a simple file that people and agents can read, before anyone spends time applying. Inspired by llms.txt; meant to reuse existing grant-data work (CommonGrants) rather than invent a competing schema.
+- **Funding to Impact (FtI):** a file format for funders (`fti-manifest.json`, draft 0.1) plus an MCP server. Funders publish their priorities, eligibility, support, availability, process, evidence expectations and freshness in a file that people and agents can read, before anyone spends time applying. Inspired by llms.txt; each opportunity is a CommonGrants record inside the file. The goal is funder adoption (Artem, 2026-11-11).
 
 The site exists to explain both halves and how they meet: builders describe their work and needs; funders describe what they support.
 
@@ -38,7 +38,8 @@ One loop from both ends. ItF works from the builder's side (impact → funding);
 ## Capabilities and Constraints
 
 - **ItF is experimental v0.** It offers conversation, optional templates and reference material. It does not find collaborators, provide funding or certify impact. Its usefulness and its effect on raising money have not been tested. The site must not claim otherwise.
-- **FtI is a proposal-stage idea, documentation only.** The site describes the idea and nothing beyond it (Artem, 2026-11-10). Nothing is implemented: no published standard, schema, server or importer. No funder has endorsed or adopted it.
+- **FtI is at draft 0.1.** The file format has executable schemas and a validator; the MCP server has four read-only tools (`find_funders`, `search_opportunities`, `get_entry`, `registry_info`). Both run locally and were tested with fictional data. Import adapters are planned. No hosted service, and no funder has adopted it yet. Describe FtI as a format looking for its first funders, never as just an idea (Artem, 2026-11-11), and never claim adoption.
+- **ItF has an optional local MCP server** over its reference library: `search_references`, `get_reference`, `library_info`; Node.js 22+.
 - ItF code is MIT; ItF's original written content is CC BY-SA 4.0.
 - Undecided: whether the site covers the guilds concept (draft note in the ItF repo); any contact or sign-up route; analytics.
 
@@ -56,7 +57,7 @@ One loop from both ends. ItF works from the builder's side (impact → funding);
 
 ## Product Principles
 
-1. Honest about status: experimental and proposal-stage work is labelled as such, everywhere.
+1. Honest about status: experimental and draft work is labelled as such, everywhere.
 2. Start from the person's situation, not a funding goal.
 3. Both sides of the loop get equal standing.
 4. Reuse existing standards before inventing new ones.

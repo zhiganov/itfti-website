@@ -29,14 +29,14 @@ const publishes = [
       alt="The ItFtI seal: the letters I, t, F, t, I form the walls of a maze, with an entrance at the bottom and an exit at the top." />
     <div class="copy">
       <h1 id="hero-title">Find the way from impact to funding.</h1>
-      <p class="lede">Many projects get lost before they reach support. ItFtI has a project for each end of the maze. One exists today; the other is still an idea.</p>
+      <p class="lede">Many projects get lost before they reach support. ItFtI works on both ends of the maze: a skill that helps builders make their case, and a file format that lets funders say what they support.</p>
       <div class="lane rule-solid">
         <h2><a href="/itf">Impact to Funding</a> <span>builders · experimental</span></h2>
         <p>An open-source skill for your AI agent: find where your skills help, build with others, and explain what would help the work continue.</p>
       </div>
       <div class="lane rule-dash">
-        <h2><a href="/fti">Funding to Impact</a> <span>funders · proposal</span></h2>
-        <p>An idea, not a service yet: funders publish what they support in a simple file people and agents can read.</p>
+        <h2><a href="/fti">Funding to Impact</a> <span>funders · draft 0.1</span></h2>
+        <p>A file format funders publish on their own website, so people and agents can see what they support before anyone applies. Looking for its first funders.</p>
       </div>
       <p class="act">
         <a class="slab" href="#install">Install ItF</a>
@@ -64,6 +64,7 @@ const publishes = [
       <p>Start with your situation. You don't need a theory of change, a project, evidence or a fundraising goal. It's for developers, maintainers and independent builders who already use AI agents; community organisers, small teams and facilitators may find it useful too.</p>
       <h3 id="install">Install</h3>
       <InstallCommands />
+      <p>ItF also has an optional MCP server: three read-only tools that let any agent search its reference library of cases and patterns. <a href="/itf#mcp">Set it up</a>.</p>
       <p class="actions">
         <a class="slab-ghost" href="/itf">How it works</a>
       </p>
@@ -84,16 +85,17 @@ const publishes = [
   <section class="course fti grid" id="fti" aria-labelledby="fti-title">
     <div class="head">
       <h2 id="fti-title">Funding to Impact</h2>
-      <p class="tag rule-dash">For funders. A proposal: nothing to install yet.</p>
+      <p class="tag rule-dash">For funders. Draft 0.1, looking for its first funders.</p>
     </div>
     <div class="body">
       <p class="big">Before I apply, can I tell whether this funder supports work like mine, whether I'm eligible, and how to approach them?</p>
-      <p>FtI proposes a simple file a funder publishes on its own website, inspired by <a href="https://llmstxt.org/">llms.txt</a> and meant to reuse existing grant-data work such as <a href="https://commongrants.org/">CommonGrants</a> rather than add a new competing schema. A funder would explain:</p>
+      <p>FtI is a file format, <code>fti-manifest.json</code>, that a funder publishes on its own website. It's inspired by <a href="https://llmstxt.org/">llms.txt</a> and built on <a href="https://commongrants.org/">CommonGrants</a>: each opportunity is a CommonGrants record inside the FtI file. In it, a funder explains:</p>
       <dl class="publishes">
         {publishes.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
       </dl>
       <p>Funding interests are not open calls. Past awards don't mean applications are open now. Missing eligibility is unknown, not permission to apply.</p>
-      <p class="actions"><a class="slab-ghost" href="/fti">Read the idea</a></p>
+      <p>An MCP server reads these files, so agents can find funders and open opportunities with four read-only tools: <code>find_funders</code>, <code>search_opportunities</code>, <code>get_entry</code> and <code>registry_info</code>. ItF is one of its intended readers, not the only one.</p>
+      <p class="actions"><a class="slab-ghost" href="/fti">How FtI works</a></p>
     </div>
   </section>
 
@@ -101,8 +103,8 @@ const publishes = [
     <h2 id="status-title" class="head">What exists today</h2>
     <div class="body">
       <ul class="ledger">
-        <li class="rule-solid"><strong>Impact to Funding</strong> is published and open source. It offers conversation, optional templates and reference material. It doesn't find collaborators, provide funding or certify impact. Trials so far were small; we haven't tested how useful it is to people or whether it helps them raise money.</li>
-        <li class="rule-dash"><strong>Funding to Impact</strong> is a proposal, documentation only. There is no published standard, schema, server or importer yet, and no funder has adopted it.</li>
+        <li class="rule-solid"><strong>Impact to Funding</strong> is published and open source. It offers conversation, optional templates, reference material and an optional local MCP server for its reference library. It doesn't find collaborators, provide funding or certify impact. Trials so far were small; we haven't tested how useful it is to people or whether it helps them raise money.</li>
+        <li class="rule-dash"><strong>Funding to Impact</strong> is at draft 0.1. The file format has executable schemas and a validator, and the MCP server has four read-only tools. Both run locally and have been tested with fictional data. Importers for funders who don't publish the file are planned. No funder has adopted FtI yet, and there is no hosted service.</li>
       </ul>
       <p class="actions"><a class="slab" href={repo}>ItF on GitHub</a></p>
     </div>

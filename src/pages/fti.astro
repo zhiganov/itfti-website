@@ -1,9 +1,9 @@
 ---
 import Base from "../layouts/Base.astro";
 const parts = [
-  ["A publication file", "Funders would describe their priorities and opportunities in a file on their own website, linked to the authoritative programme pages. General priorities would stay separate from actual calls, and a funder wouldn't need to run a server or join a new portal."],
-  ["Import adapters", "Funding information from sources that don't publish the file could be brought in from elsewhere. Importing a listing wouldn't mean its funder had adopted FtI."],
-  ["A read-only server", "An MCP server would let compatible agents query both kinds of information. ItF would be one client among others, never a gateway or an eligibility authority."],
+  ["The file format", "A funder publishes fti-manifest.json on its own website, linked to its official programme pages. Each opportunity is a CommonGrants record inside it, and general priorities stay separate from actual calls. Draft 0.1 has executable schemas and a validator. A funder doesn't need to run a server or join a new portal.", "built"],
+  ["The MCP server", "A read-only server that lets agents find funders and opportunities from these files, with four tools: find_funders, search_opportunities, get_entry and registry_info. It runs locally over prepared snapshots; there is no hosted service yet. ItF is one intended client among others, never a gateway or an eligibility authority.", "built"],
+  ["Import adapters", "Planned: bring in funding information from sources that don't publish the file. Importing a listing won't mean its funder has adopted FtI.", "planned"],
 ];
 const publishes = [
   ["Priorities", "the problems, communities and kinds of work it wants to support, including explicit exclusions."],
@@ -16,24 +16,24 @@ const publishes = [
 ];
 ---
 <Base
-  title="Funding to Impact: a proposal for funders · ItFtI"
-  description="Funding to Impact proposes a simple file funders publish on their own websites, so people and agents can tell what a funder supports before they spend time applying. A proposal: nothing is implemented yet."
+  title="Funding to Impact: a file format for funders · ItFtI"
+  description="Funding to Impact is a file format funders publish on their own websites, with an MCP server that lets agents read it, so people can tell what a funder supports before they spend time applying. Draft 0.1, looking for its first funders."
   current="fti"
 >
   <section class="intro grid" aria-labelledby="t">
     <div class="head">
       <h1 id="t">Funding to Impact</h1>
-      <p class="tag rule-dash">For funders. A proposal, documentation only.</p>
+      <p class="tag rule-dash">For funders. Draft 0.1, looking for its first funders.</p>
     </div>
     <div class="body">
       <p class="big">Help builders understand what funders want to support, before they spend time applying.</p>
-      <p>FtI is an idea for funders to publish their priorities and opportunities in a form people and agents can readily read. It's inspired by the lightweight approach of <a href="https://llmstxt.org/">llms.txt</a>, and it should reuse existing grant-data work, especially <a href="https://commongrants.org/">CommonGrants</a>, rather than add another competing schema.</p>
+      <p>FtI is a file format funders publish on their own website, so people and agents can read their priorities and opportunities before anyone applies. It's inspired by the lightweight approach of <a href="https://llmstxt.org/">llms.txt</a> and built on <a href="https://commongrants.org/">CommonGrants</a>, instead of adding another competing schema.</p>
       <p>For funders, the intended benefit is clearer communication and fewer unsuitable applications. For builders, it's less time lost on scattered, outdated or ambiguous information. These are intended benefits, not measured results.</p>
     </div>
   </section>
 
   <section class="course grid" aria-labelledby="explain">
-    <h2 id="explain" class="head">What a funder would explain</h2>
+    <h2 id="explain" class="head">What a funder explains</h2>
     <dl class="body publishes">
       {publishes.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
     </dl>
@@ -42,7 +42,7 @@ const publishes = [
   <section class="course grid" aria-labelledby="shape">
     <h2 id="shape" class="head">Three connected parts</h2>
     <ol class="body parts">
-      {parts.map(([k, v]) => (<li class="rule-dash"><h3>{k}</h3><p>{v}</p></li>))}
+      {parts.map(([k, v, s]) => (<li class={s === "built" ? "rule-solid" : "rule-dash"}><h3>{k}</h3><p>{v}</p></li>))}
     </ol>
   </section>
 
@@ -60,7 +60,7 @@ const publishes = [
   <section class="course grid" aria-labelledby="now">
     <h2 id="now" class="head">Where it stands</h2>
     <div class="body">
-      <p class="rule-dash status">FtI is at the proposal stage. There is no published standard, executable schema, working server, importer or tested integration. No funder has endorsed or adopted it.</p>
+      <p class="rule-dash status">FtI is at draft 0.1. The file format has executable schemas and a validator. The MCP server runs locally and has been tested with fictional data. Import adapters are planned. No funder has adopted FtI yet, and there is no hosted service. We're looking for the first funders to publish with it.</p>
       <p class="actions"><a class="slab-ghost" href="/itf">Impact to Funding, available now</a></p>
     </div>
   </section>

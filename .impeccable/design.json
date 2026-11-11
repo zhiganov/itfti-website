@@ -135,8 +135,8 @@
       "name": "Status Lanes",
       "kind": "custom",
       "refersTo": "slab",
-      "description": "Solid 8px rule: exists today. Dashed 8px rule: proposal.",
-      "html": "<div class=\"ds-lane ds-solid\"><h2>Impact to Funding</h2><p>Experimental v0.</p></div><div class=\"ds-lane ds-dash\"><h2>Funding to Impact</h2><p>Proposal only.</p></div>",
+      "description": "Solid 8px rule: built and usable today. Dashed 8px rule: draft not yet adopted, or planned.",
+      "html": "<div class=\"ds-lane ds-solid\"><h2>Impact to Funding</h2><p>Experimental v0.</p></div><div class=\"ds-lane ds-dash\"><h2>Funding to Impact</h2><p>Draft 0.1.</p></div>",
       "css": ".ds-lane { margin-top: 22px; padding-top: 10px; color: #890405; } .ds-lane h2 { font-family: 'Zilla Slab', Rockwell, serif; font-weight: 700; font-size: 1.4rem; line-height: 1; } .ds-lane p { margin-top: 6px; font-family: 'Libre Franklin', system-ui, sans-serif; } .ds-solid { border-top: 8px solid #890405; } .ds-dash { border-top: 8px dashed #890405; }"
     },
     {
@@ -172,7 +172,7 @@
       },
       {
         "name": "The Line Form Rule",
-        "body": "Status is carried by rule style. Solid 8px rule: exists today. Dashed 8px rule: proposal. Never use colour or a badge for status.",
+        "body": "Status is carried by rule style. Solid 8px rule: built and usable today. Dashed 8px rule: draft not yet adopted, or planned. Never use colour or a badge for status.",
         "section": "colors"
       },
       {
@@ -193,12 +193,12 @@
     ],
     "dos": [
       "Do use only #890405 on #f7f5f2, with #5e0203 for hover.",
-      "Do mark what exists with a solid 8px rule and proposals with a dashed 8px rule.",
+      "Do mark what is built with a solid 8px rule, and drafts or planned work with a dashed 8px rule.",
       "Do use the real seal logo asset as the focal image.",
       "Do keep every page on the shared 12-column grid.",
       "Do keep corners square and depth flat.",
       "Do let the seal be the only frame on the page.",
-      "Do keep copy honest about status: ItF is experimental, FtI is a proposal."
+      "Do keep copy honest about status: ItF is experimental; FtI is draft 0.1 with no funder adoption yet."
     ],
     "donts": [
       "Don't add a second colour, grey ramp, tint or gradient.",

@@ -1,6 +1,11 @@
 ---
 import Base from "../layouts/Base.astro";
 import InstallCommands from "../components/InstallCommands.astro";
+import CopyBlock from "../components/CopyBlock.astro";
+const mcpSetup = `cd .claude/skills/impact-to-funding   # your ItF install folder
+npm ci --ignore-scripts --prefix mcp
+mkdir -p outputs
+node mcp/prepare.mjs --revision "$(git rev-parse HEAD)" --output outputs/library-snapshot.json`;
 const repo = "https://github.com/zhiganov/impact-to-funding";
 const starts = [
   {
@@ -40,6 +45,17 @@ const starts = [
       <p>Pick your agent, copy the command, and run it in your terminal. Conversation needs no signup, Node.js, MCP server or plugin. Your agent's model costs and privacy terms still apply.</p>
       <InstallCommands />
       <p>Claude Code and Codex CLI were each checked with one non-interactive run. OpenCode was install-tested with an older snapshot. Menus, desktop apps and usefulness were not tested.</p>
+    </div>
+  </section>
+
+  <section class="course grid" id="mcp" aria-labelledby="mcp-title">
+    <h2 id="mcp-title" class="head">MCP server</h2>
+    <div class="body">
+      <p class="big">An optional, read-only MCP server over ItF's reference library.</p>
+      <p>It lets any MCP client search the library's cases, candidate patterns and lenses with three tools: <code>search_references</code>, <code>get_reference</code> and <code>library_info</code>. It runs locally, reads a snapshot you prepare from your installed copy, and needs no account or API key. You don't need it to use the skill.</p>
+      <p>It needs Node.js 22 or later, npm and Git. Prepare the snapshot once, from your install folder:</p>
+      <CopyBlock code={mcpSetup} />
+      <p>Then add a stdio server to your agent's MCP settings: command <code>node</code>, arguments <code>&lt;install folder&gt;/mcp/server.mjs --snapshot &lt;install folder&gt;/outputs/library-snapshot.json</code>, using absolute paths. Details in the <a href="https://github.com/zhiganov/impact-to-funding/blob/main/mcp/README.md">MCP guide</a>.</p>
     </div>
   </section>
 
