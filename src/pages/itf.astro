@@ -1,0 +1,98 @@
+---
+import Base from "../layouts/Base.astro";
+import InstallCommands from "../components/InstallCommands.astro";
+const repo = "https://github.com/zhiganov/impact-to-funding";
+const starts = [
+  {
+    title: "Find a useful contribution",
+    prompt: "Help me explore where my skills and available time could be useful, including contributing to existing work. Use what I supply, mark assumptions, and keep this private. Do not contact anyone.",
+  },
+  {
+    title: "Develop shared work and learn",
+    prompt: "Help me describe my role in this shared project, check it against my capacity, and examine what we know about its effects. Preserve other contributors and disagreement. Do not collect or publish anything.",
+  },
+  {
+    title: "Explain what support would help",
+    prompt: "Help me prepare a private case for sustaining this work. Separate observations from proposals, use only known costs and commitments, and keep uncertainty visible. Do not invent impact, submit an application or contact a funder.",
+  },
+];
+---
+<Base
+  title="Impact to Funding: an agent skill for builders · ItFtI"
+  description="Impact to Funding is an open-source skill for your AI agent. It helps you find where your skills are useful, build with others, learn what difference the work makes and explain what would help it continue."
+  current="itf"
+>
+  <section class="intro grid" aria-labelledby="t">
+    <div class="head">
+      <h1 id="t">Impact to Funding</h1>
+      <p class="tag rule-solid">For builders. Experimental v0, open source.</p>
+    </div>
+    <div class="body">
+      <p class="big">Put your skills and experience towards real problems, and build a credible case for support.</p>
+      <p>ItF is a skill for the AI agent you already use and are signed in to. Start with your situation: you don't need a theory of change, a project, evidence or a fundraising goal. If you're worried about work, you don't need to become a founder or work for free.</p>
+      <p class="actions"><a class="slab" href="#install">Install ItF</a><a class="slab-ghost" href={repo}>Source on GitHub</a></p>
+    </div>
+  </section>
+
+  <section class="course grid" aria-labelledby="install">
+    <h2 id="install" class="head">Install</h2>
+    <div class="body">
+      <p>Pick your agent, copy the command, and run it in your terminal. Conversation needs no signup, Node.js, MCP server or plugin. Your agent's model costs and privacy terms still apply.</p>
+      <InstallCommands />
+      <p>Claude Code and Codex CLI were each checked with one non-interactive run. OpenCode was install-tested with an older snapshot. Menus, desktop apps and usefulness were not tested.</p>
+    </div>
+  </section>
+
+  <section class="course grid" aria-labelledby="start">
+    <h2 id="start" class="head">Three ways to start</h2>
+    <div class="body">
+      <p>After you invoke the skill, try one of these. They're starting points, not commands. A few sentences about your situation are enough.</p>
+      <ol class="starts">
+        {starts.map((s) => (
+          <li>
+            <h3>{s.title}</h3>
+            <blockquote><p>{s.prompt}</p></blockquote>
+          </li>
+        ))}
+      </ol>
+      <p>A useful result might be a possible contribution, a clearer question, a smaller commitment or a decision to stop. It doesn't have to be a report.</p>
+    </div>
+  </section>
+
+  <section class="course grid" aria-labelledby="limits">
+    <h2 id="limits" class="head">Limits</h2>
+    <div class="body">
+      <ul class="ledger">
+        <li class="rule-solid"><strong>Private by default.</strong> A local file can still go to a remote model when your agent reads it. Use only material you may share with that provider.</li>
+        <li class="rule-solid"><strong>No action without your say-so.</strong> A draft doesn't authorise publishing, contacting people, applying or paying.</li>
+        <li class="rule-solid"><strong>No certification or ranking.</strong> Outputs and completed assessments don't prove impact.</li>
+        <li class="rule-dash"><strong>Limited evidence.</strong> Development trials were small and the examples are fiction. We haven't verified usefulness to people or fundraising results.</li>
+      </ul>
+      <p>Original writing is CC BY-SA 4.0; code is MIT. ItF draws on public Moral Ambition principles and isn't affiliated with or endorsed by the School for Moral Ambition or Rutger Bregman.</p>
+      <p class="actions"><a class="slab" href={repo}>ItF on GitHub</a><a class="slab-ghost" href="/fti">Funding to Impact</a></p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .intro { padding-bottom: clamp(48px, 6vw, 88px); }
+  .head { grid-column: 1 / span 4; align-self: start; position: sticky; top: 24px; }
+  .body { grid-column: 5 / span 8; display: grid; gap: 1.1em; min-width: 0; }
+  .big { font-family: var(--display); font-weight: 500; font-size: var(--step-2); line-height: 1.3; max-width: 26ch; }
+  .tag { margin-top: 14px; padding-top: 10px; font-weight: 600; max-width: 26ch; }
+  .actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 0.4em; }
+  .starts { list-style: none; padding: 0; display: grid; gap: 0; counter-reset: s; }
+  .starts li { padding: 18px 0; border-top: 4px solid var(--red); max-width: none; }
+  .starts h3 { margin-bottom: 10px; }
+  blockquote { margin: 0; padding: 14px 18px; background: var(--red-wash); font-size: 0.95rem; }
+  .ledger { list-style: none; padding: 0; display: grid; gap: 20px; }
+  .ledger li { padding-top: 12px; }
+  @media (max-width: 900px) {
+    .head, .body { grid-column: 1 / -1; }
+    .head { position: static; }
+    table, thead, tbody, tr, th, td { display: block; }
+    thead { display: none; }
+    tr { border-bottom: 2px solid var(--red); padding: 0.6em 0; }
+    td { border: 0; padding: 0.15em 0; }
+  }
+</style>

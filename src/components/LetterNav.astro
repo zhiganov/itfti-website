@@ -1,0 +1,79 @@
+---
+// Navigation is the name: each of the five letters I-t-F-t-I opens one part of the site.
+interface Props { current: "home" | "itf" | "loop" | "fti" | "status" }
+const { current } = Astro.props;
+const letters = [
+  { id: "home", glyph: "I", label: "Home", href: "/" },
+  { id: "itf", glyph: "t", label: "Impact to Funding", href: "/itf" },
+  { id: "loop", glyph: "F", label: "How the two meet", href: "/#loop" },
+  { id: "fti", glyph: "t", label: "Funding to Impact", href: "/fti" },
+  { id: "status", glyph: "I", label: "What exists today", href: "/#status" },
+];
+---
+<nav class="letters" aria-label="Site">
+  <ul>
+    {letters.map((l) => (
+      <li>
+        <a href={l.href} aria-current={l.id === current ? "page" : undefined} class:list={{ on: l.id === current }}>
+          <span class="glyph" aria-hidden="true">{l.glyph}</span>
+          <span class="label">{l.label}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+  <a class="home" href="/">itfti.org</a>
+  <p class="here" aria-hidden="true">{letters.find((l) => l.id === current)?.label}</p>
+</nav>
+
+<style>
+  .letters { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
+  ul { list-style: none; padding: 0; display: flex; gap: 10px; }
+  li { max-width: none; }
+  a { text-decoration: none; }
+  ul a { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .glyph {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 1;
+    width: 52px;
+    height: 52px;
+    display: grid;
+    place-items: center;
+    padding-bottom: 4px;
+    border: 4px solid var(--red);
+    color: var(--red);
+    transition: background-color 0.2s var(--ease-out), color 0.2s var(--ease-out);
+  }
+  ul a:hover .glyph, .on .glyph { background: var(--red); color: var(--paper); }
+  .label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    max-width: 84px;
+    text-align: center;
+    line-height: 1.2;
+    opacity: 0;
+    transform: translateY(-3px);
+    transition: opacity 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+  }
+  ul a:hover .label, ul a:focus-visible .label, .on .label { opacity: 1; transform: none; }
+  .home {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding-top: 16px;
+  }
+  .here { display: none; }
+  @media (max-width: 720px) {
+    .glyph { width: 40px; height: 40px; font-size: 24px; border-width: 3px; }
+    ul { gap: 6px; }
+    .label { display: none; }
+    .home { display: none; }
+    .letters { flex-direction: column; gap: 8px; }
+    .here { display: block; font-family: var(--display); font-weight: 700; font-size: 18px; line-height: 1.2; }
+  }
+</style>

@@ -1,0 +1,91 @@
+---
+import Base from "../layouts/Base.astro";
+const parts = [
+  ["A publication file", "Funders would describe their priorities and opportunities in a file on their own website, linked to the authoritative programme pages. General priorities would stay separate from actual calls, and a funder wouldn't need to run a server or join a new portal."],
+  ["Import adapters", "Funding information from sources that don't publish the file could be brought in from elsewhere. Importing a listing wouldn't mean its funder had adopted FtI."],
+  ["A read-only server", "An MCP server would let compatible agents query both kinds of information. ItF would be one client among others, never a gateway or an eligibility authority."],
+];
+const publishes = [
+  ["Priorities", "the problems, communities and kinds of work it wants to support, including explicit exclusions."],
+  ["Eligibility", "whether individuals, informal groups, organisations or fiscally sponsored projects can apply, and under which geographic or other restrictions."],
+  ["Support", "type, typical amount and currency, duration, eligible costs and material conditions."],
+  ["Availability", "whether a specific opportunity is open, rolling, invitation-only, forecasted, closed or withdrawn."],
+  ["Process", "the official route, required materials, deadlines with time zones, decision timing and reporting expectations."],
+  ["Evidence", "what applicants should show, including whether exploratory work without prior outcomes can be supported."],
+  ["Authority and freshness", "the publisher, authoritative links, review and update information, and any expiry or withdrawal."],
+];
+---
+<Base
+  title="Funding to Impact: a proposal for funders · ItFtI"
+  description="Funding to Impact proposes a simple file funders publish on their own websites, so people and agents can tell what a funder supports before they spend time applying. A proposal: nothing is implemented yet."
+  current="fti"
+>
+  <section class="intro grid" aria-labelledby="t">
+    <div class="head">
+      <h1 id="t">Funding to Impact</h1>
+      <p class="tag rule-dash">For funders. A proposal, documentation only.</p>
+    </div>
+    <div class="body">
+      <p class="big">Help builders understand what funders want to support, before they spend time applying.</p>
+      <p>FtI is an idea for funders to publish their priorities and opportunities in a form people and agents can readily read. It's inspired by the lightweight approach of <a href="https://llmstxt.org/">llms.txt</a>, and it should reuse existing grant-data work, especially <a href="https://commongrants.org/">CommonGrants</a>, rather than add another competing schema.</p>
+      <p>For funders, the intended benefit is clearer communication and fewer unsuitable applications. For builders, it's less time lost on scattered, outdated or ambiguous information. These are intended benefits, not measured results.</p>
+    </div>
+  </section>
+
+  <section class="course grid" aria-labelledby="explain">
+    <h2 id="explain" class="head">What a funder would explain</h2>
+    <dl class="body publishes">
+      {publishes.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
+    </dl>
+  </section>
+
+  <section class="course grid" aria-labelledby="shape">
+    <h2 id="shape" class="head">Three connected parts</h2>
+    <ol class="body parts">
+      {parts.map(([k, v]) => (<li class="rule-dash"><h3>{k}</h3><p>{v}</p></li>))}
+    </ol>
+  </section>
+
+  <section class="course grid" aria-labelledby="rules">
+    <h2 id="rules" class="head">Ground rules</h2>
+    <div class="body">
+      <ul class="rules">
+        <li>Funding interests are not automatically open calls.</li>
+        <li>Previous awards are not evidence that applications are open now.</li>
+        <li>Missing eligibility information is unknown, not permission to apply.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="course grid" aria-labelledby="now">
+    <h2 id="now" class="head">Where it stands</h2>
+    <div class="body">
+      <p class="rule-dash status">FtI is at the proposal stage. There is no published standard, executable schema, working server, importer or tested integration. No funder has endorsed or adopted it.</p>
+      <p class="actions"><a class="slab-ghost" href="/itf">Impact to Funding, available now</a></p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .intro { padding-bottom: clamp(48px, 6vw, 88px); }
+  .head { grid-column: 1 / span 4; align-self: start; position: sticky; top: 24px; }
+  .body { grid-column: 5 / span 8; display: grid; gap: 1.1em; min-width: 0; }
+  .big { font-family: var(--display); font-weight: 500; font-size: var(--step-2); line-height: 1.3; max-width: 26ch; }
+  .tag { margin-top: 14px; padding-top: 10px; font-weight: 600; max-width: 26ch; }
+  .actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 0.4em; }
+  .publishes { gap: 0; }
+  .publishes div { display: grid; grid-template-columns: 11em 1fr; gap: 16px; padding: 0.75em 0; border-bottom: 2px solid var(--red); }
+  .publishes dt { font-family: var(--display); font-weight: 700; }
+  .publishes dd { margin: 0; max-width: 60ch; }
+  .parts { list-style: none; padding: 0; gap: 26px; }
+  .parts li { padding-top: 12px; max-width: none; }
+  .parts h3 { margin-bottom: 6px; }
+  .rules { list-style: none; padding: 0; font-family: var(--display); font-weight: 700; font-size: var(--step-1); line-height: 1.3; }
+  .rules li { padding: 0.45em 0; border-bottom: 2px solid var(--red); }
+  .status { padding-top: 12px; }
+  @media (max-width: 900px) {
+    .head, .body { grid-column: 1 / -1; }
+    .head { position: static; }
+    .publishes div { grid-template-columns: 1fr; gap: 2px; }
+  }
+</style>

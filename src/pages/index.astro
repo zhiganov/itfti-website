@@ -1,0 +1,158 @@
+---
+import Base from "../layouts/Base.astro";
+import InstallCommands from "../components/InstallCommands.astro";
+
+const repo = "https://github.com/zhiganov/impact-to-funding";
+const helps = [
+  "explore where your skills could be useful,",
+  "develop shared work with others,",
+  "learn what difference the work makes,",
+  "explain what would help it continue.",
+];
+const publishes = [
+  ["Priorities", "the problems, communities and kinds of work it wants to support, and what it excludes."],
+  ["Eligibility", "whether individuals, informal groups, organisations or fiscally sponsored projects can apply, and where."],
+  ["Support", "the type, typical amount, duration and eligible costs."],
+  ["Availability", "whether an opportunity is open, rolling, invitation-only, forecasted, closed or withdrawn."],
+  ["Process", "the official route, required materials, deadlines with time zones and reporting expectations."],
+  ["Evidence", "what applicants should show, including whether exploratory work without prior results can be supported."],
+  ["Freshness", "who published it, authoritative links, and when it was last reviewed."],
+];
+---
+<Base
+  title="ItFtI: from impact to funding, and back"
+  description="Two open projects that make the way between useful work and funding easier to find, from both ends: Impact to Funding for builders, Funding to Impact for funders."
+  current="home"
+>
+  <section class="hero grid" aria-labelledby="hero-title">
+    <img class="seal" src="/itfti-seal.svg" width="1824" height="1820"
+      alt="The ItFtI seal: the letters I, t, F, t, I form the walls of a maze, with an entrance at the bottom and an exit at the top." />
+    <div class="copy">
+      <h1 id="hero-title">Find the way from impact to funding.</h1>
+      <p class="lede">Many projects get lost before they reach support. ItFtI has a project for each end of the maze. One exists today; the other is still an idea.</p>
+      <div class="lane rule-solid">
+        <h2><a href="/itf">Impact to Funding</a> <span>builders · experimental</span></h2>
+        <p>An open-source skill for your AI agent: find where your skills help, build with others, and explain what would help the work continue.</p>
+      </div>
+      <div class="lane rule-dash">
+        <h2><a href="/fti">Funding to Impact</a> <span>funders · proposal</span></h2>
+        <p>An idea, not a service yet: funders publish what they support in a simple file people and agents can read.</p>
+      </div>
+      <p class="act">
+        <a class="slab" href="#install">Install ItF</a>
+        <span>free and open source</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="course maze grid" id="maze" aria-labelledby="maze-title">
+    <h2 id="maze-title" class="head">The maze</h2>
+    <div class="body">
+      <p class="big">Useful work often stalls on the way to support. Builders lose time reading scattered, outdated or vague funding pages. Funders read applications that were never a fit.</p>
+      <p>ItFtI starts from both sides. From the builder's side, it helps people describe their work and what would help it continue. From the funder's side, it proposes a plain way to say what they support, before anyone spends time applying.</p>
+    </div>
+  </section>
+
+  <section class="course itf grid" id="itf" aria-labelledby="itf-title">
+    <div class="head">
+      <h2 id="itf-title">Impact to Funding</h2>
+      <p class="tag rule-solid">For builders. Available now as an experimental skill.</p>
+    </div>
+    <div class="body">
+      <p class="big">ItF is a skill for the AI agent you already use. It helps you:</p>
+      <ul class="helps">{helps.map((h) => <li>{h}</li>)}</ul>
+      <p>Start with your situation. You don't need a theory of change, a project, evidence or a fundraising goal. It's for developers, maintainers and independent builders who already use AI agents; community organisers, small teams and facilitators may find it useful too.</p>
+      <h3 id="install">Install</h3>
+      <InstallCommands />
+      <p class="actions">
+        <a class="slab-ghost" href="/itf">How it works</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="course loop grid" id="loop" aria-labelledby="loop-title">
+    <h2 id="loop-title" class="head">How the two meet</h2>
+    <div class="body">
+      <ol class="sides">
+        <li><h3>Impact → funding</h3><p>A builder works out what their contribution is, what difference it makes so far, and what support would help it continue.</p></li>
+        <li><h3>Funding → impact</h3><p>A funder states what it supports, who can apply, how much, by when and with what evidence, in a form people and agents can read.</p></li>
+      </ol>
+      <p>When both sides speak plainly, fewer people get lost in the maze. ItF is meant to be one reader of what funders publish, not the only one and not a gatekeeper. The two parts can be used separately.</p>
+    </div>
+  </section>
+
+  <section class="course fti grid" id="fti" aria-labelledby="fti-title">
+    <div class="head">
+      <h2 id="fti-title">Funding to Impact</h2>
+      <p class="tag rule-dash">For funders. A proposal: nothing to install yet.</p>
+    </div>
+    <div class="body">
+      <p class="big">Before I apply, can I tell whether this funder supports work like mine, whether I'm eligible, and how to approach them?</p>
+      <p>FtI proposes a simple file a funder publishes on its own website, inspired by <a href="https://llmstxt.org/">llms.txt</a> and meant to reuse existing grant-data work such as <a href="https://commongrants.org/">CommonGrants</a> rather than add a new competing schema. A funder would explain:</p>
+      <dl class="publishes">
+        {publishes.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
+      </dl>
+      <p>Funding interests are not open calls. Past awards don't mean applications are open now. Missing eligibility is unknown, not permission to apply.</p>
+      <p class="actions"><a class="slab-ghost" href="/fti">Read the idea</a></p>
+    </div>
+  </section>
+
+  <section class="course status grid" id="status" aria-labelledby="status-title">
+    <h2 id="status-title" class="head">What exists today</h2>
+    <div class="body">
+      <ul class="ledger">
+        <li class="rule-solid"><strong>Impact to Funding</strong> is published and open source. It offers conversation, optional templates and reference material. It doesn't find collaborators, provide funding or certify impact. Trials so far were small; we haven't tested how useful it is to people or whether it helps them raise money.</li>
+        <li class="rule-dash"><strong>Funding to Impact</strong> is a proposal, documentation only. There is no published standard, schema, server or importer yet, and no funder has adopted it.</li>
+      </ul>
+      <p class="actions"><a class="slab" href={repo}>ItF on GitHub</a></p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { align-items: center; row-gap: 32px; padding-bottom: clamp(40px, 6vw, 96px); }
+  .seal { grid-column: 1 / span 6; width: 100%; height: auto; max-height: min(64svh, 640px); object-fit: contain; }
+  .copy { grid-column: 7 / span 6; }
+  .lede { font-size: var(--step-1); line-height: 1.4; margin-top: 0.7em; }
+  .lane { margin-top: 22px; padding-top: 10px; }
+  .lane h2 { font-size: var(--step-1); }
+  .lane h2 a { text-decoration: none; }
+  .lane h2 a:hover { text-decoration: underline; }
+  .lane h2 span { font-family: var(--body); font-weight: 600; font-size: max(12px, 0.55em); letter-spacing: 0.12em; text-transform: uppercase; margin-left: 0.5em; white-space: nowrap; }
+  .lane p { margin-top: 6px; }
+  .act { margin-top: 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; font-size: 0.9rem; }
+
+  .head { grid-column: 1 / span 4; align-self: start; position: sticky; top: 24px; }
+  .body { grid-column: 5 / span 8; display: grid; gap: 1.1em; min-width: 0; }
+  .big { font-family: var(--display); font-weight: 500; font-size: var(--step-1); line-height: 1.3; max-width: 34ch; }
+  .tag { margin-top: 14px; padding-top: 10px; font-weight: 600; max-width: 26ch; }
+
+  .helps { list-style: none; padding: 0; font-family: var(--display); font-weight: 700; font-size: var(--step-1); line-height: 1.3; }
+  .helps li { padding: 0.35em 0; border-bottom: 2px solid var(--red); }
+  .hosts { max-width: 560px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 0.4em; }
+
+  .sides { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 8px solid var(--red); }
+  .sides li { padding: 22px 24px; max-width: none; }
+  .sides li + li { border-left: 8px solid var(--red); }
+  .sides h3 { margin-bottom: 0.4em; }
+
+  .publishes { display: grid; gap: 0; }
+  .publishes div { display: grid; grid-template-columns: 9.5em 1fr; gap: 16px; padding: 0.7em 0; border-bottom: 2px solid var(--red); }
+  .publishes dt { font-family: var(--display); font-weight: 700; }
+  .publishes dd { margin: 0; max-width: 60ch; }
+
+  .ledger { list-style: none; padding: 0; display: grid; gap: 24px; }
+  .ledger li { padding-top: 14px; }
+
+  @media (max-width: 900px) {
+    .hero { min-height: 0; }
+    .seal { grid-column: 1 / -1; max-width: 460px; justify-self: center; max-height: none; }
+    .copy, .head, .body { grid-column: 1 / -1; }
+    .head { position: static; }
+    .sides { grid-template-columns: 1fr; }
+    .sides li + li { border-left: 0; border-top: 8px solid var(--red); }
+    .publishes div { grid-template-columns: 1fr; gap: 2px; }
+    .lane h2 span { display: block; margin: 6px 0 0; }
+  }
+</style>

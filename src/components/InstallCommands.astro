@@ -1,0 +1,153 @@
+---
+// Install commands copied from the ItF installation guide (docs/install.md) and README.
+// Claude Code and Codex use the guide's guarded clone at the checked revision; OpenCode uses the
+// README's older, install-tested snapshot. Update these together with the guide.
+const revision = "4566892ad990131fb36f760e14c73e5f275600cc";
+const guarded = (target: string) => `target='${target}'
+revision='${revision}'
+if [ -e "$target" ] || [ -L "$target" ]; then
+  echo "Destination already exists; stop and inspect: $target"
+else
+  git clone https://github.com/zhiganov/impact-to-funding.git "$target" &&
+    git -C "$target" checkout --detach "$revision" &&
+    git -C "$target" rev-parse HEAD
+fi`;
+
+const hosts = [
+  {
+    id: "claude",
+    name: "Claude Code",
+    command: guarded(".claude/skills/impact-to-funding"),
+    then: "Open Claude Code in the same project and type",
+    invoke: "/impact-to-funding",
+    note: "If the session was already open, run /reload-skills first.",
+  },
+  {
+    id: "codex",
+    name: "Codex CLI",
+    command: guarded(".agents/skills/impact-to-funding"),
+    then: "Open Codex in the same project and type",
+    invoke: "$impact-to-funding",
+    note: "You can also pick it from /skills.",
+  },
+  {
+    id: "opencode",
+    name: "OpenCode",
+    command: `git clone https://github.com/zhiganov/impact-to-funding.git .opencode/skills/impact-to-funding
+git -C .opencode/skills/impact-to-funding checkout --detach fbb8993060254ef63f5157d3b9ddcbb8bb4cf19b`,
+    then: "In OpenCode, in the same project, type",
+    invoke: "@impact-to-funding",
+    note: "This is an older snapshot, the one tested in OpenCode. It lacks some newer guidance. Use an empty destination.",
+  },
+];
+---
+<div class="install" data-install>
+  <div class="tabs" role="tablist" aria-label="Choose your agent" hidden data-tabs>
+    {hosts.map((h, i) => (
+      <button type="button" role="tab" id={`tab-${h.id}`} aria-controls={`panel-${h.id}`}
+        aria-selected={i === 0 ? "true" : "false"} tabindex={i === 0 ? 0 : -1}>{h.name}</button>
+    ))}
+  </div>
+  {hosts.map((h) => (
+    <section class="panel" id={`panel-${h.id}`} role="tabpanel" aria-labelledby={`tab-${h.id}`} data-panel>
+      <h3 class="panel-name">{h.name}</h3>
+      <p class="step">Run this in your terminal, from the project where you'll use ItF. You need Git.</p>
+      <div class="code">
+        <pre><code>{h.command}</code></pre>
+        <button type="button" class="copy" data-copy={h.command}>Copy</button>
+      </div>
+      <p class="step">{h.then} <code>{h.invoke}</code>. {h.note}</p>
+    </section>
+  ))}
+  <p class="fine">Installs into this project only and changes no global settings. If something already exists at the destination, it stops instead of overwriting. Full guide, personal installs and updates: <a href="https://github.com/zhiganov/impact-to-funding/blob/main/docs/install.md">installation guide</a>.</p>
+</div>
+
+<style>
+  .install { display: grid; gap: 14px; max-width: 760px; min-width: 0; }
+  .tabs { display: flex; flex-wrap: wrap; gap: 0; border-bottom: 4px solid var(--red); }
+  .tabs[hidden] { display: none; }
+  .tabs button {
+    font: 700 1.05rem/1 var(--display);
+    color: var(--red);
+    background: transparent;
+    border: 4px solid var(--red);
+    border-bottom: 0;
+    margin-right: -4px;
+    padding: 10px 16px 9px;
+    cursor: pointer;
+  }
+  .tabs button[aria-selected="true"] { background: var(--red); color: var(--paper); }
+  .tabs button:hover:not([aria-selected="true"]) { background: var(--red-wash); }
+  .panel { display: grid; gap: 10px; min-width: 0; }
+  .panel[hidden] { display: none; }
+  :global(.js) .panel-name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .step { max-width: 64ch; }
+  .code { position: relative; background: var(--red-wash); min-width: 0; max-width: 100%; }
+  .panel > * { min-width: 0; }
+  pre {
+    margin: 0;
+    padding: 18px 20px;
+    padding-right: 92px;
+    overflow-x: auto;
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--red);
+    scrollbar-color: var(--red) var(--red-wash);
+  }
+  pre code { background: none; padding: 0; white-space: pre; }
+  .copy {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font: 700 0.95rem/1 var(--display);
+    color: var(--paper);
+    background: var(--red);
+    border: 0;
+    padding: 9px 14px;
+    cursor: pointer;
+    min-width: 72px;
+  }
+  .copy:hover { background: var(--red-deep); }
+  .fine { font-size: 0.9rem; max-width: 70ch; }
+  @media (max-width: 720px) {
+    pre { font-size: 0.78rem; padding: 52px 14px 14px; }
+  }
+</style>
+
+<script>
+  document.documentElement.classList.add("js");
+  for (const root of document.querySelectorAll<HTMLElement>("[data-install]")) {
+    const tablist = root.querySelector<HTMLElement>("[data-tabs]");
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>("[role=tab]")];
+    const panels = [...root.querySelectorAll<HTMLElement>("[data-panel]")];
+    const select = (i: number, focus = false) => {
+      tabs.forEach((t, j) => {
+        t.setAttribute("aria-selected", String(i === j));
+        t.tabIndex = i === j ? 0 : -1;
+        panels[j].hidden = i !== j;
+      });
+      if (focus) tabs[i].focus();
+    };
+    if (tablist) tablist.hidden = false;
+    select(0);
+    tabs.forEach((t, i) => {
+      t.addEventListener("click", () => select(i));
+      t.addEventListener("keydown", (e) => {
+        const k = e.key;
+        if (k === "ArrowRight") select((i + 1) % tabs.length, true);
+        if (k === "ArrowLeft") select((i - 1 + tabs.length) % tabs.length, true);
+      });
+    });
+    for (const b of root.querySelectorAll<HTMLButtonElement>("[data-copy]")) {
+      b.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(b.dataset.copy ?? "");
+          b.textContent = "Copied";
+        } catch {
+          b.textContent = "Select and copy";
+        }
+        setTimeout(() => (b.textContent = "Copy"), 2000);
+      });
+    }
+  }
+</script>
