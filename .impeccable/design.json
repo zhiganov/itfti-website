@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-11T00:00:00Z",
+  "generatedAt": "2026-11-11T14:22:44.826Z",
   "title": "Design System: ItFtI",
   "extensions": {
     "colorMeta": {
@@ -76,7 +76,7 @@
       },
       "title": {
         "displayName": "Title",
-        "purpose": "h3, lane heads, button text, lead lines."
+        "purpose": "h3, lane heads, button text, lead lines. Zilla Slab 500 at 1.3 line height is used for the large pull sentence."
       },
       "body": {
         "displayName": "Body",
@@ -113,7 +113,7 @@
       "refersTo": "slab",
       "description": "The primary action. Filled red with paper text.",
       "html": "<a class=\"ds-slab\" href=\"#\">Install ItF</a>",
-      "css": ".ds-slab { display: inline-block; font-family: 'Zilla Slab', Rockwell, serif; font-weight: 700; font-size: 1.4rem; line-height: 1; color: #f7f5f2; background: #890405; padding: 0.6em 1.05em 0.65em; text-decoration: none; transition: background-color 0.25s cubic-bezier(0.16,1,0.3,1), transform 0.25s cubic-bezier(0.16,1,0.3,1); } .ds-slab:hover { background: #5e0203; color: #f7f5f2; } .ds-slab:active { transform: translateY(1px); } .ds-slab:focus-visible { outline: 3px solid #890405; outline-offset: 4px; }"
+      "css": ".ds-slab { display: inline-block; font-family: var(--display, 'Zilla Slab', Rockwell, 'Roboto Slab', serif); font-weight: 700; font-size: var(--step-1, clamp(1.25rem, 1.1rem + 0.6vw, 1.6rem)); line-height: 1; letter-spacing: -0.01em; border-radius: 0; color: var(--paper, #f7f5f2); background: var(--red, #890405); padding: 0.6em 1.05em 0.65em; text-decoration: none; transition: background-color 0.25s cubic-bezier(0.16,1,0.3,1), transform 0.25s cubic-bezier(0.16,1,0.3,1); } .ds-slab:hover { background: var(--red-deep, #5e0203); color: var(--paper, #f7f5f2); } .ds-slab:active { transform: translateY(1px); } .ds-slab:focus-visible { outline: 3px solid var(--red, #890405); outline-offset: 4px; }"
     },
     {
       "name": "Slab Ghost Button",
@@ -121,15 +121,15 @@
       "refersTo": "slab-ghost",
       "description": "The second action. Red border, inverts on hover.",
       "html": "<a class=\"ds-slab-ghost\" href=\"#\">How it works</a>",
-      "css": ".ds-slab-ghost { display: inline-block; font-family: 'Zilla Slab', Rockwell, serif; font-weight: 700; font-size: 1.4rem; line-height: 1; color: #890405; border: 4px solid #890405; padding: calc(0.6em - 4px) calc(1.05em - 4px) calc(0.65em - 4px); text-decoration: none; transition: background-color 0.25s cubic-bezier(0.16,1,0.3,1), color 0.25s cubic-bezier(0.16,1,0.3,1); } .ds-slab-ghost:hover { background: #890405; color: #f7f5f2; } .ds-slab-ghost:focus-visible { outline: 3px solid #890405; outline-offset: 4px; }"
+      "css": ".ds-slab-ghost { display: inline-block; font-family: var(--display, 'Zilla Slab', Rockwell, 'Roboto Slab', serif); font-weight: 700; font-size: var(--step-1, clamp(1.25rem, 1.1rem + 0.6vw, 1.6rem)); line-height: 1; letter-spacing: -0.01em; border-radius: 0; background: var(--paper, #f7f5f2); color: var(--red, #890405); border: 4px solid var(--red, #890405); padding: calc(0.6em - 4px) calc(1.05em - 4px) calc(0.65em - 4px); text-decoration: none; transition: background-color 0.25s cubic-bezier(0.16,1,0.3,1), color 0.25s cubic-bezier(0.16,1,0.3,1); } .ds-slab-ghost:hover { background: var(--red, #890405); color: var(--paper, #f7f5f2); } .ds-slab-ghost:focus-visible { outline: 3px solid var(--red, #890405); outline-offset: 4px; }"
     },
     {
       "name": "Letter Nav",
       "kind": "nav",
       "refersTo": "letter-block",
-      "description": "I-t-F-t-I. The current letter is filled.",
-      "html": "<nav class=\"ds-letters\"><a class=\"ds-glyph on\" href=\"#\">I</a><a class=\"ds-glyph\" href=\"#\">t</a><a class=\"ds-glyph\" href=\"#\">F</a><a class=\"ds-glyph\" href=\"#\">t</a><a class=\"ds-glyph\" href=\"#\">I</a></nav>",
-      "css": ".ds-letters { display: flex; gap: 10px; } .ds-glyph { font-family: 'Zilla Slab', Rockwell, serif; font-weight: 700; font-size: 30px; line-height: 1; width: 52px; height: 52px; display: grid; place-items: center; padding-bottom: 4px; border: 4px solid #890405; color: #890405; text-decoration: none; transition: background-color 0.2s cubic-bezier(0.16,1,0.3,1), color 0.2s cubic-bezier(0.16,1,0.3,1); } .ds-glyph:hover, .ds-glyph.on { background: #890405; color: #f7f5f2; } .ds-glyph:focus-visible { outline: 3px solid #890405; outline-offset: 4px; }"
+      "description": "I-t-F-t-I. The current letter is filled; captions appear on hover, focus and the current letter. Phones use smaller blocks and a separate current-page label.",
+      "html": "<div class=\"ds-nav\"><nav class=\"ds-letters\" aria-label=\"Main navigation\"><a class=\"ds-glyph ds-current\" href=\"#\" aria-current=\"page\" aria-label=\"Home\">I<span class=\"ds-caption\">Home</span></a><a class=\"ds-glyph\" href=\"#\" aria-label=\"Impact to Funding\">t<span class=\"ds-caption\">Impact to Funding</span></a><a class=\"ds-glyph\" href=\"#\" aria-label=\"The loop\">F<span class=\"ds-caption\">The loop</span></a><a class=\"ds-glyph\" href=\"#\" aria-label=\"Funding to Impact\">t<span class=\"ds-caption\">Funding to Impact</span></a><a class=\"ds-glyph\" href=\"#\" aria-label=\"Status\">I<span class=\"ds-caption\">Status</span></a></nav><span class=\"ds-site\">itfti.org</span><span class=\"ds-mobile-page\">Home</span></div>",
+      "css": ".ds-nav { display: flex; align-items: start; justify-content: space-between; gap: 16px; color: var(--red, #890405); padding-bottom: 40px; } .ds-letters { display: flex; gap: 10px; } .ds-glyph { position: relative; font-family: var(--display, 'Zilla Slab', Rockwell, 'Roboto Slab', serif); font-weight: 700; font-size: 30px; line-height: 1; width: 52px; height: 52px; display: grid; place-items: center; padding-bottom: 4px; border: 4px solid var(--red, #890405); border-radius: 0; color: var(--red, #890405); text-decoration: none; transition: background-color 0.2s cubic-bezier(0.16,1,0.3,1), color 0.2s cubic-bezier(0.16,1,0.3,1); } .ds-glyph:hover, .ds-glyph.ds-current { background: var(--red, #890405); color: var(--paper, #f7f5f2); } .ds-glyph:focus-visible { outline: 3px solid var(--red, #890405); outline-offset: 4px; } .ds-caption { position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%); width: 100px; color: var(--red, #890405); font-family: var(--body, 'Libre Franklin', system-ui, sans-serif); font-size: 11px; font-weight: 600; line-height: 1.2; letter-spacing: 0.06em; text-transform: uppercase; text-align: center; visibility: hidden; } .ds-glyph:hover .ds-caption, .ds-glyph:focus-visible .ds-caption, .ds-current .ds-caption { visibility: visible; } .ds-site { font-family: var(--display, 'Zilla Slab', Rockwell, serif); font-weight: 700; } .ds-mobile-page { display: none; } @media (max-width: 720px) { .ds-nav { flex-wrap: wrap; padding-bottom: 0; } .ds-glyph { width: 40px; height: 40px; border-width: 3px; } .ds-caption, .ds-site { display: none; } .ds-mobile-page { display: block; flex-basis: 100%; font-family: var(--display, 'Zilla Slab', Rockwell, serif); font-weight: 700; } }"
     },
     {
       "name": "Status Lanes",
@@ -137,7 +137,7 @@
       "refersTo": "slab",
       "description": "Solid 8px rule: built and usable today. Dashed 8px rule: draft not yet adopted, or planned.",
       "html": "<div class=\"ds-lane ds-solid\"><h2>Impact to Funding</h2><p>Experimental v0.</p></div><div class=\"ds-lane ds-dash\"><h2>Funding to Impact</h2><p>Draft 0.1.</p></div>",
-      "css": ".ds-lane { margin-top: 22px; padding-top: 10px; color: #890405; } .ds-lane h2 { font-family: 'Zilla Slab', Rockwell, serif; font-weight: 700; font-size: 1.4rem; line-height: 1; } .ds-lane p { margin-top: 6px; font-family: 'Libre Franklin', system-ui, sans-serif; } .ds-solid { border-top: 8px solid #890405; } .ds-dash { border-top: 8px dashed #890405; }"
+      "css": ".ds-lane { margin-top: 22px; padding-top: 10px; color: var(--red, #890405); } .ds-lane h2 { font-family: var(--display, 'Zilla Slab', Rockwell, 'Roboto Slab', serif); font-weight: 700; font-size: var(--step-1, clamp(1.25rem, 1.1rem + 0.6vw, 1.6rem)); line-height: 1; letter-spacing: -0.01em; } .ds-lane p { margin-top: 6px; font-family: var(--body, 'Libre Franklin', system-ui, sans-serif); } .ds-solid { border-top: 8px solid var(--red, #890405); } .ds-dash { border-top: 8px dashed var(--red, #890405); }"
     },
     {
       "name": "Inline Code",
@@ -145,12 +145,12 @@
       "refersTo": "inline-code",
       "description": "Red wash ground, monospace, square.",
       "html": "<code class=\"ds-code\">/impact-to-funding</code>",
-      "css": ".ds-code { font-family: ui-monospace, 'Cascadia Code', Menlo, Consolas, monospace; font-size: 0.9em; background: #f0e4e2; color: #890405; padding: 0.1em 0.35em; }"
+      "css": ".ds-code { font-family: var(--mono, ui-monospace, 'Cascadia Code', Menlo, Consolas, monospace); font-size: 0.9em; background: var(--red-wash, #f0e4e2); color: var(--red, #890405); border-radius: 0; padding: 0.1em 0.35em; }"
     }
   ],
   "narrative": {
     "northStar": "The Seal Walked",
-    "overview": "The site is one impression of the ItFtI seal. The seal itself is the only frame: it leads the home page at full size, and nothing else on the page is boxed in red. Its language carries through in thick red rules, framed letter blocks and filled slab buttons. There is one ink and one paper. Everything is red on near-white. Shape is square. Depth is flat. The real seal logo is the focal image on the home page. Status is told by line form, not by colour or badges.",
+    "overview": "The site is one impression of the ItFtI seal. The seal itself is the only frame: it leads the home page at full size, and nothing else on the page is boxed in red. Its language carries through in thick red rules, framed letter blocks and filled slab buttons.\n\nThere is one ink and one paper. Everything is red on near-white. Shape is square. Depth is flat. The real seal logo is the focal image on the home page.\n\nStatus is told by line form, not by colour or badges. A solid rule means it is built and usable today. A dashed rule means a draft not yet adopted, or something planned.",
     "keyCharacteristics": [
       "One ink, one paper, no second colour.",
       "The seal is the only frame; no border around the viewport.",
