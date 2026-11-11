@@ -3,8 +3,8 @@
 // Claude Code and Codex use the guide's guarded clone at the checked revision; OpenCode uses the
 // README's older, install-tested snapshot. Update these together with the guide.
 const revision = "4566892ad990131fb36f760e14c73e5f275600cc";
-const guarded = (target: string) => `target='${target}'
-revision='${revision}'
+const guarded = (target: string, installRevision = revision) => `target='${target}'
+revision='${installRevision}'
 if [ -e "$target" ] || [ -L "$target" ]; then
   echo "Destination already exists; stop and inspect: $target"
 else
@@ -33,8 +33,7 @@ const hosts = [
   {
     id: "opencode",
     name: "OpenCode",
-    command: `git clone https://github.com/zhiganov/impact-to-funding.git .opencode/skills/impact-to-funding
-git -C .opencode/skills/impact-to-funding checkout --detach fbb8993060254ef63f5157d3b9ddcbb8bb4cf19b`,
+    command: guarded(".opencode/skills/impact-to-funding", "fbb8993060254ef63f5157d3b9ddcbb8bb4cf19b"),
     then: "In OpenCode, in the same project, type",
     invoke: "@impact-to-funding",
     note: "This is an older snapshot, the one tested in OpenCode. It lacks some newer guidance. Use an empty destination.",
