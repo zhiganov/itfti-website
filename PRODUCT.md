@@ -12,7 +12,8 @@ Astro, static output. Deployed to Netlify (the workspace default for non-Harmoni
 
 ## Users
 
-Two audiences, equally weighted (confirmed by Artem, 2026-11-10):
+Builders and funders have equal standing (confirmed by Artem, 2026-11-10).
+Organisations requesting help are an additional publisher role:
 
 - **Builders:** developers, maintainers and independent builders who already use AI agents, plus community organisers, small teams and facilitators. Their job: find where their skills could be useful, develop shared work, learn what difference it makes, and explain what would help it continue. Many projects stall before they work out how to reach funding.
 - **Funders:** grant programmes and funders who want fewer unsuitable applications and clearer communication of what they support.
@@ -23,9 +24,9 @@ Two audiences, equally weighted (confirmed by Artem, 2026-11-10):
 ItFtI joins two projects by Artem Zhiganov:
 
 - **Impact to Funding (ItF):** an open-source skill for your AI agent (Codex CLI, Claude Code, OpenCode). It helps people explore where their skills could be useful, develop shared work, learn what difference the work makes, and explain what would help it continue. Start from your situation; no theory of change, project, evidence or fundraising goal is needed. Repo: https://github.com/zhiganov/impact-to-funding
-- **Funding to Impact (FtI):** a file format for funders (`fti-manifest.json`, draft 0.1) plus an MCP server. Funders publish their priorities, eligibility, support, availability, process, evidence expectations and freshness in a file that people and agents can read, before anyone spends time applying. Inspired by llms.txt; each opportunity is a CommonGrants record inside the file. The goal is funder adoption (Artem, 2026-11-11).
+- **Funding to Impact (FtI):** publication formats plus the private `fti-discovery` MCP server. Funders publish their priorities, eligibility, support, availability, process, evidence expectations and freshness in `fti-manifest.json` (draft 0.1), before anyone spends time applying. Inspired by llms.txt; each funding opportunity is a CommonGrants record inside the file. Organisations requesting help use the separate needs format for skilled contributions and budgets. The goal is funder adoption (Artem, 2026-11-11).
 
-The site exists to explain both halves and how they meet: builders describe their work and needs; funders describe what they support.
+The site explains both halves and how they meet: builders describe their work and support needs; funders describe what they support; organisations requesting help publish practical contributions they need and any available budgets.
 
 ## Positioning
 
@@ -35,15 +36,16 @@ One loop from both ends. ItF works from the builder's side (impact → funding);
 
 - ItF is installed into the agent the person already uses and invoked there (`$impact-to-funding` in Codex, `/impact-to-funding` in Claude Code, `@impact-to-funding` in OpenCode). Installation guide: `docs/install.md` in the ItF repo.
 - ItF releases are prereleases; updates are announced on its GitHub releases page.
+- Funders can contact the project through the Netlify form on `/fti` and `/fti/publish#contact`, or by email at `hello@citizeninfra.org`. End-to-end form submission and email delivery remain unverified; [website #6](https://github.com/zhiganov/itfti-website/issues/6) tracks the test.
 
 ## Capabilities and Constraints
 
 - **ItF is experimental v0.** It offers conversation, optional templates and reference material. It does not find collaborators, provide funding or certify impact. Its usefulness and its effect on raising money have not been tested. The site must not claim otherwise.
-- **FtI is at draft 0.1.** The file format has executable schemas and a validator; the MCP server has four read-only tools (`find_funders`, `search_opportunities`, `get_entry`, `registry_info`). Both run locally and were tested with fictional data. Import adapters are planned. No hosted service, and no funder has adopted it yet. Describe FtI as a format looking for its first funders, never as just an idea (Artem, 2026-11-11), and never claim adoption.
+- **FtI is at draft 0.1.** The funding file format has executable schemas and a validator. The local `fti-discovery` MCP server exposes four funding tools (`find_funders`, `search_opportunities`, `get_entry`, `registry_info`); enabling a separate needs snapshot adds three needs tools (`search_needs`, `get_need`, `needs_registry_info`). All are read-only and have fictional-data checks. Import adapters are planned. No hosted service, and no funder has adopted it yet. Describe FtI as a format looking for its first funders, never as just an idea (Artem, 2026-11-11), and never claim adoption.
 - **ItF has an optional local MCP server** over its reference library: `search_references`, `get_reference`, `library_info`; Node.js 22+.
 - **Organisation-needs publication:** a separate draft JSON format supports requester-owned needs and budgets. Local validation and discovery have fictional-data checks. The needs publication format is public under CC0; the MCP implementation stays private. Publishing a file does not automatically add it to a catalogue.
 - ItF code is MIT; ItF's original written content is CC BY-SA 4.0.
-- Undecided: whether the site covers the guilds concept (draft note in the ItF repo); any contact or sign-up route; analytics.
+- Undecided: whether the site covers the guilds concept (draft note in the ItF repo); a sign-up/account flow; analytics.
 
 ## Brand Commitments
 
