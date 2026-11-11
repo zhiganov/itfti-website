@@ -2,8 +2,27 @@
 import Base from "../../layouts/Base.astro";
 import CopyBlock from "../../components/CopyBlock.astro";
 import snippet from "../../data/fti-snippet.json";
+import reqSnippet from "../../data/fti-requirements-snippet.json";
 
 const example = JSON.stringify(snippet, null, 2);
+const reqExample = JSON.stringify(reqSnippet, null, 2);
+const payloadFields = [
+  ["profile", "Required", "Always fti.requirements/0.1-draft."],
+  ["id", "Required", "Your ID for this set of requirements, unique within the entry."],
+  ["revision", "Required", "Change it whenever the requirements change."],
+  ["scope", "Required", "phases this set covers, its completeness (complete, partial or unknown), and a one-sentence statement."],
+  ["source", "Required", "url of the official page the requirements come from, and an optional locator such as a section name."],
+  ["requirements", "Required", "The list of requirements. An empty list only means \"nothing required\" if the scope is complete and says so."],
+];
+const reqFields = [
+  ["phase", "Required", "eligibility, selection, application, post_award_reporting or unspecified."],
+  ["level", "Required", "required, preferred or unknown, as the funder states it."],
+  ["statement", "Required", "The requirement in the funder's own words."],
+  ["evidence", "Optional", "What counts as evidence, including how things should be counted, when you say so."],
+  ["presentation", "Optional", "instructions, accepted mediaTypes (such as application/pdf), and formRef pointing to a real form."],
+  ["timing", "Optional", "A plain statement, and dueAt only for an exact time with a time zone offset."],
+  ["appliesWhen, handling, source", "Optional", "When the requirement applies, how submitted material is handled, and a more specific source."],
+];
 
 const top = [
   ["profile", "Required", "Always fti.discovery/0.1-draft for this version. Readers report other versions as unsupported instead of guessing."],
@@ -44,6 +63,7 @@ const intake = [
       <p class="actions">
         <a class="slab" href="/schema/fti-manifest-0.1.json">Download the schema</a>
         <a class="slab-ghost" href="/examples/fti-manifest.example.json">Full example</a>
+        <a class="slab-ghost" href="#requirements">Requirements</a>
         <a class="slab-ghost" href="/fti/publish">How to publish</a>
       </p>
     </div>
@@ -95,6 +115,25 @@ const intake = [
     </div>
   </section>
 
+  <section class="course grid" id="requirements" aria-labelledby="req-title">
+    <h2 id="req-title" class="head">Evidence and reporting requirements</h2>
+    <div class="body">
+      <p class="big">Optional: say what applicants must show, and what grantees must report.</p>
+      <p>Add a requirements set to an entry's <code>extensions</code>, under a key that starts with your domain reversed, such as <code>org.example.requirements</code>. If you publish CommonGrants records, you can put it in the record's <code>customFields</code> instead, as a field with <code>fieldType: "object"</code>. Use one place for a given set, not both.</p>
+      <dl class="fields">
+        {payloadFields.map(([k, req, v]) => (<div><dt><code>{k}</code><span>{req}</span></dt><dd>{v}</dd></div>))}
+      </dl>
+      <h3>Each requirement</h3>
+      <p>Every requirement has its own <code>id</code>, plus:</p>
+      <dl class="fields">
+        {reqFields.map(([k, req, v]) => (<div><dt><code>{k}</code><span>{req}</span></dt><dd>{v}</dd></div>))}
+      </dl>
+      <p>Requirements are information for applicants. They don't let anyone collect data, and meeting them doesn't prove impact.</p>
+      <CopyBlock code={reqExample} />
+      <p class="actions"><a class="slab-ghost" href="/schema/fti-requirements-0.1.json">Requirements schema</a></p>
+    </div>
+  </section>
+
   <section class="course grid" aria-labelledby="rules">
     <h2 id="rules" class="head">Rules readers follow</h2>
     <div class="body">
@@ -111,7 +150,7 @@ const intake = [
   <section class="course grid" aria-labelledby="check">
     <h2 id="check" class="head">Checking a file</h2>
     <div class="body">
-      <p>The schema checks the file's shape. Any JSON Schema 2020-12 validator can use it, as long as it can load the CommonGrants schemas it links to. FtI's own validator also checks that entry IDs are unique and that a review is not due before it happened. A validator you can use in the browser is planned. Until then, send us your file and we'll check it.</p>
+      <p>The schemas check the file's shape: <a href="/schema/fti-manifest-0.1.json">the file</a> and <a href="/schema/fti-requirements-0.1.json">requirements sets</a>. Any JSON Schema 2020-12 validator can use them, as long as it can load the CommonGrants schemas they link to. FtI's own validator also checks that entry IDs are unique and that a review is not due before it happened. A validator you can use in the browser is planned. Until then, send us your file and we'll check it.</p>
       <p class="actions"><a class="slab" href="/fti/publish#contact">Send us your file</a></p>
       <p class="fine">The spec text, schema and examples are dedicated to the public domain under <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>. CommonGrants is a separate project; FtI links to its schemas and is not endorsed by it.</p>
     </div>
