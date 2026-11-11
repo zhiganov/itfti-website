@@ -16,6 +16,7 @@ Two audiences, equally weighted (confirmed by Artem, 2026-11-10):
 
 - **Builders:** developers, maintainers and independent builders who already use AI agents, plus community organisers, small teams and facilitators. Their job: find where their skills could be useful, develop shared work, learn what difference it makes, and explain what would help it continue. Many projects stall before they work out how to reach funding.
 - **Funders:** grant programmes and funders who want fewer unsuitable applications and clearer communication of what they support.
+- **Organisations requesting help:** a distinct role publishing practical needs and budgets for skilled contributions. The public needs spec, schema, guide and fictional examples use CC0. Paid and pro bono paths stay distinct; an organisation may also be a funder in a separate context.
 
 ## Product Purpose
 
@@ -40,6 +41,7 @@ One loop from both ends. ItF works from the builder's side (impact → funding);
 - **ItF is experimental v0.** It offers conversation, optional templates and reference material. It does not find collaborators, provide funding or certify impact. Its usefulness and its effect on raising money have not been tested. The site must not claim otherwise.
 - **FtI is at draft 0.1.** The file format has executable schemas and a validator; the MCP server has four read-only tools (`find_funders`, `search_opportunities`, `get_entry`, `registry_info`). Both run locally and were tested with fictional data. Import adapters are planned. No hosted service, and no funder has adopted it yet. Describe FtI as a format looking for its first funders, never as just an idea (Artem, 2026-11-11), and never claim adoption.
 - **ItF has an optional local MCP server** over its reference library: `search_references`, `get_reference`, `library_info`; Node.js 22+.
+- **Organisation-needs publication:** a separate draft JSON format supports requester-owned needs and budgets. Local validation and discovery have fictional-data checks. The needs publication format is public under CC0; the MCP implementation stays private. Publishing a file does not automatically add it to a catalogue.
 - ItF code is MIT; ItF's original written content is CC BY-SA 4.0.
 - Undecided: whether the site covers the guilds concept (draft note in the ItF repo); any contact or sign-up route; analytics.
 

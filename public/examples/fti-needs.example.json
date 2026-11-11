@@ -1,0 +1,184 @@
+{
+  "profile": "fti.needs/0.1-proposal",
+  "canonicalUrl": "https://example.org/needs.json",
+  "revision": "fictional-1",
+  "publisher": { "name": "Fictional Access Workshop", "website": "https://example.org" },
+  "scope": {
+    "id": "fictional-help-requests",
+    "description": "Fictional examples for learning the format. All organisations, requests, dates and budgets are invented. These are not live opportunities. Example content is dedicated to the public domain under CC0 1.0: https://creativecommons.org/publicdomain/zero/1.0/.",
+    "completeness": "partial"
+  },
+  "organisations": [
+    { "@type": "Organization", "@id": "https://example.org/#organisation", "name": "Fictional Access Workshop", "url": "https://example.org" }
+  ],
+  "entries": [
+    {
+      "entryId": "paid-developer",
+      "revision": "fictional-1",
+      "requesterRef": "https://example.org/#organisation",
+      "demand": {
+        "@type": "Demand",
+        "@id": "https://example.org/needs/website#need",
+        "name": "Paid developer: repair access pages",
+        "description": "Fictional request to replace three outdated pages with approved access information.",
+        "url": "https://example.org/needs/website",
+        "itemOffered": { "@type": "Service", "name": "Website development and handover" }
+      },
+      "terms": {
+        "intendedResult": "Visitors can find current access information.",
+        "scope": "Three static pages and a staff editing guide.",
+        "skills": ["web development", "accessibility"],
+        "domains": ["community access"],
+        "lifecycle": "open",
+        "response": { "mode": "public_response", "url": "https://example.org/needs/website/respond", "statement": "In this fictional example, send a scope proposal through the form." },
+        "effort": { "minHours": "12", "maxHours": "20", "basis": "Fictional publisher estimate for the whole scope" },
+        "workLocation": { "mode": "remote", "statement": "Working-location eligibility is agreed before work starts." },
+        "language": { "statement": "Pages and handover are in English.", "sourceUrl": "https://example.org/needs/website" },
+        "rights": { "statement": "Agree rights to the work before starting.", "sourceUrl": "https://example.org/needs/website" },
+        "maintenance": { "statement": "Staff maintains the pages after handover.", "sourceUrl": "https://example.org/needs/website" },
+        "acceptingRole": "Service information coordinator",
+        "handover": "Deliver source files and the editing guide. Later development needs a separate agreement."
+      },
+      "compensation": {
+        "arrangements": ["paid"],
+        "scopeCoverage": "whole_scope",
+        "statement": "Fictional paid scope. Agree the fee and invoice terms before work starts.",
+        "sourceUrl": "https://example.org/needs/website",
+        "budgetRefs": ["developer-fee"]
+      },
+      "budgets": [
+        { "id": "developer-fee", "purpose": "contributor_compensation", "money": { "currency": "GBP", "kind": "range", "minimum": "600.00", "maximum": "1000.00" }, "basis": "Whole development scope", "amountStatus": "allocated", "availability": "available", "statement": "Fictional declared fee range; final fee depends on the agreed scope." },
+        { "id": "hosting", "purpose": "tools_hosting", "money": { "currency": "GBP", "kind": "cap", "maximum": "120.00" }, "basis": "Twelve months of hosting", "amountStatus": "allocated", "availability": "available", "statement": "Fictional hosting budget, paid directly to the provider. Separate from contributor pay." }
+      ],
+      "review": { "reviewedOn": "2026-11-11", "reviewDueOn": "2026-12-11" }
+    },
+    {
+      "entryId": "pro-bono-designer",
+      "revision": "fictional-1",
+      "requesterRef": "https://example.org/#organisation",
+      "demand": {
+        "@type": "Demand",
+        "@id": "https://example.org/needs/leaflet#need",
+        "name": "Pro bono designer: make an access leaflet",
+        "description": "Fictional request for a readable two-page leaflet using approved text.",
+        "url": "https://example.org/needs/leaflet",
+        "itemOffered": { "@type": "Service", "name": "Leaflet design" }
+      },
+      "terms": {
+        "intendedResult": "Visitors can use a clear printed access guide.",
+        "scope": "One two-page leaflet, editable files and one revision.",
+        "skills": ["graphic design", "accessible print"],
+        "lifecycle": "open",
+        "response": { "mode": "public_response", "url": "https://example.org/needs/leaflet/respond" },
+        "effort": { "maxHours": "8", "basis": "Fictional publisher estimate including one revision" },
+        "acceptingRole": "Access coordinator"
+      },
+      "compensation": { "arrangements": ["pro_bono"], "scopeCoverage": "whole_scope", "statement": "This fictional design scope is unpaid. The organisation pays printing separately." },
+      "budgets": [
+        { "id": "printing", "purpose": "other", "money": { "currency": "GBP", "kind": "fixed", "value": "90.00" }, "basis": "One print run", "amountStatus": "allocated", "availability": "available", "statement": "Fictional payment to a printer; this is not a design fee." }
+      ]
+    },
+    {
+      "entryId": "paid-campaign",
+      "revision": "fictional-1",
+      "requesterRef": "https://example.org/#organisation",
+      "demand": {
+        "@type": "Demand",
+        "@id": "https://example.org/needs/campaign#need",
+        "name": "Paid campaign support: explain a local service",
+        "description": "Fictional request to plan and run a short public-information campaign.",
+        "url": "https://example.org/needs/campaign",
+        "itemOffered": { "@type": "Service", "name": "Campaign planning and delivery" }
+      },
+      "terms": {
+        "intendedResult": "Residents understand how to access the service.",
+        "scope": "One campaign plan, three approved messages and a delivery report.",
+        "skills": ["campaign planning", "copywriting"],
+        "lifecycle": "open",
+        "response": { "mode": "public_response", "url": "https://example.org/needs/campaign/respond" },
+        "effort": { "maxHours": "20", "basis": "Fictional paid-hours ceiling" },
+        "timing": { "statement": "Fictional delivery window in January 2027.", "sourceUrl": "https://example.org/needs/campaign", "startOn": "2027-01-04", "endOn": "2027-01-29", "dueOn": "2026-12-14" },
+        "acceptingRole": "Communications coordinator"
+      },
+      "compensation": { "arrangements": ["paid"], "scopeCoverage": "whole_scope", "statement": "Fictional hourly pay for all agreed campaign work, up to 20 hours. Campaign spend is separate.", "budgetRefs": ["campaign-fee"] },
+      "budgets": [
+        { "id": "campaign-fee", "purpose": "contributor_compensation", "money": { "currency": "GBP", "kind": "rate", "value": "40.00", "unit": "hour" }, "basis": "Each agreed hour, up to 20 hours", "amountStatus": "allocated", "availability": "available", "statement": "Fictional contributor rate. No total fee is stated." },
+        { "id": "campaign-spend", "purpose": "campaign_spend", "money": { "currency": "GBP", "kind": "cap", "maximum": "1500.00" }, "basis": "Media placements for this campaign", "amountStatus": "allocated", "availability": "available", "statement": "Fictional media budget, paid directly to media providers. Separate from contributor pay." },
+        { "id": "campaign-tools", "purpose": "tools_hosting", "money": { "currency": "GBP", "kind": "cap", "maximum": "60.00" }, "basis": "One month of campaign software", "amountStatus": "allocated", "availability": "available", "statement": "Fictional software budget, paid directly to the provider." }
+      ]
+    },
+    {
+      "entryId": "expenses-only-review",
+      "revision": "fictional-1",
+      "requesterRef": "https://example.org/#organisation",
+      "demand": {
+        "@type": "Demand",
+        "@id": "https://example.org/needs/walkthrough#need",
+        "name": "Expenses-only access walkthrough",
+        "description": "Fictional request to review a public visitor route with staff.",
+        "url": "https://example.org/needs/walkthrough"
+      },
+      "terms": {
+        "intendedResult": "Staff receives a list of access barriers to investigate.",
+        "scope": "One walkthrough and a short written account.",
+        "skills": ["accessibility review"],
+        "lifecycle": "open",
+        "response": { "mode": "public_response", "url": "https://example.org/needs/walkthrough/respond" },
+        "effort": { "maxHours": "3", "basis": "Fictional estimate excluding travel" },
+        "workLocation": { "mode": "on_site", "statement": "At the fictional community centre. Agree access needs before attending." },
+        "acceptingRole": "Visitor services coordinator"
+      },
+      "compensation": { "arrangements": ["expenses_only"], "scopeCoverage": "whole_scope", "statement": "No fee for time. Reimburse agreed travel costs against receipts, up to the declared cap.", "budgetRefs": ["travel"] },
+      "budgets": [
+        { "id": "travel", "purpose": "expense_reimbursement", "money": { "currency": "GBP", "kind": "cap", "maximum": "45.00" }, "basis": "Agreed return travel for one walkthrough", "amountStatus": "allocated", "availability": "available", "statement": "Fictional reimbursement cap. This pays expenses, not labour." }
+      ]
+    },
+    {
+      "entryId": "unknown-terms",
+      "revision": "fictional-1",
+      "requesterRef": "https://example.org/#organisation",
+      "demand": {
+        "@type": "Demand",
+        "@id": "https://example.org/needs/archive#need",
+        "name": "Archive help: terms unknown",
+        "description": "Fictional early request to improve a public document archive. Scope and acceptance terms remain unspecified.",
+        "url": "https://example.org/needs/archive"
+      },
+      "terms": { "lifecycle": "unknown", "response": { "mode": "unknown", "statement": "No response route is declared in this fictional example." } },
+      "compensation": { "arrangements": ["unknown"], "scopeCoverage": "unknown", "statement": "Payment terms remain unknown. Missing amounts do not mean unpaid work." },
+      "budgets": [
+        { "id": "archive-fee", "purpose": "contributor_compensation", "basis": "Scope still to be defined", "amountStatus": "unknown", "availability": "unknown", "statement": "Fictional budget placeholder. Amount and available funds are unknown." }
+      ],
+      "notes": [
+        { "text": "This request is an early outline; confirm the scope and terms before considering work.", "sourceUrl": "https://example.org/needs/archive", "kind": "context" }
+      ]
+    },
+    {
+      "entryId": "filled-translation",
+      "revision": "fictional-1",
+      "requesterRef": "https://example.org/#organisation",
+      "demand": {
+        "@type": "Demand",
+        "@id": "https://example.org/needs/translation#need",
+        "name": "Filled: translate an access guide",
+        "description": "Fictional historical request retained to show a filled need.",
+        "url": "https://example.org/needs/translation"
+      },
+      "terms": {
+        "intendedResult": "Visitors can read the guide in Spanish.",
+        "scope": "Translate and review one 800-word guide.",
+        "skills": ["Spanish translation"],
+        "lifecycle": "filled",
+        "response": { "mode": "not_accepting", "statement": "The fictional role is filled. No further responses are accepted." },
+        "effort": { "maxHours": "6", "basis": "Fictional estimate for the original request" },
+        "acceptingRole": "Access coordinator"
+      },
+      "compensation": { "arrangements": ["paid"], "scopeCoverage": "whole_scope", "statement": "A fictional fixed fee was committed to the selected contributor. It is no longer available to new contributors.", "budgetRefs": ["translation-fee"] },
+      "budgets": [
+        { "id": "translation-fee", "purpose": "contributor_compensation", "money": { "currency": "GBP", "kind": "fixed", "value": "240.00" }, "basis": "Whole translation scope", "amountStatus": "committed", "availability": "unavailable", "statement": "Fictional historical fee, already committed to the selected contributor." }
+      ],
+      "review": { "reviewedOn": "2026-11-11" }
+    }
+  ],
+  "review": { "reviewedOn": "2026-11-11", "reviewDueOn": "2026-12-11" }
+}

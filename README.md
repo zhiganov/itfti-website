@@ -5,7 +5,14 @@ Landing site for itfti.org, joining two projects:
 - [Impact to Funding](https://github.com/zhiganov/impact-to-funding): an agent skill that helps people put their work towards real problems, understand what difference it makes and find support to keep going.
 - Funding to Impact: its funder-side sibling.
 
-The site isn't built yet.
+The site is built with Astro and deployed to Netlify at itfti.org. Run `npm run build` for the static production build.
+
+## Public formats
+
+- `/fti/format` and `/fti/publish`: the funder file format and publishing guide.
+- `/fti/needs` and `/fti/needs/publish`: organisation-owned needs and budgets, with a public schema and six fictional examples.
+
+The needs spec, schema, publisher guide and fictional examples are CC0 1.0. This publication does not include the private MCP implementation or supply a hosted needs catalogue.
 
 ## Logo
 

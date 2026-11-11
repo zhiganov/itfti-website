@@ -1,0 +1,55 @@
+---
+import Base from "../../../layouts/Base.astro";
+const steps = [
+  ["Agree what help is needed", "Start with a real organisational need. Describe the intended result, a bounded deliverable and what is outside the scope. Name the role that can agree and accept the work, plus who maintains it afterwards."],
+  ["Separate pay from other costs", "State whether labour is paid, pro bono, expenses-only, negotiable or unknown. Separate compensation, reimbursable expenses, campaign spend and tools. Give known amounts, currency, scope or period and approval conditions. A cap is not a promised fee."],
+  ["Choose what can be public", "Check publication authority and disclosure. Use official organisation and response URLs. Leave beneficiary records, staff contact lists, credentials, internal finances and private contributor profiles out."],
+  ["Make your needs.json", "Start from the fictional example. Replace its organisation, URLs, IDs, work and terms with yours. Use the exact profile fti.needs/0.1-proposal. Keep one stable ID per need and separate collection and entry revisions. Any filename is allowed."],
+  ["Keep unknowns honest", "Omit unknown details or use supported unknown states. Missing pay never means free work. A general institutional budget does not show what is available for a particular contribution. Explain mixed scopes and genuine alternatives."],
+  ["Check shape and meaning", "Check the JSON against the needs schema with URI and date/time format checks enabled. Also check unique IDs, requester and budget references, ranges and chronological dates. Read the official page and file together; preserve conflicts instead of choosing the more favourable terms."],
+  ["Publish and link the file", "Upload UTF-8 JSON on your organisation-controlled HTTPS site and serve it as application/json. Set canonicalUrl to that file. Link it from your official help or contribution page; an existing llms.txt file can link to it too."],
+  ["Review and update it", "Set reviewedOn only when someone checks the information. Change the collection revision when its content changes and the entry revision when that need changes. Mark paused, filled or withdrawn needs explicitly. A changed scope needs a fresh agreement."],
+];
+---
+<Base
+  title="How to publish organisation needs · ItFtI"
+  description="Eight steps for organisations to publish needs and budgets in their own JSON file, with paid, pro bono, expenses-only and unknown terms kept distinct. CC0 guide."
+  current="fti"
+  formatLicence="CC0"
+>
+  <section class="intro grid" aria-labelledby="title">
+    <div class="head"><h1 id="title">Publish your organisation's needs</h1><p class="tag rule-dash">Draft 0.1. A guide for requesting organisations.</p></div>
+    <div class="body">
+      <p class="big">From a request for help to a file people and tools can read.</p>
+      <p>You'll need someone authorised to publish for the organisation and someone who can edit its website. A text editor is enough to prepare the file. Publishing requires no central account or organisation-run MCP server.</p>
+      <p>This guide covers requests for practical skills, including paid and pro bono work. If you offer grants, use the separate <a href="/fti/publish">funder publishing guide</a>.</p>
+      <p class="actions"><a class="slab" href="/examples/fti-needs.example.json">Get the fictional example</a><a class="slab-ghost" href="/fti/needs">Read the format</a><a class="slab-ghost" href="/schema/fti-needs-0.1.json">Get the schema</a></p>
+    </div>
+  </section>
+  <section class="course grid" aria-labelledby="steps">
+    <h2 id="steps" class="head">Eight steps</h2>
+    <ol class="body steps">{steps.map(([title, body]) => <li><h3>{title}</h3><p>{body}</p></li>)}</ol>
+  </section>
+  <section class="course grid" aria-labelledby="after">
+    <h2 id="after" class="head">After publication</h2>
+    <div class="body">
+      <p>A website link makes the file available at its source. It does not automatically register it with an aggregator or create a hosted listing. Compatible tools can read permitted records through separately configured intake; the MCP implementation remains private.</p>
+      <p>A person may inspect the need and prepare a response. Selection, scope, payment and expenses, access, rights, acceptance, maintenance and exit still need agreement between the parties. Publishing is not permission to contact contributors or collect their private data.</p>
+      <p>The examples are fictional, and no publisher adoption or placement result is claimed. This guide, the needs spec, schema and fictional examples are <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>.</p>
+      <p class="actions"><a class="slab" href="/fti/needs">Check the field reference</a></p>
+    </div>
+  </section>
+</Base>
+<style>
+  .intro { padding-bottom: clamp(48px, 6vw, 88px); }
+  .head { grid-column: 1 / span 4; align-self: start; position: sticky; top: 24px; }
+  .body { grid-column: 5 / span 8; display: grid; gap: 1.1em; min-width: 0; }
+  .big { font-family: var(--display); font-weight: 500; font-size: var(--step-2); line-height: 1.3; max-width: 26ch; }
+  .tag { margin-top: 14px; padding-top: 10px; font-weight: 600; max-width: 26ch; }
+  .actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 0.4em; }
+  .steps { list-style: none; padding: 0; gap: 0; counter-reset: step; }
+  .steps li { counter-increment: step; display: grid; grid-template-columns: 3.2rem minmax(0, 1fr); column-gap: 16px; padding: 18px 0; border-top: 4px solid var(--red); max-width: none; }
+  .steps li::before { content: counter(step); grid-row: span 2; font-family: var(--display); font-weight: 700; font-size: var(--step-2); line-height: 1; }
+  .steps h3 { margin-bottom: 6px; }
+  @media (max-width: 900px) { .head, .body { grid-column: 1 / -1; } .head { position: static; } }
+</style>

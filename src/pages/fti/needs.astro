@@ -1,0 +1,150 @@
+---
+import { readFileSync } from "node:fs";
+import Base from "../../layouts/Base.astro";
+import CopyBlock from "../../components/CopyBlock.astro";
+
+const collection = JSON.parse(readFileSync("public/examples/fti-needs.example.json", "utf8"));
+const example = JSON.stringify({ ...collection, revision: "short-example-1", scope: { ...collection.scope, completeness: "partial" }, entries: collection.entries.slice(0, 1) }, null, 2);
+const fields = [
+  ["profile", "Required", "fti.needs/0.1-proposal. Keep this exact identifier; its proposal suffix is retained for this draft."],
+  ["canonicalUrl", "Required", "The HTTPS address where this collection lives."],
+  ["publisher", "Required", "The name and official website of the party publishing by or on behalf of the requesting organisations."],
+  ["revision", "Required", "Your collection version. Change it whenever the file changes; never reuse it for different content."],
+  ["scope", "Required", "A stable id, description and completeness: complete, partial or unknown. Complete means this collection, not every need your organisation has."],
+  ["organisations", "Required", "The requesting organisations, each with @type: Organization, a stable HTTPS @id, name and official url. An informal organisation can use a source-owned URL."],
+  ["entries", "Required", "The needs in this collection. It may be empty."],
+  ["review", "Optional", "The actual reviewedOn date and optional reviewDueOn. A download date is not a review."],
+];
+const entryFields = [
+  ["entryId, revision", "Required", "A stable ID for this need and its own content version. Change the revision when terms change; use a new ID for different work."],
+  ["requesterRef", "Required", "The @id of a requesting organisation listed in organisations. Requester, publisher and payer may be different parties."],
+  ["demand", "Required", "@type: Demand, a stable HTTPS @id, name, description and official guidance url. Optional itemOffered describes the requested Service."],
+  ["terms", "Required", "At least lifecycle and response.mode, including unknown when appropriate. Add intendedResult, scope, skills, domains, effort, timing, workLocation, language, acceptingRole, rights and handover or maintenance terms when known."],
+  ["compensation", "Optional", "Declared arrangements, a plain statement, optional budgetRefs and scopeCoverage. Omission means unknown, never free labour."],
+  ["budgets", "Optional", "Need-level money and cost lines. Keep labour, expenses, campaign spend and tools separate."],
+  ["review, notes", "Optional", "Actual review information and source-linked explanations. A note marked kind: conflict keeps disputed terms visible."],
+];
+const budgetFields = [
+  ["id, purpose", "A local budget ID and contributor_compensation, expense_reimbursement, campaign_spend, tools_hosting or explained other."],
+  ["basis, statement", "What scope or period the money covers, plus material terms. State rate units, tax/fee conditions and approvals where supplied."],
+  ["availability", "available, conditional, unavailable or unknown. A stated amount alone does not establish available funds."],
+  ["amountStatus", "indicative, allocated, committed or unknown. An internal allocation differs from a commitment to an engagement."],
+  ["money", "Optional when the amount is unknown. Currency is an uppercase three-letter code; values are nonnegative decimal strings, not JSON numbers."],
+  ["sharedRef, allocationStatement", "Optional shared-pot reference and its allocation limits. The same pot must not be added twice."],
+];
+---
+<Base
+  title="Publish organisation needs and budgets · ItFtI"
+  description="A draft JSON format for organisations to publish requests for skilled help, paid or pro bono, with separate compensation and cost budgets. Spec, schema and examples under CC0."
+  current="fti"
+  formatLicence="CC0"
+>
+  <section class="intro grid" aria-labelledby="title">
+    <div class="head">
+      <h1 id="title">Organisation needs and budgets</h1>
+      <p class="tag rule-dash">Draft 0.1. Free to use: CC0.</p>
+    </div>
+    <div class="body">
+      <p class="big">Say what help your organisation needs, and what budget is available.</p>
+      <p>A developer might build your website, a designer improve a guide, or a marketing specialist help with a campaign. Publish a JSON file on your own site so people and compatible tools can inspect the request. Contributors can support existing work without founding a project.</p>
+      <p>This is a request for skilled help, separate from the <a href="/fti/format">funder format</a> for offering grants. Paid and pro bono work are both valid. A nonprofit is one kind of requester, not a separate proof of impact.</p>
+      <p class="actions">
+        <a class="slab" href="/schema/fti-needs-0.1.json">Download the schema</a>
+        <a class="slab-ghost" href="/examples/fti-needs.example.json">Six fictional needs</a>
+        <a class="slab-ghost" href="/fti/needs/publish">How to publish</a>
+      </p>
+      <nav aria-label="On this page" class="contents"><a href="#file">The file</a><a href="#need">Each need</a><a href="#money">Pay and budgets</a><a href="#availability">Availability</a><a href="#example">Example</a><a href="#checks">Checks and limits</a></nav>
+    </div>
+  </section>
+
+  <section class="course grid" aria-labelledby="file">
+    <h2 id="file" class="head">The file</h2>
+    <div class="body">
+      <p>Use UTF-8 JSON, serve it as <code>application/json</code>, and link it from your official website. <code>needs.json</code> is an example filename; any filename or path is allowed. The declared profile selects how readers interpret it.</p>
+      <dl class="fields">{fields.map(([name, required, text]) => <div><dt><code>{name}</code><span>{required}</span></dt><dd>{text}</dd></div>)}</dl>
+      <p>The organisation and request use <a href="https://schema.org/Organization">Schema.org Organization</a> and <a href="https://schema.org/Demand">Demand</a> concepts. Demand describes a public request for goods or services. This JSON profile adds explicit terms and budget context; it is not a certified JSON-LD export or an employment offer.</p>
+    </div>
+  </section>
+
+  <section class="course grid" aria-labelledby="need">
+    <h2 id="need" class="head">Each need</h2>
+    <div class="body">
+      <dl class="fields">{entryFields.map(([name, required, text]) => <div><dt><code>{name}</code><span>{required}</span></dt><dd>{text}</dd></div>)}</dl>
+      <p>A useful request explains the intended result, bounded deliverable, skills, effort and who can accept and maintain the work. State remote, on-site, language and timing constraints where relevant. Remote work does not mean worldwide contracting eligibility.</p>
+      <p>The <strong>requester</strong> needs the work; the <strong>publisher</strong> releases the file; the <strong>contributor</strong> does the work; the <strong>accepting party</strong> agrees whether it meets the scope; the <strong>payer</strong> pays the contributor; the <strong>funder</strong> supplies funding; and the <strong>beneficiary</strong> benefits from the result. One party may hold several roles. Funding a budget does not establish who pays or accepts the work, and beneficiaries are not automatically contributors. Explain known responsibilities in the terms; leave unknown roles unspecified.</p>
+      <p>Leave unknown details out rather than invent them. An incomplete record can still be read, but missing facts may prevent a person from judging whether the work fits.</p>
+    </div>
+  </section>
+
+  <section class="course grid" aria-labelledby="money">
+    <h2 id="money" class="head">Pay and budgets</h2>
+    <div class="body">
+      <p>In <code>compensation.arrangements</code>, distinguish <code>paid</code>, <code>pro_bono</code>, <code>expenses_only</code>, <code>negotiable</code> and <code>unknown</code>. Include a <code>statement</code> explaining the actual offer. Link relevant local budget IDs through <code>budgetRefs</code>.</p>
+      <p>Use <code>scopeCoverage</code> to state <code>whole_scope</code>, <code>mixed</code> or <code>unknown</code>. Multiple arrangements can be genuine alternatives for the same scope. A partly paid task needs an explanation of its paid and unpaid parts; an array of labels cannot express that split.</p>
+      <p><strong>Labour pay is separate from expenses, advertising spend and tools.</strong> A £600 labour cap plus £120 hosting is not £720 contributor income. An unspecified budget does not mean zero or volunteer-only work.</p>
+      <dl class="fields">{budgetFields.map(([name, text]) => <div><dt><code>{name}</code></dt><dd>{text}</dd></div>)}</dl>
+      <h3>Money shapes</h3>
+      <ul class="plain">
+        <li><code>fixed</code>: <code>currency</code> and <code>value</code>.</li>
+        <li><code>range</code>: <code>currency</code>, <code>minimum</code> and <code>maximum</code>.</li>
+        <li><code>minimum</code>: <code>currency</code> and <code>minimum</code>.</li>
+        <li><code>cap</code>: <code>currency</code> and <code>maximum</code>.</li>
+        <li><code>rate</code>: <code>currency</code>, <code>value</code> and <code>unit</code>, such as an hour.</li>
+      </ul>
+      <p>A cap is a ceiling, not a promised fee. Preserve conditional funds, conflicting terms and shared pots. Readers must not convert currencies, invent rates or count the same budget twice. Pay, expenses and acceptance still need agreement between the parties.</p>
+    </div>
+  </section>
+
+  <section class="course grid" aria-labelledby="availability">
+    <h2 id="availability" class="head">Availability and response</h2>
+    <div class="body">
+      <p><code>terms.lifecycle</code> is <code>planned</code>, <code>open</code>, <code>paused</code>, <code>filled</code>, <code>withdrawn</code>, <code>completed</code> or <code>unknown</code>.</p>
+      <p><code>terms.response.mode</code> is separate: <code>public_response</code>, <code>invitation_only</code>, <code>not_accepting</code> or <code>unknown</code>. Add the official response <code>url</code> and a plain <code>statement</code> when known. An open need can still be invitation-only.</p>
+      <p>Use actual calendar dates for reviews and date-only terms. An exact <code>timing.dueAt</code> needs a time-zone offset; uncertain timing stays in the source statement. Keep source modification, publisher review and later retrieval distinct.</p>
+      <p>Update the relevant revision whenever terms change. Mark filled or withdrawn work explicitly. A missing page, failed download or omission from a partial collection does not establish withdrawal. A changed scope needs renewed agreement.</p>
+    </div>
+  </section>
+
+  <section class="course grid" aria-labelledby="example">
+    <h2 id="example" class="head">A short example</h2>
+    <div class="body">
+      <p>Entirely fictional: one paid website need, with a separate hosting budget. This partial collection has its own revision. The <a href="/examples/fti-needs.example.json">full example</a> also covers pro bono design, a paid campaign, expenses-only, unknown compensation and filled work. Names, dates, amounts and reserved example.org URLs are invented.</p>
+      <CopyBlock code={example} label="Copy JSON" />
+    </div>
+  </section>
+
+  <section class="course grid" aria-labelledby="checks">
+    <h2 id="checks" class="head">Checks and limits</h2>
+    <div class="body">
+      <p>The <a href="/schema/fti-needs-0.1.json">standalone JSON Schema 2020-12</a> checks shape, supported fields and version, decimal syntax and URL constraints. It requires no remote schemas. A validator must enable URI and date/time format checks.</p>
+      <p>Additional semantic checks are needed: unique organisation, need and budget IDs; valid requester and budget references; minimums no greater than maximums; review and work dates in order; and source conflicts. Both the public example and the native fixture passed the public schema and FtI's semantic validator.</p>
+      <p>Unknown fields are rejected. HTTPS URLs must have no embedded credentials, whitespace or backslashes. IDs and revisions are up to 256 characters, URLs up to 2048, prose up to 8192 and decimal strings up to 40. Keep files bounded: the native validator supports 8 MiB, depth 64 and 200,000 traversed values.</p>
+      <p>Publish only needs and budgets you are authorised to disclose. Keep beneficiary records, credentials, internal finances and private contributor profiles out. A valid file does not establish available funds, organisational authority, an accepted role or social impact.</p>
+      <p>Publishing does not automatically add a file to a catalogue. Compatible tools may consume it through separately arranged intake. There is no hosted needs catalogue or guaranteed placement here. The MCP implementation remains private.</p>
+      <p>The needs spec, schema, publisher guide and fictional examples are dedicated to the public domain under <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>. Schema.org is a separate project; no endorsement or full vocabulary conformance is claimed.</p>
+      <p class="actions"><a class="slab" href="/fti/needs/publish">Publish your needs file</a><a class="slab-ghost" href="/fti/format">Offering grants instead?</a></p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .intro { padding-bottom: clamp(48px, 6vw, 88px); }
+  .head { grid-column: 1 / span 4; align-self: start; position: sticky; top: 24px; }
+  .body { grid-column: 5 / span 8; display: grid; gap: 1.1em; min-width: 0; }
+  .big { font-family: var(--display); font-weight: 500; font-size: var(--step-2); line-height: 1.3; max-width: 26ch; }
+  .tag { margin-top: 14px; padding-top: 10px; font-weight: 600; max-width: 26ch; }
+  .actions, .contents { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 0.4em; }
+  .contents { column-gap: 20px; font-size: var(--step-0); }
+  .fields { display: grid; }
+  .fields div { display: grid; grid-template-columns: minmax(0, 12em) minmax(0, 1fr); gap: 16px; padding: 0.7em 0; border-bottom: 2px solid var(--red); }
+  .fields dt { display: grid; gap: 4px; align-content: start; overflow-wrap: anywhere; }
+  .fields dt span { font-size: var(--step-0); font-weight: 600; }
+  .fields dd { margin: 0; max-width: 60ch; overflow-wrap: anywhere; }
+  .plain { padding-left: 1.2em; display: grid; gap: 0.6em; }
+  h3 { margin-top: 0.6em; }
+  @media (max-width: 900px) {
+    .head, .body { grid-column: 1 / -1; }
+    .head { position: static; }
+    .fields div { grid-template-columns: 1fr; gap: 4px; }
+  }
+</style>
