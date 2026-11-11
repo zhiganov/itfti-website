@@ -4,7 +4,6 @@ import CopyBlock from "../../components/CopyBlock.astro";
 import snippet from "../../data/fti-snippet.json";
 
 const example = JSON.stringify(snippet, null, 2);
-const mail = "mailto:hello@citizeninfra.org?subject=Publishing%20with%20Funding%20to%20Impact";
 
 const top = [
   ["profile", "Required", "Always fti.discovery/0.1-draft for this version. Readers report other versions as unsupported instead of guessing."],
@@ -113,7 +112,7 @@ const intake = [
     <h2 id="check" class="head">Checking a file</h2>
     <div class="body">
       <p>The schema checks the file's shape. Any JSON Schema 2020-12 validator can use it, as long as it can load the CommonGrants schemas it links to. FtI's own validator also checks that entry IDs are unique and that a review is not due before it happened. A validator you can use in the browser is planned. Until then, send us your file and we'll check it.</p>
-      <p class="actions"><a class="slab" href={mail}>Send us your file</a></p>
+      <p class="actions"><a class="slab" href="/fti/publish#contact">Send us your file</a></p>
       <p class="fine">The spec text, schema and examples are dedicated to the public domain under <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>. CommonGrants is a separate project; FtI links to its schemas and is not endorsed by it.</p>
     </div>
   </section>

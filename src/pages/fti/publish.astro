@@ -1,6 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
-const mail = "mailto:hello@citizeninfra.org?subject=Publishing%20with%20Funding%20to%20Impact";
+import FunderForm from "../../components/FunderForm.astro";
 const steps = [
   {
     title: "Start from the funding page you already have",
@@ -28,7 +28,7 @@ const steps = [
   },
   {
     title: "Tell us",
-    body: "Write to hello@citizeninfra.org with the file's address. We're looking for the first funders to publish, and we'll help you get it right.",
+    body: "Use the form below and include the file's address. We're looking for the first funders to publish, and we'll help you get it right.",
   },
   {
     title: "Keep it current",
@@ -63,11 +63,11 @@ const steps = [
     </ol>
   </section>
 
-  <section class="course grid" aria-labelledby="help">
+  <section class="course grid" id="contact" aria-labelledby="help">
     <h2 id="help" class="head">Need help?</h2>
     <div class="body">
       <p>FtI is at draft 0.1, and no funder has published with it yet. If you'd like to be among the first, write to us. We'll answer questions and check your file.</p>
-      <p class="actions"><a class="slab" href={mail}>hello@citizeninfra.org</a></p>
+      <FunderForm id="publish-contact" />
     </div>
   </section>
 </Base>

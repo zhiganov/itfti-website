@@ -1,0 +1,61 @@
+---
+// Contact form for funders, handled by Netlify Forms. Netlify detects it in the built HTML;
+// every copy on the site uses the same name and fields.
+interface Props { id: string }
+const { id } = Astro.props;
+---
+<form class="form" name="fti-funders" method="POST" action="/fti/thanks"
+  data-netlify="true" netlify-honeypot="bot-field" aria-labelledby={`${id}-title`}>
+  <input type="hidden" name="form-name" value="fti-funders" />
+  <p class="hp" aria-hidden="true">
+    <label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+  </p>
+  <h3 id={`${id}-title`}>Talk to us about publishing</h3>
+  <div class="row">
+    <label for={`${id}-name`}>Your name</label>
+    <input id={`${id}-name`} name="name" type="text" autocomplete="name" required />
+  </div>
+  <div class="row">
+    <label for={`${id}-org`}>Organisation</label>
+    <input id={`${id}-org`} name="organisation" type="text" autocomplete="organization" required />
+  </div>
+  <div class="row">
+    <label for={`${id}-email`}>Email</label>
+    <input id={`${id}-email`} name="email" type="email" autocomplete="email" required />
+  </div>
+  <div class="row">
+    <label for={`${id}-url`}>Funding page or FtI file <span>optional</span></label>
+    <input id={`${id}-url`} name="url" type="url" placeholder="https://" />
+  </div>
+  <div class="row">
+    <label for={`${id}-msg`}>Message</label>
+    <textarea id={`${id}-msg`} name="message" rows="4" required></textarea>
+  </div>
+  <p class="send"><button type="submit" class="slab">Send</button></p>
+  <p class="fine">We use your details only to reply. Netlify, our host, stores the submission. You can also write to <a href="mailto:hello@citizeninfra.org">hello@citizeninfra.org</a>.</p>
+</form>
+
+<style>
+  .form { display: grid; gap: 14px; max-width: 640px; padding: 22px 24px 20px; border: 4px solid var(--red); }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  h3 { margin-bottom: 2px; }
+  .row { display: grid; gap: 6px; }
+  label { font-weight: 600; font-size: 0.95rem; }
+  label span { font-weight: 400; font-size: 0.85rem; margin-left: 0.4em; }
+  input, textarea {
+    font: inherit;
+    color: var(--red);
+    background: var(--paper);
+    border: 2px solid var(--red);
+    border-radius: 0;
+    padding: 10px 12px;
+    width: 100%;
+  }
+  textarea { resize: vertical; min-height: 6.5em; }
+  input::placeholder { color: var(--red); opacity: 0.55; }
+  input:focus-visible, textarea:focus-visible { outline: 3px solid var(--red); outline-offset: 2px; }
+  input:user-invalid, textarea:user-invalid { border-style: dashed; }
+  .send { margin-top: 4px; }
+  .send button { border: 0; cursor: pointer; }
+  .fine { font-size: 0.85rem; }
+</style>
