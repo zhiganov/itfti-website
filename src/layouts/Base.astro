@@ -6,8 +6,9 @@ interface Props {
   title: string;
   description: string;
   current: "home" | "itf" | "loop" | "fti" | "status";
+  formatLicence?: "CC0";
 }
-const { title, description, current } = Astro.props;
+const { title, description, current, formatLicence } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 <!doctype html>
@@ -37,8 +38,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         <p>
           ItFtI is two projects by Artem Zhiganov.{" "}
           <a href="https://github.com/zhiganov/impact-to-funding">Impact to Funding on GitHub</a>.
-          Code MIT, original writing CC BY-SA 4.0.
+          Its code is MIT; its original writing is CC BY-SA 4.0.
         </p>
+        {formatLicence === "CC0" && <p>The needs spec, schema, publisher guide and fictional examples are <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>. This dedication does not cover the private MCP implementation.</p>}
         <p>The seal: the letters I, t, F, t, I as the walls of a maze, entrance at the bottom, exit at the top.</p>
       </footer>
     </div>

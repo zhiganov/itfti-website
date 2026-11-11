@@ -1,0 +1,185 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://itfti.org/schema/fti-needs-0.1.json",
+  "title": "FtI public needs publication (draft 0.1)",
+  "description": "A public format for organisation needs. Profile: fti.needs/0.1-proposal. Dedicated to the public domain under CC0 1.0: https://creativecommons.org/publicdomain/zero/1.0/.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["profile", "canonicalUrl", "revision", "publisher", "scope", "organisations", "entries"],
+  "properties": {
+    "profile": { "const": "fti.needs/0.1-proposal" },
+    "canonicalUrl": { "$ref": "#/$defs/https" },
+    "revision": { "$ref": "#/$defs/id" },
+    "publisher": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "website"],
+      "properties": { "name": { "$ref": "#/$defs/label" }, "website": { "$ref": "#/$defs/https" } }
+    },
+    "scope": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "description", "completeness"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }, "description": { "$ref": "#/$defs/text" },
+        "completeness": { "enum": ["complete", "partial", "unknown"] }
+      }
+    },
+    "organisations": { "type": "array", "maxItems": 1000, "items": { "$ref": "#/$defs/organisation" } },
+    "entries": { "type": "array", "maxItems": 1000, "items": { "$ref": "#/$defs/entry" } },
+    "review": { "$ref": "#/$defs/review" }
+  },
+  "$defs": {
+    "id": { "type": "string", "minLength": 1, "maxLength": 256, "pattern": "^[^\\s\\u0000-\\u001f\\u007f]+$" },
+    "label": { "type": "string", "minLength": 1, "maxLength": 512, "pattern": "\\S" },
+    "text": { "type": "string", "minLength": 1, "maxLength": 8192, "pattern": "\\S" },
+    "https": { "type": "string", "maxLength": 2048, "format": "uri", "pattern": "^https://(?:\\[[0-9A-Fa-f:.]+\\]|[^\\s\\u0000-\\u001f\\u007f\\\\/?#@:\\[\\]]+)(?::[0-9]*)?(?:[/?#][^\\s\\u0000-\\u001f\\u007f\\\\]*)?(?![\\s\\S])" },
+    "date": { "type": "string", "maxLength": 10, "format": "date", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
+    "decimal": { "type": "string", "maxLength": 40, "pattern": "^(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?(?![\\s\\S])" },
+    "tokens": {
+      "type": "array", "maxItems": 20, "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "\\S" }
+    },
+    "review": {
+      "type": "object", "additionalProperties": false, "required": ["reviewedOn"],
+      "properties": { "reviewedOn": { "$ref": "#/$defs/date" }, "reviewDueOn": { "$ref": "#/$defs/date" } }
+    },
+    "sourceStatement": {
+      "type": "object", "additionalProperties": false, "required": ["statement", "sourceUrl"],
+      "properties": { "statement": { "$ref": "#/$defs/text" }, "sourceUrl": { "$ref": "#/$defs/https" } }
+    },
+    "organisation": {
+      "type": "object", "additionalProperties": false, "required": ["@type", "@id", "name", "url"],
+      "properties": {
+        "@type": { "const": "Organization" }, "@id": { "$ref": "#/$defs/https" },
+        "name": { "$ref": "#/$defs/label" }, "url": { "$ref": "#/$defs/https" }
+      }
+    },
+    "demand": {
+      "type": "object", "additionalProperties": false, "required": ["@type", "@id", "name", "description", "url"],
+      "properties": {
+        "@type": { "const": "Demand" }, "@id": { "$ref": "#/$defs/https" },
+        "name": { "$ref": "#/$defs/label" }, "description": { "$ref": "#/$defs/text" },
+        "url": { "$ref": "#/$defs/https" },
+        "itemOffered": {
+          "type": "object", "additionalProperties": false, "required": ["@type", "name"],
+          "properties": {
+            "@type": { "const": "Service" }, "name": { "$ref": "#/$defs/label" },
+            "description": { "$ref": "#/$defs/text" }
+          }
+        }
+      }
+    },
+    "terms": {
+      "type": "object", "additionalProperties": false, "required": ["lifecycle", "response"],
+      "properties": {
+        "intendedResult": { "$ref": "#/$defs/text" }, "scope": { "$ref": "#/$defs/text" },
+        "skills": { "$ref": "#/$defs/tokens" }, "domains": { "$ref": "#/$defs/tokens" },
+        "lifecycle": { "enum": ["planned", "open", "paused", "filled", "withdrawn", "completed", "unknown"] },
+        "response": {
+          "type": "object", "additionalProperties": false, "required": ["mode"],
+          "properties": {
+            "mode": { "enum": ["public_response", "invitation_only", "not_accepting", "unknown"] },
+            "url": { "$ref": "#/$defs/https" }, "statement": { "$ref": "#/$defs/text" },
+            "sourceUrl": { "$ref": "#/$defs/https" }
+          }
+        },
+        "effort": {
+          "type": "object", "additionalProperties": false, "required": ["basis"],
+          "properties": {
+            "minHours": { "$ref": "#/$defs/decimal" }, "maxHours": { "$ref": "#/$defs/decimal" },
+            "basis": { "$ref": "#/$defs/text" }
+          },
+          "anyOf": [{ "required": ["minHours"] }, { "required": ["maxHours"] }]
+        },
+        "workLocation": {
+          "type": "object", "additionalProperties": false, "required": ["mode", "statement"],
+          "properties": {
+            "mode": { "enum": ["remote", "on_site", "hybrid", "unknown"] },
+            "statement": { "$ref": "#/$defs/text" }, "sourceUrl": { "$ref": "#/$defs/https" }
+          }
+        },
+        "language": { "$ref": "#/$defs/sourceStatement" },
+        "rights": { "$ref": "#/$defs/sourceStatement" },
+        "maintenance": { "$ref": "#/$defs/sourceStatement" },
+        "timing": {
+          "type": "object", "additionalProperties": false, "required": ["statement", "sourceUrl"],
+          "properties": {
+            "statement": { "$ref": "#/$defs/text" }, "sourceUrl": { "$ref": "#/$defs/https" },
+            "startOn": { "$ref": "#/$defs/date" }, "endOn": { "$ref": "#/$defs/date" },
+            "dueOn": { "$ref": "#/$defs/date" },
+            "dueAt": { "type": "string", "maxLength": 64, "format": "date-time" },
+            "timeZone": { "$ref": "#/$defs/label" }
+          },
+          "not": { "required": ["dueOn", "dueAt"] }
+        },
+        "acceptingRole": { "$ref": "#/$defs/label" }, "handover": { "$ref": "#/$defs/text" }
+      }
+    },
+    "compensation": {
+      "type": "object", "additionalProperties": false, "required": ["arrangements", "statement"],
+      "properties": {
+        "arrangements": {
+          "type": "array", "minItems": 1, "maxItems": 5, "uniqueItems": true,
+          "items": { "enum": ["paid", "pro_bono", "expenses_only", "negotiable", "unknown"] }
+        },
+        "statement": { "$ref": "#/$defs/text" }, "sourceUrl": { "$ref": "#/$defs/https" },
+        "scopeCoverage": {
+          "description": "Source-declared coverage of the requested contribution. Multiple arrangements alone leave whole-scope versus mixed-scope coverage unknown.",
+          "enum": ["whole_scope", "mixed", "unknown"]
+        },
+        "budgetRefs": { "type": "array", "maxItems": 100, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } }
+      }
+    },
+    "money": {
+      "description": "Nonnegative decimal strings. Fixed/rate use value; range uses minimum and maximum; minimum/cap use their respective bound. Rate requires unit. No inferred totals.",
+      "type": "object", "additionalProperties": false, "required": ["currency", "kind"],
+      "properties": {
+        "currency": { "type": "string", "minLength": 3, "maxLength": 3, "pattern": "^[A-Z]{3}$" },
+        "kind": { "enum": ["fixed", "range", "minimum", "cap", "rate"] },
+        "value": { "$ref": "#/$defs/decimal" }, "minimum": { "$ref": "#/$defs/decimal" },
+        "maximum": { "$ref": "#/$defs/decimal" }, "unit": { "$ref": "#/$defs/label" }
+      },
+      "oneOf": [
+        { "properties": { "kind": { "const": "fixed" } }, "required": ["value"], "not": { "anyOf": [{ "required": ["minimum"] }, { "required": ["maximum"] }, { "required": ["unit"] }] } },
+        { "properties": { "kind": { "const": "range" } }, "required": ["minimum", "maximum"], "not": { "anyOf": [{ "required": ["value"] }, { "required": ["unit"] }] } },
+        { "properties": { "kind": { "const": "minimum" } }, "required": ["minimum"], "not": { "anyOf": [{ "required": ["value"] }, { "required": ["maximum"] }, { "required": ["unit"] }] } },
+        { "properties": { "kind": { "const": "cap" } }, "required": ["maximum"], "not": { "anyOf": [{ "required": ["value"] }, { "required": ["minimum"] }, { "required": ["unit"] }] } },
+        { "properties": { "kind": { "const": "rate" } }, "required": ["value", "unit"], "not": { "anyOf": [{ "required": ["minimum"] }, { "required": ["maximum"] }] } }
+      ]
+    },
+    "budget": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "purpose", "basis", "amountStatus", "availability", "statement"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "purpose": { "enum": ["contributor_compensation", "expense_reimbursement", "campaign_spend", "tools_hosting", "other"] },
+        "money": { "$ref": "#/$defs/money" }, "basis": { "$ref": "#/$defs/text" },
+        "amountStatus": { "enum": ["indicative", "allocated", "committed", "unknown"] },
+        "availability": { "enum": ["available", "conditional", "unavailable", "unknown"] },
+        "statement": { "$ref": "#/$defs/text" }, "sourceUrl": { "$ref": "#/$defs/https" },
+        "conditions": { "$ref": "#/$defs/text" }, "sharedRef": { "$ref": "#/$defs/https" },
+        "allocationStatement": { "$ref": "#/$defs/text" }
+      },
+      "dependentRequired": { "sharedRef": ["allocationStatement"] }
+    },
+    "note": {
+      "description": "Retain exact source prose. kind conflict explicitly marks a source-linked unresolved conflict; it does not resolve the competing claims.",
+      "type": "object", "additionalProperties": false, "required": ["text", "sourceUrl"],
+      "properties": {
+        "text": { "$ref": "#/$defs/text" }, "sourceUrl": { "$ref": "#/$defs/https" },
+        "kind": { "enum": ["context", "conflict"] }
+      }
+    },
+    "entry": {
+      "type": "object", "additionalProperties": false,
+      "required": ["entryId", "revision", "requesterRef", "demand", "terms"],
+      "properties": {
+        "entryId": { "$ref": "#/$defs/id" }, "revision": { "$ref": "#/$defs/id" },
+        "requesterRef": { "$ref": "#/$defs/https" }, "demand": { "$ref": "#/$defs/demand" },
+        "terms": { "$ref": "#/$defs/terms" }, "compensation": { "$ref": "#/$defs/compensation" },
+        "budgets": { "type": "array", "maxItems": 100, "items": { "$ref": "#/$defs/budget" } },
+        "review": { "$ref": "#/$defs/review" },
+        "notes": { "type": "array", "maxItems": 100, "items": { "$ref": "#/$defs/note" } }
+      }
+    }
+  }
+}
