@@ -159,4 +159,12 @@ const publishes = [
     .publishes div { grid-template-columns: 1fr; gap: 2px; }
     .lane h2 span { display: block; margin: 6px 0 0; }
   }
+  /* Phones: smaller seal, and the install action straight after the lede so it sits in the first screen. */
+  @media (max-width: 720px) {
+    .hero { row-gap: 20px; }
+    .seal { max-width: 210px; justify-self: start; }
+    .copy { display: flex; flex-direction: column; }
+    .act { order: 1; margin-top: 18px; }
+    .lane { order: 2; }
+  }
 </style>
