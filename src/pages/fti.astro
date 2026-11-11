@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import FunderForm from "../components/FunderForm.astro";
 const parts = [
   ["The file format", "A funder publishes fti-manifest.json on its own website, linked to its official programme pages. Each opportunity is a CommonGrants record inside it, and general priorities stay separate from actual calls. Draft 0.1 has executable schemas and a validator. A funder doesn't need to run a server or join a new portal.", "built"],
   ["The MCP server", "A read-only server that lets agents find funders and opportunities from these files, with four tools: find_funders, search_opportunities, get_entry and registry_info. It runs locally over prepared snapshots; there is no hosted service yet. ItF is one intended client among others, never a gateway or an eligibility authority.", "built"],
@@ -62,8 +63,9 @@ const publishes = [
     <h2 id="now" class="head">Where it stands</h2>
     <div class="body">
       <p class="rule-dash status">FtI is at draft 0.1. The <a href="/fti/format">file format</a> is published here under CC0, with a schema and a validator. The MCP server runs locally and has been tested with fictional data. Import adapters are planned. No funder has adopted FtI yet, and there is no hosted service. We're looking for the first funders to publish with it.</p>
-      <p>If you fund work and want to publish with FtI, write to <a href="mailto:hello@citizeninfra.org?subject=Publishing%20with%20Funding%20to%20Impact">hello@citizeninfra.org</a>.</p>
-      <p class="actions"><a class="slab" href="mailto:hello@citizeninfra.org?subject=Publishing%20with%20Funding%20to%20Impact">Publish with FtI</a><a class="slab-ghost" href="/itf">Impact to Funding, available now</a></p>
+      <p>If you fund work and want to publish with FtI, tell us below.</p>
+      <FunderForm id="fti-contact" />
+      <p class="actions"><a class="slab" href="/fti/publish">How to publish</a><a class="slab-ghost" href="/itf">Impact to Funding, available now</a></p>
     </div>
   </section>
 </Base>
