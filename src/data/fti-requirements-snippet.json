@@ -1,0 +1,34 @@
+{
+  "profile": "fti.requirements/0.1-draft",
+  "id": "maintenance-2026-requirements",
+  "revision": "1",
+  "scope": {
+    "phases": ["application", "post_award_reporting"],
+    "completeness": "partial",
+    "statement": "Covers what the application and the final report ask for. Selection criteria are on the programme page."
+  },
+  "source": {
+    "url": "https://funder.example.org/maintenance-2026",
+    "locator": "Section: What we ask for"
+  },
+  "requirements": [
+    {
+      "id": "usage-evidence",
+      "phase": "application",
+      "level": "required",
+      "statement": "Show that the tool is used beyond your own team.",
+      "evidence": "Any of: download counts, projects that depend on it, or statements from users. Say how you counted.",
+      "presentation": {
+        "instructions": "Attach a PDF of up to two pages.",
+        "mediaTypes": ["application/pdf"]
+      }
+    },
+    {
+      "id": "final-report",
+      "phase": "post_award_reporting",
+      "level": "required",
+      "statement": "Send a final report on what the grant paid for and what changed.",
+      "timing": { "statement": "Due three months after the grant ends." }
+    }
+  ]
+}

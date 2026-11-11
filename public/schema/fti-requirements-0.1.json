@@ -1,0 +1,183 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://itfti.org/schema/fti-requirements-0.1.json",
+  "title": "FtI requirements payload 0.1 (draft)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profile",
+    "id",
+    "revision",
+    "scope",
+    "source",
+    "requirements"
+  ],
+  "properties": {
+    "profile": {
+      "const": "fti.requirements/0.1-draft"
+    },
+    "id": {
+      "$ref": "https://itfti.org/schema/fti-manifest-0.1.json#/$defs/id"
+    },
+    "revision": {
+      "$ref": "https://itfti.org/schema/fti-manifest-0.1.json#/$defs/id"
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "phases",
+        "completeness",
+        "statement"
+      ],
+      "properties": {
+        "phases": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/phase"
+          }
+        },
+        "completeness": {
+          "$ref": "https://itfti.org/schema/fti-manifest-0.1.json#/$defs/completeness"
+        },
+        "statement": {
+          "$ref": "https://itfti.org/schema/fti-manifest-0.1.json#/$defs/text"
+        }
+      }
+    },
+    "source": {
+      "$ref": "#/$defs/source"
+    },
+    "requirements": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/requirement"
+      }
+    }
+  },
+  "$defs": {
+    "phase": {
+      "enum": [
+        "eligibility",
+        "selection",
+        "application",
+        "post_award_reporting",
+        "unspecified"
+      ]
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "url"
+      ],
+      "properties": {
+        "url": {
+          "$ref": "https://itfti.org/schema/fti-manifest-0.1.json#/$defs/https"
+        },
+        "locator": {
+          "$ref": "https://itfti.org/schema/fti-manifest-0.1.json#/$defs/text"
+        }
+      }
+    },
+    "requirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "phase",
+        "level",
+        "statement"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "https://itfti.org/schema/fti-manifest-0.1.json#/$defs/id"
+        },
+        "phase": {
+          "$ref": "#/$defs/phase"
+        },
+        "level": {
+          "enum": [
+            "required",
+            "preferred",
+            "unknown"
+          ]
+        },
+        "statement": {
+          "$ref": "https://itfti.org/schema/fti-manifest-0.1.json#/$defs/text"
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        },
+        "appliesWhen": {
+          "$ref": "https://itfti.org/schema/fti-manifest-0.1.json#/$defs/text"
+        },
+        "evidence": {
+          "$ref": "https://itfti.org/schema/fti-manifest-0.1.json#/$defs/text"
+        },
+        "handling": {
+          "$ref": "https://itfti.org/schema/fti-manifest-0.1.json#/$defs/text"
+        },
+        "presentation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "instructions"
+          ],
+          "properties": {
+            "instructions": {
+              "$ref": "https://itfti.org/schema/fti-manifest-0.1.json#/$defs/text"
+            },
+            "mediaTypes": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^[!#$%&'*+.^_`|~0-9A-Za-z-]+\\/[!#$%&'*+.^_`|~0-9A-Za-z-]+(?:\\s*;\\s*[!#$%&'*+.^_`|~0-9A-Za-z-]+=(?:[!#$%&'*+.^_`|~0-9A-Za-z-]+|\"[^\"\\r\\n]*\"))*$"
+              }
+            },
+            "formRef": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "url"
+              ],
+              "properties": {
+                "url": {
+                  "$ref": "https://itfti.org/schema/fti-manifest-0.1.json#/$defs/https"
+                },
+                "version": {
+                  "$ref": "https://itfti.org/schema/fti-manifest-0.1.json#/$defs/id"
+                },
+                "fieldRef": {
+                  "$ref": "https://itfti.org/schema/fti-manifest-0.1.json#/$defs/text"
+                }
+              }
+            }
+          }
+        },
+        "timing": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "statement"
+          ],
+          "properties": {
+            "statement": {
+              "$ref": "https://itfti.org/schema/fti-manifest-0.1.json#/$defs/text"
+            },
+            "dueAt": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "[Tt].*(?:[Zz]|[+-][0-9]{2}:[0-9]{2})$"
+            }
+          }
+        }
+      }
+    }
+  },
+  "description": "Optional evidence and reporting requirements for one FtI entry, profile fti.requirements/0.1-draft. Spec: https://itfti.org/fti/format#requirements. CC0 1.0."
+}
