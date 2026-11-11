@@ -1,0 +1,285 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://itfti.org/schema/fti-manifest-0.1.json",
+  "title": "FtI manifest 0.1 (draft)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profile",
+    "canonicalUrl",
+    "publisher",
+    "revision",
+    "scope",
+    "entries"
+  ],
+  "properties": {
+    "profile": {
+      "const": "fti.discovery/0.1-draft"
+    },
+    "canonicalUrl": {
+      "$ref": "#/$defs/https"
+    },
+    "publisher": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "website"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/text"
+        },
+        "website": {
+          "$ref": "#/$defs/https"
+        }
+      }
+    },
+    "revision": {
+      "$ref": "#/$defs/id"
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "description",
+        "completeness"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "description": {
+          "$ref": "#/$defs/text"
+        },
+        "completeness": {
+          "$ref": "#/$defs/completeness"
+        }
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reviewedOn"
+      ],
+      "properties": {
+        "reviewedOn": {
+          "type": "string",
+          "format": "date"
+        },
+        "reviewDueOn": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "priorities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "text",
+        "guidanceUrl"
+      ],
+      "properties": {
+        "text": {
+          "$ref": "#/$defs/text"
+        },
+        "guidanceUrl": {
+          "$ref": "#/$defs/https"
+        }
+      }
+    },
+    "extensions": {
+      "$ref": "#/$defs/extensions"
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/entry"
+      }
+    }
+  },
+  "$defs": {
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[^\\u0000-\\u001f\\u007f]+$"
+    },
+    "https": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://[^\\s]+$"
+    },
+    "completeness": {
+      "enum": [
+        "complete",
+        "partial",
+        "unknown"
+      ]
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[A-Za-z][A-Za-z0-9_-]*(?:\\.[A-Za-z0-9_-]+)+$"
+      },
+      "additionalProperties": true
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "entryId",
+        "kind",
+        "guidanceUrl"
+      ],
+      "properties": {
+        "entryId": {
+          "$ref": "#/$defs/id"
+        },
+        "kind": {
+          "enum": [
+            "opportunity",
+            "programme",
+            "source_reference"
+          ]
+        },
+        "guidanceUrl": {
+          "$ref": "#/$defs/https"
+        },
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "commonGrants": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "version"
+          ],
+          "properties": {
+            "version": {
+              "const": "0.5.0"
+            },
+            "url": {
+              "$ref": "#/$defs/https"
+            },
+            "record": {
+              "$ref": "https://commongrants.org/schemas/yaml/versions/v0.5.0/OpportunityBase.yaml"
+            }
+          },
+          "oneOf": [
+            {
+              "required": [
+                "record"
+              ]
+            },
+            {
+              "required": [
+                "url"
+              ]
+            }
+          ]
+        },
+        "intake": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "mode",
+            "cadence",
+            "statement",
+            "sourceUrl"
+          ],
+          "properties": {
+            "mode": {
+              "enum": [
+                "public_application",
+                "invitation_only",
+                "not_accepting",
+                "unknown"
+              ]
+            },
+            "cadence": {
+              "enum": [
+                "fixed_deadline",
+                "rolling",
+                "unspecified"
+              ]
+            },
+            "statement": {
+              "$ref": "#/$defs/text"
+            },
+            "sourceUrl": {
+              "$ref": "#/$defs/https"
+            }
+          }
+        },
+        "applicationUrl": {
+          "$ref": "#/$defs/https"
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "text",
+              "sourceUrl"
+            ],
+            "properties": {
+              "text": {
+                "$ref": "#/$defs/text"
+              },
+              "sourceUrl": {
+                "$ref": "#/$defs/https"
+              }
+            }
+          }
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "opportunity"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "commonGrants"
+            ],
+            "not": {
+              "required": [
+                "title"
+              ]
+            }
+          },
+          "else": {
+            "required": [
+              "title"
+            ],
+            "not": {
+              "required": [
+                "commonGrants"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  "description": "Funding to Impact file format, profile fti.discovery/0.1-draft. Spec: https://itfti.org/fti/format. CC0 1.0."
+}
