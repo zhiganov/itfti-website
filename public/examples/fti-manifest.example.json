@@ -1,0 +1,127 @@
+{
+  "profile": "fti.discovery/0.1-draft",
+  "canonicalUrl": "https://example.org/synthetic/fti-manifest.json",
+  "publisher": {
+    "name": "Fictional validator test publisher",
+    "website": "https://example.org/synthetic/"
+  },
+  "revision": "synthetic-authoring-1",
+  "scope": {
+    "id": "synthetic-tests",
+    "description": "New fictional validator records, not historical metadata for Illustrative Funder A",
+    "completeness": "partial"
+  },
+  "entries": [
+    {
+      "entryId": "synthetic-open",
+      "kind": "opportunity",
+      "guidanceUrl": "https://example.org/synthetic/open",
+      "commonGrants": {
+        "version": "0.5.0",
+        "record": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "title": "Synthetic open record",
+          "description": "Wholly fictional validator fixture. IDs and creation metadata belong to this newly authored record, not a real funder or prior prose example.",
+          "status": {
+            "value": "open"
+          },
+          "createdAt": "2026-11-10T00:00:00Z",
+          "lastModifiedAt": "2026-11-10T00:00:00Z",
+          "acceptedApplicantTypes": [
+            {
+              "value": "individual"
+            }
+          ],
+          "funding": {
+            "maxAwardAmount": {
+              "amount": "1000.00",
+              "currency": "EUR"
+            }
+          }
+        }
+      },
+      "intake": {
+        "mode": "public_application",
+        "cadence": "fixed_deadline",
+        "statement": "Fictional intake; a deadline and remaining eligibility terms are not supplied.",
+        "sourceUrl": "https://example.org/synthetic/open"
+      },
+      "applicationUrl": "https://example.org/synthetic/open/apply"
+    },
+    {
+      "entryId": "synthetic-rolling",
+      "kind": "opportunity",
+      "guidanceUrl": "https://example.org/synthetic/rolling",
+      "commonGrants": {
+        "version": "0.5.0",
+        "record": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "title": "Synthetic rolling record",
+          "description": "Wholly fictional validator fixture; no prior outcome requirement is asserted.",
+          "status": {
+            "value": "open"
+          },
+          "createdAt": "2026-11-10T00:00:00Z",
+          "lastModifiedAt": "2026-11-10T00:00:00Z"
+        }
+      },
+      "intake": {
+        "mode": "public_application",
+        "cadence": "rolling",
+        "statement": "Explicit fictional rolling intake; geography and other terms remain unknown.",
+        "sourceUrl": "https://example.org/synthetic/rolling"
+      }
+    },
+    {
+      "entryId": "synthetic-invitation",
+      "kind": "programme",
+      "title": "Synthetic invitation-only programme",
+      "guidanceUrl": "https://example.org/synthetic/invitation",
+      "intake": {
+        "mode": "invitation_only",
+        "cadence": "unspecified",
+        "statement": "No unsolicited applications or introduction requests.",
+        "sourceUrl": "https://example.org/synthetic/invitation"
+      }
+    },
+    {
+      "entryId": "synthetic-closed",
+      "kind": "opportunity",
+      "guidanceUrl": "https://example.org/synthetic/closed",
+      "commonGrants": {
+        "version": "0.5.0",
+        "record": {
+          "id": "00000000-0000-4000-8000-000000000003",
+          "title": "Synthetic closed record",
+          "description": "Wholly fictional validator fixture; not a live call.",
+          "status": {
+            "value": "closed"
+          },
+          "createdAt": "2026-11-10T00:00:00Z",
+          "lastModifiedAt": "2026-11-10T00:00:00Z"
+        }
+      },
+      "intake": {
+        "mode": "not_accepting",
+        "cadence": "unspecified",
+        "statement": "No current applications.",
+        "sourceUrl": "https://example.org/synthetic/closed"
+      }
+    },
+    {
+      "entryId": "synthetic-linked",
+      "kind": "opportunity",
+      "guidanceUrl": "https://example.org/synthetic/linked",
+      "commonGrants": {
+        "version": "0.5.0",
+        "url": "https://example.org/synthetic/record.json"
+      }
+    },
+    {
+      "entryId": "synthetic-reference",
+      "kind": "source_reference",
+      "title": "Synthetic incomplete source",
+      "guidanceUrl": "https://example.org/synthetic/reference"
+    }
+  ]
+}

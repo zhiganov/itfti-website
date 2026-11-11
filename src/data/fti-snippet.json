@@ -1,0 +1,57 @@
+{
+  "profile": "fti.discovery/0.1-draft",
+  "canonicalUrl": "https://funder.example.org/fti-manifest.json",
+  "publisher": {
+    "name": "Example Foundation (fictional)",
+    "website": "https://funder.example.org/"
+  },
+  "revision": "2026-11-11.1",
+  "scope": {
+    "id": "open-source-programmes",
+    "description": "Our open-source maintenance programmes",
+    "completeness": "complete"
+  },
+  "review": { "reviewedOn": "2026-11-11", "reviewDueOn": "2027-02-11" },
+  "priorities": {
+    "text": "We fund maintenance of shared digital infrastructure. We don't fund new startups.",
+    "guidanceUrl": "https://funder.example.org/what-we-fund"
+  },
+  "entries": [
+    {
+      "entryId": "maintenance-2026",
+      "kind": "opportunity",
+      "guidanceUrl": "https://funder.example.org/maintenance-2026",
+      "commonGrants": {
+        "version": "0.5.0",
+        "record": {
+          "id": "6f1d2c0a-3b4e-4c5d-9e8f-0a1b2c3d4e5f",
+          "title": "Maintenance grants 2026",
+          "description": "Grants for maintainers of widely used open-source tools.",
+          "status": { "value": "open" },
+          "createdAt": "2026-11-01T09:00:00Z",
+          "lastModifiedAt": "2026-11-11T09:00:00Z",
+          "funding": { "maxAwardAmount": { "amount": "40000.00", "currency": "EUR" } }
+        }
+      },
+      "intake": {
+        "mode": "public_application",
+        "cadence": "fixed_deadline",
+        "statement": "Applications close 15 December 2026, 17:00 UTC.",
+        "sourceUrl": "https://funder.example.org/maintenance-2026"
+      },
+      "applicationUrl": "https://funder.example.org/maintenance-2026/apply"
+    },
+    {
+      "entryId": "partnerships",
+      "kind": "programme",
+      "title": "Strategic partnerships",
+      "guidanceUrl": "https://funder.example.org/partnerships",
+      "intake": {
+        "mode": "invitation_only",
+        "cadence": "unspecified",
+        "statement": "By invitation only. We don't accept unsolicited proposals.",
+        "sourceUrl": "https://funder.example.org/partnerships"
+      }
+    }
+  ]
+}

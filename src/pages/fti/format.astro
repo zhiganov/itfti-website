@@ -1,0 +1,144 @@
+---
+import Base from "../../layouts/Base.astro";
+import CopyBlock from "../../components/CopyBlock.astro";
+import snippet from "../../data/fti-snippet.json";
+
+const example = JSON.stringify(snippet, null, 2);
+const mail = "mailto:hello@citizeninfra.org?subject=Publishing%20with%20Funding%20to%20Impact";
+
+const top = [
+  ["profile", "Required", "Always fti.discovery/0.1-draft for this version. Readers report other versions as unsupported instead of guessing."],
+  ["canonicalUrl", "Required", "The https address where this file lives."],
+  ["publisher", "Required", "name and official https website of the funder publishing the file, or the team publishing it on the funder's behalf."],
+  ["revision", "Required", "Any text you choose. Change it every time the file changes."],
+  ["scope", "Required", "id, description and completeness (complete, partial or unknown) of what this file lists. A partial list doesn't mean you have nothing else."],
+  ["review", "Optional", "reviewedOn: the date someone actually checked the information. reviewDueOn: when you plan to check again. Leave them out if you don't know."],
+  ["priorities", "Optional", "text and guidanceUrl describing what you want to fund and what you don't. Priorities are never an open call."],
+  ["entries", "Required", "A list of what you fund: opportunities, programmes or references to other pages. It may be empty."],
+  ["extensions", "Optional", "Your own extra data, under keys with a dot, such as org.example.notes. Readers keep it but never treat it as an eligibility rule."],
+];
+const kinds = [
+  ["opportunity", "A call you can apply to. It carries a CommonGrants record: either the record itself, or the https address of one."],
+  ["programme", "A programme described in words, with a title, without claiming there's an open call."],
+  ["source_reference", "A title and a link to your official page, when you can't describe the opportunity in structured form yet."],
+];
+const intake = [
+  ["mode", "public_application, invitation_only, not_accepting or unknown"],
+  ["cadence", "fixed_deadline, rolling or unspecified"],
+  ["statement", "One plain sentence, for example the deadline with its time zone."],
+  ["sourceUrl", "The official page that says so."],
+];
+---
+<Base
+  title="The FtI file format, draft 0.1 · ItFtI"
+  description="The Funding to Impact file format: one JSON file, fti-manifest.json, that a funder publishes on its own website so people and agents can see what it funds. Draft 0.1, CC0."
+  current="fti"
+>
+  <section class="intro grid" aria-labelledby="t">
+    <div class="head">
+      <h1 id="t">The FtI file format</h1>
+      <p class="tag rule-dash">Draft 0.1. Free to use: CC0.</p>
+    </div>
+    <div class="body">
+      <p class="big">One JSON file a funder puts on its own website, saying what it funds and how to apply.</p>
+      <p>Name it <code>fti-manifest.json</code>, put it anywhere on your site, and link it from your funding page. You don't need a portal, an account or a server. Each opportunity inside it is a <a href="https://commongrants.org/">CommonGrants</a> record (version 0.5.0), so the format reuses existing grant data instead of inventing another schema.</p>
+      <p class="actions">
+        <a class="slab" href="/schema/fti-manifest-0.1.json">Download the schema</a>
+        <a class="slab-ghost" href="/examples/fti-manifest.example.json">Full example</a>
+        <a class="slab-ghost" href="/fti/publish">How to publish</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="course grid" aria-labelledby="glance">
+    <h2 id="glance" class="head">The file at a glance</h2>
+    <div class="body">
+      <dl class="fields">
+        {top.map(([k, req, v]) => (<div><dt><code>{k}</code><span>{req}</span></dt><dd>{v}</dd></div>))}
+      </dl>
+    </div>
+  </section>
+
+  <section class="course grid" aria-labelledby="entries">
+    <h2 id="entries" class="head">Entries</h2>
+    <div class="body">
+      <p>Every entry has an <code>entryId</code> that you never reuse for a different call, a <code>kind</code>, and a <code>guidanceUrl</code> pointing to your official page.</p>
+      <dl class="fields">
+        {kinds.map(([k, v]) => (<div><dt><code>{k}</code></dt><dd>{v}</dd></div>))}
+      </dl>
+      <h3>Intake: can people apply?</h3>
+      <p>Add <code>intake</code> to say plainly whether and how you accept applications. Leaving it out means "unknown", never "open to everyone".</p>
+      <dl class="fields">
+        {intake.map(([k, v]) => (<div><dt><code>{k}</code></dt><dd>{v}</dd></div>))}
+      </dl>
+      <p>Two more optional fields: <code>applicationUrl</code>, the real application page (not a contact page), and <code>notes</code>, a list of short explanations, each with a <code>sourceUrl</code>.</p>
+    </div>
+  </section>
+
+  <section class="course grid" aria-labelledby="cg">
+    <h2 id="cg" class="head">Opportunities and CommonGrants</h2>
+    <div class="body">
+      <p>An opportunity's <code>commonGrants</code> object has <code>version: "0.5.0"</code> and exactly one of:</p>
+      <ul class="plain">
+        <li><code>record</code>: a CommonGrants <a href="https://commongrants.org/schemas/yaml/versions/v0.5.0/OpportunityBase.yaml">OpportunityBase</a>. It needs an <code>id</code> (a UUID), <code>title</code>, <code>description</code>, <code>status</code>, <code>createdAt</code> and <code>lastModifiedAt</code>. Status is an object such as <code>{"{"} "value": "open" {"}"}</code>, with the values forecasted, open, closed or custom.</li>
+        <li><code>url</code>: the https address of a CommonGrants record you already publish. Readers treat it as unchecked until they fetch it.</li>
+      </ul>
+      <p>Put amounts, dates, applicant types and funders in the CommonGrants fields, not in a second copy elsewhere in the file. Rolling and invitation-only intake belong in <code>intake</code>, not in the CommonGrants status.</p>
+      <p class="fine">Known issue: CommonGrants 0.5.0 rejects clock times without a time zone, such as <code>17:00:00</code>. Give an offset, or state the deadline in the intake statement.</p>
+    </div>
+  </section>
+
+  <section class="course grid" aria-labelledby="ex">
+    <h2 id="ex" class="head">A short example</h2>
+    <div class="body">
+      <p>A fictional funder with one open call and one invitation-only programme. It passes the schema and FtI's validator.</p>
+      <CopyBlock code={example} />
+    </div>
+  </section>
+
+  <section class="course grid" aria-labelledby="rules">
+    <h2 id="rules" class="head">Rules readers follow</h2>
+    <div class="body">
+      <ul class="rules">
+        <li>Missing information is unknown, not permission to apply.</li>
+        <li>Funding priorities are not open calls.</li>
+        <li>Past awards don't mean applications are open now.</li>
+        <li>If your page and your file disagree, readers show the conflict instead of picking the more favourable answer.</li>
+        <li>Unknown fields are rejected, except under <code>extensions</code>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="course grid" aria-labelledby="check">
+    <h2 id="check" class="head">Checking a file</h2>
+    <div class="body">
+      <p>The schema checks the file's shape. Any JSON Schema 2020-12 validator can use it, as long as it can load the CommonGrants schemas it links to. FtI's own validator also checks that entry IDs are unique and that a review is not due before it happened. A validator you can use in the browser is planned. Until then, send us your file and we'll check it.</p>
+      <p class="actions"><a class="slab" href={mail}>Send us your file</a></p>
+      <p class="fine">The spec text, schema and examples are dedicated to the public domain under <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>. CommonGrants is a separate project; FtI links to its schemas and is not endorsed by it.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .intro { padding-bottom: clamp(48px, 6vw, 88px); }
+  .head { grid-column: 1 / span 4; align-self: start; position: sticky; top: 24px; }
+  .body { grid-column: 5 / span 8; display: grid; gap: 1.1em; min-width: 0; }
+  .big { font-family: var(--display); font-weight: 500; font-size: var(--step-2); line-height: 1.3; max-width: 26ch; }
+  .tag { margin-top: 14px; padding-top: 10px; font-weight: 600; max-width: 26ch; }
+  .actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 0.4em; }
+  .fields { display: grid; }
+  .fields div { display: grid; grid-template-columns: 12em 1fr; gap: 16px; padding: 0.7em 0; border-bottom: 2px solid var(--red); }
+  .fields dt { display: grid; gap: 4px; align-content: start; }
+  .fields dt span { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+  .fields dd { margin: 0; max-width: 60ch; }
+  .plain { padding-left: 1.2em; display: grid; gap: 0.6em; }
+  .rules { list-style: none; padding: 0; font-family: var(--display); font-weight: 700; font-size: var(--step-1); line-height: 1.3; }
+  .rules li { padding: 0.45em 0; border-bottom: 2px solid var(--red); }
+  .fine { font-size: 0.9rem; }
+  h3 { margin-top: 0.6em; }
+  @media (max-width: 900px) {
+    .head, .body { grid-column: 1 / -1; }
+    .head { position: static; }
+    .fields div { grid-template-columns: 1fr; gap: 4px; }
+  }
+</style>
