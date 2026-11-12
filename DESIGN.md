@@ -177,6 +177,9 @@ Square. Radius is 0 everywhere. Borders are 2px (rows), 3px to 4px (blocks, fram
 - **Slab ghost:** paper ground, 4px red border, red text. Hover inverts to a red fill with paper text. Used for the second action.
 - Transitions are 0.25s with an ease-out curve (cubic-bezier(0.16, 1, 0.3, 1)).
 
+### Homepage Entry Actions
+Builders and funders have adjacent, explicitly named actions immediately after the opening lede: a filled builder slab to the on-page installation and a ghost funder slab to the publishing guide. Their equal-width desktop columns share a row and height; at 720px and below they stack at full width. Keep both before the explanatory lanes in DOM, keyboard and visual order. The free/open-source note names ItF, rather than implying shared access terms. Keep short verb/product phrases together when the labels wrap. The existing footer provides the corresponding routes at the end of the page.
+
 ### Links
 Red, 2px underline, 0.2em offset. Hover is deep red. Focus is a 3px red outline with a 4px offset.
 
