@@ -53,6 +53,7 @@ One loop from both ends. ItF works from the builder's side (impact → funding);
 - Logo: `logo/itfti-seal.svg` (and `logo/itfti-seal-2048.png`): a hand-stamped red seal whose letters I, t, F, t, I form the walls of a maze, with an entrance at the bottom and an exit at the top. Ink red `#890405`. Binding style reference for the site (Artem, 2026-11-10).
 - The maze is the metaphor: the search for support is a maze, and many projects get lost before they find their way to funding.
 - Voice: short, plain sentences; state limits honestly; no hype.
+- The shared footer includes Citizen Infrastructure Builders Club (CIBC), its [website](https://citizeninfra.org/) and an invitation to [support the club on Open Collective](https://opencollective.com/citizen-infra), without a personal byline. This is club support, not a claimed dedicated ItFtI fund or a service-payment arrangement.
 
 ## Evidence on Hand
 

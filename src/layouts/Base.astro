@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import LetterNav from "../components/LetterNav.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 
 interface Props {
   title: string;
@@ -34,16 +35,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <div class="page">
       <header class="masthead"><LetterNav current={current} /></header>
       <main id="main"><slot /></main>
-      <footer class="foot">
-        <p>
-          ItFtI is two projects by Artem Zhiganov.{" "}
-          <a href="https://github.com/zhiganov/impact-to-funding">Impact to Funding on GitHub</a>.
-          Its code is MIT; its original writing is CC BY-SA 4.0.
-        </p>
-        {formatLicence === "CC0" && <p>The needs spec, schema, publisher guide and fictional examples are <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>. This dedication does not cover the private MCP implementation.</p>}
-        <p>The seal: the letters I, t, F, t, I as the walls of a maze, entrance at the bottom, exit at the top.</p>
-      </footer>
     </div>
+    <SiteFooter formatLicence={formatLicence} />
   </body>
 </html>
 
@@ -60,12 +53,4 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   }
   .skip:focus { transform: none; }
   .masthead { margin-bottom: clamp(16px, 2.4vw, 32px); }
-  .foot {
-    border-top: 8px solid var(--red);
-    margin-top: clamp(40px, 6vw, 80px);
-    padding-top: 20px;
-    font-size: 0.9rem;
-    display: grid;
-    gap: 6px;
-  }
 </style>
