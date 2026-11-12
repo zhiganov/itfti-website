@@ -35,6 +35,26 @@ typography:
     fontSize: "11px"
     fontWeight: 600
     letterSpacing: "0.06em"
+  footer-display:
+    fontFamily: "Zilla Slab, Rockwell, Roboto Slab, serif"
+    fontSize: "clamp(3rem, 6.8vw, 6rem)"
+    fontWeight: 700
+    lineHeight: 1.02
+  footer-display-phone:
+    fontFamily: "Zilla Slab, Rockwell, Roboto Slab, serif"
+    fontSize: "clamp(2.4rem, 9vw, 4rem)"
+    fontWeight: 700
+    lineHeight: 1.02
+  footer-wordmark:
+    fontFamily: "Zilla Slab, Rockwell, Roboto Slab, serif"
+    fontSize: "4rem"
+    fontWeight: 700
+    lineHeight: 1
+  footer-note:
+    fontFamily: "Libre Franklin, system-ui, sans-serif"
+    fontSize: "14px"
+    fontWeight: 400
+    lineHeight: 1.6
 rounded:
   none: "0px"
 spacing:
@@ -80,7 +100,7 @@ components:
 
 The site is one impression of the ItFtI seal. The seal itself is the only frame: it leads the home page at full size, and nothing else on the page is boxed in red. Its language carries through in thick red rules, framed letter blocks and filled slab buttons.
 
-There is one ink and one paper. Everything is red on near-white. Shape is square. Depth is flat. The real seal logo is the focal image on the home page.
+There is one ink and one paper. The page is red on near-white; the shared footer reverses that same pair into paper on red. Shape is square. Depth is flat. The real seal logo is the focal image on the home page.
 
 Status is told by line form, not by colour or badges. A solid rule means it is built and usable today. A dashed rule means a draft not yet adopted, or something planned.
 
@@ -105,7 +125,7 @@ One red on one paper. Tints are not used except for a code wash.
 - **Red Wash** (#f0e4e2): background of inline `code` only.
 
 ### Named Rules
-**The One Ink Rule.** Seal red on paper is the whole palette. Do not add a second colour, a grey, or a gradient.
+**The One Ink Rule.** Seal red and paper are the whole palette. The shared footer reverses them into paper on red. Do not add a second colour, a grey, or a gradient.
 
 **The No Texture Rule.** Do not imitate ink bleed, stamp grain or paper texture. The seal is the real asset; the page does not fake its material.
 
@@ -171,6 +191,11 @@ A tab per agent (Claude Code, Codex CLI, OpenCode) as 4px-bordered slab tabs, th
 
 ### Status Lane
 A heading link over a short line, topped by an 8px rule: solid for ItF, dashed for FtI.
+
+### Shared Footer
+The close is a full-width seal-red field, outside the inset page wrapper, with paper text and generous spacing. A seven-column oversized statement sits opposite CIBC's four-column introduction; the same 12-column grid and gutters remain. At 900px and below, these stack in reading order. A lower ruled course carries the ItFtI wordmark and the builder, funder and organisation-needs links. Licence notes and the seal explanation close the section; there is no personal byline.
+
+Footer display type uses its own local roles above, not a larger global heading scale: 3–6rem on desktop and 2.4–4rem on phones, with 14px secondary notes. The support action is a square paper slab with red text; paper focus outlines remain visible against the field. All ordinary footer links inherit paper, including hover, and selection reverses to red on paper. No new colour, shadow, texture, raster asset or client script is introduced.
 
 ## Do's and Don'ts
 

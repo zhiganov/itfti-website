@@ -1,0 +1,116 @@
+---
+interface Props { formatLicence?: "CC0" }
+const { formatLicence } = Astro.props;
+---
+<footer class="site-footer" aria-labelledby="footer-title">
+  <div class="footer-inner">
+    <div class="footer-opening grid">
+      <div class="invitation">
+        <h2 id="footer-title"><span>Useful work.</span><span>Shared support.</span></h2>
+        <p class="footer-lede">Two ways through the maze: develop a useful contribution, or make support easier to understand.</p>
+      </div>
+      <section class="club" aria-labelledby="club-title">
+        <h3 id="club-title"><a href="https://citizeninfra.org/">Citizen Infrastructure Builders Club</a></h3>
+        <p>CIBC builds, learns and teaches how to use tools and protocols that serve mutualism and solidarity. Tools that help communities act together.</p>
+        <a class="support" href="https://opencollective.com/citizen-infra">Support CIBC on Open Collective</a>
+        <p class="support-note">Support the club and explore its open finances.</p>
+      </section>
+    </div>
+
+    <div class="footer-wayfinding">
+      <a class="footer-brand" href="/" aria-label="ItFtI home">ItFtI</a>
+      <nav aria-label="Explore ItFtI">
+        <ul>
+          <li><a href="/itf">For builders</a></li>
+          <li><a href="/fti">For funders</a></li>
+          <li><a href="/fti/needs">Organisation needs</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="footer-notes">
+      <div>
+        <p><a href="https://github.com/zhiganov/impact-to-funding">Impact to Funding on GitHub</a>. Its code is MIT; its original writing is CC BY-SA 4.0.</p>
+        {formatLicence === "CC0" && <p>The needs spec, schema, publisher guide and fictional examples are <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>. This dedication does not cover the private MCP implementation.</p>}
+      </div>
+      <p class="seal-note">The seal: I, t, F, t, I form the walls of a maze. Entrance at the bottom, exit at the top.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: clamp(24px, 4vw, 64px);
+    background: var(--red);
+    color: var(--paper);
+  }
+  .footer-inner {
+    max-width: 1600px;
+    margin-inline: auto;
+    padding: clamp(48px, 6vw, 88px) var(--pad) 32px;
+  }
+  a { color: inherit; }
+  a:hover { color: inherit; text-decoration-thickness: 3px; }
+  a:focus-visible { outline-color: var(--paper); }
+  ::selection { background: var(--paper); color: var(--red); }
+  .footer-opening { align-items: start; row-gap: 40px; }
+  .invitation { grid-column: 1 / span 7; }
+  h2 { font-size: clamp(3rem, 6.8vw, 6rem); line-height: 1.02; }
+  h2 span { display: block; }
+  .footer-lede { margin-top: 24px; font-size: var(--step-1); line-height: 1.4; max-width: 34ch; }
+  .club { grid-column: 9 / span 4; }
+  h3 { font-size: var(--step-2); line-height: 1.1; }
+  h3 a { text-decoration-thickness: 2px; }
+  .club > p { margin-top: 20px; }
+  .support {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    margin-top: 28px;
+    padding: 0.75em 1em;
+    background: var(--paper);
+    color: var(--red);
+    font-family: var(--display);
+    font-size: var(--step-1);
+    font-weight: 700;
+    line-height: 1.2;
+    text-decoration: none;
+    transition: color 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+  }
+  .support:hover { color: var(--red-deep); text-decoration: underline; }
+  .support:active { transform: translateY(1px); }
+  .club .support-note { margin-top: 12px; font-size: 14px; }
+  .footer-wayfinding {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px 48px;
+    margin-top: clamp(48px, 6vw, 88px);
+    padding-block: 28px;
+    border-top: 4px solid var(--paper);
+    border-bottom: 2px solid var(--paper);
+  }
+  .footer-brand { font-family: var(--display); font-size: 4rem; font-weight: 700; line-height: 1; text-decoration: none; }
+  nav ul { display: flex; flex-wrap: wrap; gap: 8px 32px; padding: 0; list-style: none; }
+  nav a { display: inline-flex; align-items: center; min-height: 44px; font-family: var(--display); font-size: var(--step-1); font-weight: 700; }
+  .footer-notes { display: grid; grid-template-columns: 2fr 1fr; gap: 20px 48px; padding-top: 24px; font-size: 14px; line-height: 1.6; }
+  .footer-notes p + p { margin-top: 12px; }
+  .seal-note { max-width: 30ch; justify-self: end; }
+  @media (max-width: 1100px) {
+    .invitation { grid-column: 1 / span 7; }
+    .club { grid-column: 8 / span 5; }
+  }
+  @media (max-width: 900px) {
+    .invitation, .club { grid-column: 1 / -1; }
+    .club { max-width: 42ch; }
+    .footer-wayfinding { flex-direction: column; align-items: flex-start; }
+    .footer-notes { grid-template-columns: 1fr; }
+    .seal-note { max-width: 40ch; justify-self: start; }
+  }
+  @media (max-width: 720px) {
+    h2 { font-size: clamp(2.4rem, 9vw, 4rem); }
+    .footer-lede { font-size: var(--step-0); }
+    nav ul { flex-direction: column; gap: 4px; }
+    .support { max-width: 100%; }
+  }
+</style>
