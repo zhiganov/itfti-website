@@ -3,26 +3,25 @@
 interface Props { current: "home" | "itf" | "loop" | "fti" | "status" }
 const { current } = Astro.props;
 const letters = [
-  { id: "home", glyph: "I", label: "Home", href: "/" },
-  { id: "itf", glyph: "t", label: "Impact to Funding", href: "/itf" },
-  { id: "loop", glyph: "F", label: "How the two meet", href: "/#loop" },
-  { id: "fti", glyph: "t", label: "Funding to Impact", href: "/fti" },
-  { id: "status", glyph: "I", label: "What exists today", href: "/#status" },
+  { id: "home", glyph: "I", label: "Home", shortLabel: "Home", href: "/" },
+  { id: "itf", glyph: "t", label: "Impact to Funding", shortLabel: "Builders", href: "/itf" },
+  { id: "loop", glyph: "F", label: "How the two meet", shortLabel: "The loop", href: "/#loop" },
+  { id: "fti", glyph: "t", label: "Funding to Impact", shortLabel: "Funders", href: "/fti" },
+  { id: "status", glyph: "I", label: "What exists today", shortLabel: "Status", href: "/#status" },
 ];
 ---
 <nav class="letters" aria-label="Site">
   <ul>
     {letters.map((l) => (
       <li>
-        <a href={l.href} aria-current={l.id === current ? "page" : undefined} class:list={{ on: l.id === current }}>
+        <a href={l.href} aria-label={l.shortLabel === l.label ? l.label : `${l.shortLabel}: ${l.label}`} aria-current={l.id === current ? "page" : undefined} class:list={{ on: l.id === current }}>
           <span class="glyph" aria-hidden="true">{l.glyph}</span>
-          <span class="label">{l.label}</span>
+          <span class="label" aria-hidden="true"><span class="label-full">{l.label}</span><span class="label-short">{l.shortLabel}</span></span>
         </a>
       </li>
     ))}
   </ul>
   <a class="home" href="/">itfti.org</a>
-  <p class="here" aria-hidden="true">{letters.find((l) => l.id === current)?.label}</p>
 </nav>
 
 <style>
@@ -54,11 +53,8 @@ const letters = [
     max-width: 84px;
     text-align: center;
     line-height: 1.2;
-    opacity: 0;
-    transform: translateY(-3px);
-    transition: opacity 0.2s var(--ease-out), transform 0.2s var(--ease-out);
   }
-  ul a:hover .label, ul a:focus-visible .label, .on .label { opacity: 1; transform: none; }
+  .label-short { display: none; }
   .home {
     font-family: var(--display);
     font-weight: 700;
@@ -67,13 +63,13 @@ const letters = [
     text-transform: uppercase;
     padding-top: 16px;
   }
-  .here { display: none; }
   @media (max-width: 720px) {
-    .glyph { width: 40px; height: 40px; font-size: 24px; border-width: 3px; }
-    ul { gap: 6px; }
-    .label { display: none; }
+    .glyph { width: 44px; height: 44px; font-size: 24px; border-width: 3px; }
+    ul { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; width: 100%; max-width: 420px; }
+    .label { font-size: 14px; letter-spacing: 0; text-transform: none; max-width: 100%; }
+    .label-full { display: none; }
+    .label-short { display: inline; }
     .home { display: none; }
-    .letters { flex-direction: column; gap: 8px; }
-    .here { display: block; font-family: var(--display); font-weight: 700; font-size: 18px; line-height: 1.2; }
+    .letters { flex-direction: column; gap: 0; }
   }
 </style>
