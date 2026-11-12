@@ -144,7 +144,7 @@ One red on one paper. Tints are not used except for a code wash.
 - **Headline** (700, 1.6rem to 2.4rem fluid, 1): h2 section heads.
 - **Title** (700, 1.25rem to 1.6rem fluid, 1): h3, lane heads, button text, lead lines. Zilla Slab 500 at 1.3 line height is used for the large pull sentence.
 - **Body** (400, 1rem to 1.125rem fluid, 1.55): paragraphs and lists, capped at 68ch.
-- **Label** (600, 11px, 0.06em, uppercase): letter-navigation captions only. Shown on hover, focus and for the current letter.
+- **Label** (600, 11px, 0.06em, uppercase): always-visible letter-navigation captions. On phones, use 14px sentence-case destination labels with no added tracking.
 
 ### Named Rules
 **The Slab Heads Rule.** Headings are Zilla Slab 700, tight at line-height 1, balanced wrap. Body is never slab.
@@ -184,7 +184,7 @@ Red, 2px underline, 0.2em offset. Hover is deep red. Focus is a 3px red outline 
 Red Wash ground, monospace at 0.9em, small padding, no radius.
 
 ### Navigation (Letter Nav)
-Five framed blocks spell I, t, F, t, I. Each is 52px square, with a 4px red border and Zilla Slab 700 at 30px. The current page is filled red with paper text. Hover fills too. A caption appears below on hover, focus and for the current block. The site name "itfti.org" sits at the opposite end. On phones the blocks shrink to 40px with a 3px border, captions are hidden, and the current page name shows below.
+Five framed blocks spell I, t, F, t, I. Each is 52px square, with a 4px red border and Zilla Slab 700 at 30px. The current page is filled red with paper text. Hover fills too. Destination captions are always visible below the blocks. The site name "itfti.org" sits at the opposite end. On phones the blocks are 44px with a 3px border, and five equal columns show the concise labels Home, Builders, The loop, Funders and Status. Every anchor has a persistent accessible name containing both its concise label and full destination name where these differ; hiding a responsive caption must not remove that name. Navigation uses ordinary links and works without JavaScript.
 
 ### Install Commands
 A tab per agent (Claude Code, Codex CLI, OpenCode) as 4px-bordered slab tabs, the selected one filled. Each panel shows the exact shell command from the ItF installation guide on the Red Wash ground with a filled Copy button, then the command to type in the agent. Without JavaScript all three panels show in sequence. Code scrolls sideways on phones rather than wrapping.
