@@ -15,9 +15,9 @@ THESIS: The page is the seal. It refuses the category's split hero and feature-c
 
 OWN-WORLD: One ink only, seal red #890405, on near-white paper #f7f5f2. The seal is the only frame on the page (Artem removed the viewport frame, 2026-11-11). Zilla Slab 700 for headlines and the I-t-F-t-I letter navigation in framed blocks (current one filled); Libre Franklin for body. Solid red rules mark what exists, dashed red rules mark proposal-stage work. Buttons are filled red slabs with paper text.
 
-STORY: Builders see a free, open-source agent skill and how to install it; funders see a draft file format for publishing what they support, and the MCP server that reads it; both see exactly what exists today and what does not.
+STORY: Builders and funders choose between two adjacent, explicitly named opening actions: install the experimental ItF skill or read the FtI publishing guide. The existing lanes explain each project and its status; both audiences retain clear routes in the shared footer. No account, hosted service or adoption is implied.
 
-FIRST VIEWPORT: Unframed page; letter nav top left, itfti.org top right; the full seal left at about 620px; headline "Find the way from impact to funding." right; two lanes (ItF solid rule, FtI dashed rule); "Install ItF" slab button bottom right, jumping to copyable install commands on the same page.
+FIRST VIEWPORT: Keep the seal-led opening and headline. Immediately after the lede, place equal-width "Builders: install ItF" and "Funders: publish with FtI" actions, linking to #install and /fti/publish. Use the existing filled/ghost slabs, not competing filled buttons. Stack the pair at phone widths, keeping both together before the explanatory lanes and in the same DOM/focus order as their visual order. Keep the free/open-source qualification explicitly scoped to ItF and the existing experimental/draft status words.
 
 FORM: Printer's Proof translated into the seal's material (assigned, position 6 of 7). seed:39ce4545d670421e. Raises kept: status as line form; navigation is the name; a fixed column grid across all pages; strict coursing. Signature interaction: the install block, with a tab per agent and a one-click copy of the exact command (the scroll-drawn route was removed with the frame, 2026-11-11).
 
