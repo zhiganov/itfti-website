@@ -1,0 +1,47 @@
+{
+  "lexicon": 1,
+  "id": "org.itfti.profile",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "A person's public, self-published impact profile. Claims belong to the author.",
+      "key": "literal:self",
+      "record": {
+        "type": "object",
+        "required": ["summary", "createdAt"],
+        "properties": {
+          "summary": { "type": "string", "maxGraphemes": 300, "maxLength": 3000 },
+          "areas": {
+            "type": "array",
+            "maxLength": 8,
+            "items": { "type": "string", "maxGraphemes": 80, "maxLength": 800 }
+          },
+          "supportProfile": { "type": "string", "format": "uri" },
+          "badge": { "type": "string", "format": "uri" },
+          "reports": {
+            "type": "array",
+            "maxLength": 10,
+            "items": { "type": "ref", "ref": "#reportLink" }
+          },
+          "createdAt": { "type": "string", "format": "datetime" },
+          "updatedAt": { "type": "string", "format": "datetime" }
+        }
+      }
+    },
+    "reportLink": {
+      "type": "object",
+      "required": ["id", "url", "revision", "provenance", "state"],
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxGraphemes": 120, "maxLength": 1200 },
+        "url": { "type": "string", "format": "uri" },
+        "revision": { "type": "string", "maxLength": 64 },
+        "period": { "type": "string", "maxLength": 64 },
+        "published": { "type": "string", "format": "datetime" },
+        "provenance": { "type": "string", "maxLength": 32, "enum": ["self-report", "ai-assisted", "peer-review", "independent-evaluation"] },
+        "state": { "type": "string", "maxLength": 32, "enum": ["current", "corrected", "out-of-date", "withdrawn"] },
+        "statusUrl": { "type": "string", "format": "uri" }
+      }
+    }
+  }
+}
