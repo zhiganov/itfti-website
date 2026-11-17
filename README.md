@@ -14,6 +14,13 @@ The site is built with Astro and deployed to Netlify at itfti.org. Run `npm run 
 
 The needs spec, schema, publisher guide and fictional examples are CC0 1.0. This publication does not include the private MCP implementation or supply a hosted needs catalogue.
 
+## Profile app
+
+`app/` is an independently built ATProto profile app. It uses Bluesky identity
+details and stores impact content in the author's account. It has not been
+deployed or tested with real account writes. See [app/README.md](app/README.md)
+for development, the dependency advisory and the separate hosting gates.
+
 ## Logo
 
 `logo/itfti-seal.jpg` is the chosen mark: a red seal stamp whose letters I, t, F, t, I form the walls of a maze, with an entrance at the bottom and an exit at the top. The maze stands for the search for support, where many projects get lost before they find their way to funding. It is an AI-generated draft. `logo/itfti-seal.svg` is a Potrace trace of it, and `logo/itfti-seal-2048.png` a large PNG render.

@@ -45,7 +45,14 @@ One loop from both ends. ItF works from the builder's side (impact → funding);
 - **ItF has an optional local MCP server** over its reference library: `search_references`, `get_reference`, `library_info`; Node.js 22+.
 - **Organisation-needs publication:** a separate draft JSON format supports requester-owned needs and budgets. Local validation and discovery have fictional-data checks. The needs publication format is public under CC0; the MCP implementation stays private. Publishing a file does not automatically add it to a catalogue.
 - ItF code is MIT; ItF's original written content is CC BY-SA 4.0.
-- Undecided: whether the site covers the guilds concept (draft note in the ItF repo); a sign-up/account flow; analytics.
+- **Personal impact-profile app:** `app/` is an independently built browser
+  implementation of public profile viewing and OAuth-based authoring. It reads
+  public Bluesky identity details and writes impact content to the author's PDS.
+  It is not deployed or real-account tested. All nine local browser checks
+  pass. A scoped initial-launch exception for the upstream dependency advisory
+  is recorded in `docs/reviews/impact-profiles/security-assessment.md`.
+  Host/namespace and real-account verification remain release gates.
+- Undecided: whether the site covers the guilds concept (draft note in the ItF repo); analytics.
 
 ## Brand Commitments
 
