@@ -1,6 +1,6 @@
 # Personal impact profiles: first implementation checks
 
-2026-11-16. Work for [website #22](https://github.com/zhiganov/itfti-website/issues/22),
+Updated 2026-11-17. Work for [website #22](https://github.com/zhiganov/itfti-website/issues/22),
 following the public-profile slice of [ItF #7](https://github.com/zhiganov/impact-to-funding/issues/7).
 
 ## What is implemented
@@ -21,18 +21,22 @@ The root Astro build and Netlify configuration are unchanged.
 | Existing Astro build | Passed | All eight existing static pages still build |
 | Browser round 1 | Failed | Found a shared development-server JSON-module routing defect |
 | Browser correction round | 6 passed, 1 failed | Fictional publish/edit/delete, read failures, conflicts, reports, sign-out, safe text and responsive rendering passed; actual SDK initialization failed |
+| Browser recovery, 2026-11-17 | **9 passed** | Corrected SDK initialization, the six fixture-based cases, history/cancel draft preservation and stale lookup completion; one run, 6.3 seconds |
 | Independent source review | Four findings corrected | Pinned SDK callback API, history draft loss, unpublish-cancel draft loss and stale lookup navigation |
 | Design detector | No findings | Changed JavaScript/CSS UI files |
 | Dependency audit | 15 high package entries | One upstream Zod advisory; [website #23](https://github.com/zhiganov/itfti-website/issues/23) |
 
+Unit/build results are retained from 2026-11-16. The implementation is unchanged.
+The browser recovery and fresh audit were run on 2026-11-17.
+
 The real-SDK failure came from using an event API absent from the installed
 SDK. The correction uses its constructor `onSessionDeleted` hook and clears
 cached identity state. Three unit tests cover that integration seam. The
-browser check has not been rerun after this correction.
+2026-11-17 browser run passed against implementation commit `b702e54485391983f032874efddf996c0227266a`.
 
-Two browser regression cases were added for history/cancel preservation and
-stale lookup completion. They have not been run. Source review does not
-replace those runtime checks.
+The same run passed the two added browser regression cases for history/cancel
+preservation and stale lookup completion. No implementation changes or new
+runner were needed.
 
 The tests replace remote accounts with fictional responses. They do not sign
 in to a real account, publish records, provision a site or change DNS.
@@ -56,7 +60,8 @@ those corrections; these images are visual evidence, not proof of the fixes.
 
 ## Before release
 
-Resolve the advisory decision and the outstanding browser integration checks.
-Then verify the intended HTTPS host, namespace/Lexicon publication and an
+The local browser checks pass. The operator temporarily accepted the scoped
+advisory risk; see the [security assessment](security-assessment.md).
+Next verify the intended HTTPS host, namespace/Lexicon publication and an
 approved real-account write/read/edit/delete cycle. The app is not deployed,
 and the current checks do not establish readiness to publish a real profile.

@@ -29,12 +29,11 @@ npm run test:browser
 
 Playwright uses installed Google Chrome on macOS, or its Chromium elsewhere.
 In CI, install Chromium with `npx playwright install --with-deps chromium`.
-Browser tests intercept account reads and writes with fictional data. One
-test attempts to initialize the real OAuth SDK signed out; it makes no account
-requests. Its initial run exposed a lifecycle-hook integration defect. The
-source correction and unit checks use the pinned SDK's constructor callback.
-A browser recheck remains outstanding. The new history/lookup regression cases
-also await that recheck. These checks do not establish a live OAuth or PDS round trip.
+All nine browser tests passed on 2026-11-17. They intercept account reads and
+writes with fictional data. One initializes the real OAuth SDK signed out
+without account requests. The suite covers the corrected SDK lifecycle hook,
+history/cancel draft preservation and stale lookup completion.
+Live OAuth and real PDS writes remain untested.
 
 ## App and record
 
@@ -69,8 +68,8 @@ follows, profile edits or private messages.
 
 Sessions and keys are stored by the SDK in this browser's IndexedDB. Drafts
 exist only in tab memory. No application backend or central profile database
-is required. Browser-only OAuth has a smaller session-control surface than a
-server-managed session; a future server must justify its extra operations.
+is required. This app cannot centrally invalidate every browser session;
+the account provider controls its grants.
 
 The app requests records without a persistent application cache, so a refresh
 reads the current source. Other services may retain copies of public records.
@@ -89,10 +88,11 @@ an oversized-array validation resource-exhaustion issue. The advisory's patched
 release is Zod 4.6.6; the SDK requires Zod 3. A forced major-version override
 has not been applied.
 
-The response and record bounds reduce exposure. They are not a fix for the
-dependency advisory. Resolve this risk through an upstream-compatible update
-or an explicit security review before merge/deployment. Audit evidence and
-the remaining risk belong in the PR; do not describe the audit as passing.
+On 2026-11-17, the operator temporarily accepted the residual browser-tab
+resource-exhaustion risk for the initial own-profile launch, with the existing
+response and record limits. The audit still reports 15 high package entries
+from this one advisory. See the [assessment and scoped exception](../docs/reviews/impact-profiles/security-assessment.md).
+Website #23 stays open for a compatible upstream fix.
 
 ## Host separately on Netlify
 
@@ -127,7 +127,7 @@ their licence files emitted under `/licenses/`.
 
 ## Release gates
 
-Release needs a resolved dependency-advisory decision, a passing browser
-integration check, a verified host/namespace and an approved real-account
-write/read/edit/delete check. The broader mentor and community-module work
-in #7 remains separate.
+The local browser gate has passed. The initial-launch dependency exception
+is recorded. Release still needs a verified host/namespace and an approved
+real-account write/read/edit/delete check. The broader mentor and
+community-module work in #7 remains separate.

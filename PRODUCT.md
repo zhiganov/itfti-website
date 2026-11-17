@@ -48,8 +48,10 @@ One loop from both ends. ItF works from the builder's side (impact → funding);
 - **Personal impact-profile app:** `app/` is an independently built browser
   implementation of public profile viewing and OAuth-based authoring. It reads
   public Bluesky identity details and writes impact content to the author's PDS.
-  It is not deployed or real-account tested. SDK browser verification and an
-  upstream dependency advisory remain release gates; see `app/README.md`.
+  It is not deployed or real-account tested. All nine local browser checks
+  pass. A scoped initial-launch exception for the upstream dependency advisory
+  is recorded in `docs/reviews/impact-profiles/security-assessment.md`.
+  Host/namespace and real-account verification remain release gates.
 - Undecided: whether the site covers the guilds concept (draft note in the ItF repo); analytics.
 
 ## Brand Commitments
