@@ -43,7 +43,10 @@ function shell() {
     el('footer', { className: 'site-footer' },
       el('p', {}, 'Your account holds the record. You decide what to share.'),
       el('div', { className: 'footer-links' }, link('/privacy', 'Privacy & publication'),
-        link('mailto:hello@citizeninfra.org', 'Report a problem')),
+        link('mailto:hello@citizeninfra.org', 'Report a problem'),
+        link('https://github.com/zhiganov/itfti-website/blob/main/app/CODE_OF_CONDUCT.md', 'Code of Conduct'),
+        link('/licenses/itfti-profile-app.txt', 'App licence', { target: '_blank', rel: 'noopener noreferrer' }),
+        link('https://www.netlify.com/', 'This site is powered by Netlify')),
     ),
   );
   return currentMain;

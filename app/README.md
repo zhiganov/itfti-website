@@ -6,7 +6,9 @@ has its own build and stays unchanged.
 
 **Status: first implementation, not deployed or real-account tested.**
 The collection name is proposed. Before enabling publication on the public
-host, verify namespace control and the Lexicon publication route.
+host, verify control of its namespace and actual PDS write/read behavior.
+Network Lexicon publication is a recommended interoperability step, not a
+technical prerequisite for the first profile.
 
 ## Develop and check
 
@@ -94,11 +96,26 @@ response and record limits. The audit still reports 15 high package entries
 from this one advisory. See the [assessment and scoped exception](../docs/reviews/impact-profiles/security-assessment.md).
 Website #23 stays open for a compatible upstream fix.
 
+## Licence and conduct
+
+The original app package is [MIT licensed](LICENSE). This covers its code and
+associated documentation. Profile records, personal data, linked reports, the
+root landing site and the pre-existing seal asset keep their own rights.
+Dependencies and fonts retain their existing licences.
+
+The [Code of Conduct](CODE_OF_CONDUCT.md) covers app collaboration and hosted
+participation. The app footer links it, the distributed app licence and the
+required Netlify acknowledgement.
+
 ## Host separately on Netlify
 
 No site or DNS record is provisioned by this code. When hosting is approved:
 
 1. Verify the intended Netlify account, site, costs and domain control.
+   If using its Open Source plan, confirm that this hosted app qualifies under
+   the [plan policy](https://www.netlify.com/legal/open-source-policy/).
+   Licence, conduct and attribution requirements are included; provider
+   acceptance is a separate check.
 2. Create/select a separate site using this repository and `app/netlify.toml`.
    It sets base directory `app` and publishes `app/dist`. Leave the existing
    landing site's root configuration and domain untouched.
@@ -111,8 +128,11 @@ No site or DNS record is provisioned by this code. When hosting is approved:
 5. Verify that OAuth metadata and the callback share the exact origin, metadata
    returns JSON, deep links return the app, and the security headers apply.
    A different host is refused for sign-in.
-6. Verify the production namespace and its schema publication. The static
-   schema file alone does not establish ATProto Lexicon authority.
+6. Verify control of `itfti.org` before adopting `org.itfti.profile`.
+   The app bundles its schema for validation. If network Lexicon publication
+   is chosen, publish it to an approved ATProto account and point
+   `_lexicon.itfti.org` at that DID. A static schema file alone is not
+   network publication. See the [official guide](https://atproto.com/guides/publishing-lexicons).
 7. Agree the operator/takedown contact and review this app's privacy page.
    `src/moderation.js` provides host-level suppression by DID; it cannot
    change a user's source record.
