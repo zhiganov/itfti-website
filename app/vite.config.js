@@ -12,6 +12,9 @@ const assets = {
   '/client-metadata.json': { source: metadata, type: 'application/json' },
   '/lexicons/org.itfti.profile.json': { source: schema, type: 'application/json' },
   '/itfti-seal.svg': { source: seal, type: 'image/svg+xml' },
+  '/licenses/itfti-profile-app.txt': {
+    source: readFileSync(new URL('./LICENSE', import.meta.url)), type: 'text/plain',
+  },
   '/licenses/zilla-slab.txt': {
     source: readFileSync(new URL('./node_modules/@fontsource/zilla-slab/LICENSE', import.meta.url)), type: 'text/plain',
   },

@@ -170,6 +170,9 @@ test('desktop and mobile render the editor, review and public profile without ov
     await page.setViewportSize({ width, height });
     await page.goto('/edit');
     await expect(page.getByLabel('What are you working on?')).toBeVisible();
+    await expect(page.getByRole('contentinfo').getByRole('link', { name: 'Code of Conduct', exact: true })).toBeVisible();
+    await expect(page.getByRole('contentinfo').getByRole('link', { name: 'App licence', exact: true })).toBeVisible();
+    await expect(page.getByRole('contentinfo').getByRole('link', { name: 'This site is powered by Netlify', exact: true })).toBeVisible();
     await page.evaluate(() => document.fonts.ready);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     if (directory) await page.screenshot({ path: `${directory}/editor-${name}.png`, fullPage: true });
@@ -185,6 +188,20 @@ test('desktop and mobile render the editor, review and public profile without ov
   }
   expect(state.errors).toEqual([]);
   expect(state.writes()).toBe(0);
+});
+
+test('policy links and distributed app licence are available without signing in', async ({ page, request }) => {
+  await page.route('https://**/*', (route) => route.abort());
+  await page.goto('/privacy');
+  const footer = page.getByRole('contentinfo');
+  await expect(footer.getByRole('link', { name: 'Code of Conduct', exact: true })).toHaveAttribute('href', 'https://github.com/zhiganov/itfti-website/blob/main/app/CODE_OF_CONDUCT.md');
+  await expect(footer.getByRole('link', { name: 'App licence', exact: true })).toHaveAttribute('target', '_blank');
+  await expect(footer.getByRole('link', { name: 'This site is powered by Netlify', exact: true })).toHaveAttribute('href', 'https://www.netlify.com/');
+  const response = await request.get('/licenses/itfti-profile-app.txt');
+  expect(response.status()).toBe(200);
+  expect(response.headers()['content-type']).toContain('text/plain');
+  expect(await response.text()).toContain('MIT License');
+  expect(await response.text()).toContain('It does not relicense profile records');
 });
 
 test('history cancellation preserves the draft, and cancel-unpublish keeps intervening edits', async ({ page }) => {

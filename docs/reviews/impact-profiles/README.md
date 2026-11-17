@@ -62,6 +62,8 @@ those corrections; these images are visual evidence, not proof of the fixes.
 
 The local browser checks pass. The operator temporarily accepted the scoped
 advisory risk; see the [security assessment](security-assessment.md).
-Next verify the intended HTTPS host, namespace/Lexicon publication and an
+Next verify the intended HTTPS host, control of the chosen namespace and an
 approved real-account write/read/edit/delete cycle. The app is not deployed,
 and the current checks do not establish readiness to publish a real profile.
+Network Lexicon publication is recommended rather than required; see the
+[hosting readiness note](hosting-readiness.md).
