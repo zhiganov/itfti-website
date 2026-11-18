@@ -10,7 +10,7 @@ const initial = {
   createdAt: '2026-11-16T12:00:00.000Z',
 };
 
-async function fixture(page, { published = true, signedIn = true, failSave = false, failRead = false } = {}) {
+async function fixture(page, { published = true, signedIn = true, failSave = false, failRead = false, sdkLifecycle = false } = {}) {
   let record = published ? structuredClone(initial) : null;
   let writes = 0;
   const errors = [];
@@ -35,16 +35,31 @@ async function fixture(page, { published = true, signedIn = true, failSave = fal
     } else return route.abort();
     await route.fulfill({ status, contentType: 'application/json', body: JSON.stringify(data) });
   });
-  await page.route('**/src/auth.js', (route) => route.fulfill({
-    contentType: 'text/javascript',
-    body: `let active = ${signedIn};
+  const sessionSource = `let active = ${signedIn};
     const session = {
       sub: ${JSON.stringify(DID)},
       async fetchHandler(path, options) {
         return fetch('/__test__/write?method=' + path.split('.').pop(), options);
       },
       async signOut() {}
-    };
+    };`;
+  await page.route('**/src/auth.js', (route) => route.fulfill({
+    contentType: 'text/javascript',
+    body: sdkLifecycle ? `
+    import { createAuth } from '/src/auth.js?callback-lifecycle-fixture';
+    ${sessionSource}
+    class BrowserOAuthClient {
+      constructor(options) { this.options = options; }
+      static async load(options) { return new BrowserOAuthClient(options); }
+      async init() {
+        this.options.onSessionDeleted(session.sub);
+        this.options.onSessionUpdated?.(session.sub, {});
+        return { session };
+      }
+    }
+    export const auth = createAuth({
+      loadSdk: async () => ({ BrowserOAuthClient }),
+    });` : `${sessionSource}
     export const auth = {
       async init() { return active ? session : null; },
       async signIn() { throw new Error('Synthetic test: no live OAuth'); },
@@ -67,6 +82,16 @@ async function fixture(page, { published = true, signedIn = true, failSave = fal
   });
   return { writes: () => writes, errors, record: () => record };
 }
+
+test('successful callback cleanup reaches the editor through the real auth wrapper', async ({ page }) => {
+  const state = await fixture(page, { published: false, sdkLifecycle: true });
+  await page.goto('/oauth/callback#state=synthetic-state&code=synthetic-code');
+  await expect(page.getByLabel('What are you working on?', { exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Sign out', exact: true })).toBeVisible();
+  await expect(page).toHaveURL(/\/edit$/);
+  expect(state.writes()).toBe(0);
+  expect(state.errors).toEqual([]);
+});
 
 test('anonymous public viewing, refresh, missing record and safe text', async ({ page }) => {
   const state = await fixture(page);
