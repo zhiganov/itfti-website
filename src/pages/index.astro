@@ -3,12 +3,6 @@ import Base from "../layouts/Base.astro";
 import InstallCommands from "../components/InstallCommands.astro";
 
 const repo = "https://github.com/zhiganov/impact-to-funding";
-const helps = [
-  "explore where your skills could be useful,",
-  "develop shared work with others,",
-  "learn what difference the work makes,",
-  "explain what would help it continue.",
-];
 const publishes = [
   ["Priorities", "the problems, communities and kinds of work it wants to support, and what it excludes."],
   ["Eligibility", "whether individuals, informal groups, organisations or fiscally sponsored projects can apply, and where."],
@@ -60,14 +54,22 @@ const publishes = [
       <p class="tag rule-solid">For builders. Available now as an experimental skill.</p>
     </div>
     <div class="body">
-      <p class="big">ItF is a skill for the AI agent you already use. It helps you:</p>
-      <ul class="helps">{helps.map((h) => <li>{h}</li>)}</ul>
-      <p>Start with your situation. You don't need a theory of change, a project, evidence or a fundraising goal. It's for developers, maintainers and independent builders who already use AI agents; community organisers, small teams and facilitators may find it useful too.</p>
+      <p class="big">ItF is a skill for the AI agent you already use. Start from your own situation: no theory of change, project, evidence or fundraising goal is needed.</p>
+      <div class="example">
+        <div>
+          <h3>You begin with your situation</h3>
+          <p>“I maintain a small open-source tool that a few teams rely on. I have maybe five hours a week. Where could my skills be useful, and what would help this work continue?”</p>
+        </div>
+        <div>
+          <h3>ItF helps you develop</h3>
+          <p>A possible contribution, a clearer question, a smaller commitment or a decision to stop. It works from what you supply, marks assumptions, keeps the conversation private and contacts no one without your say-so.</p>
+        </div>
+      </div>
+      <p class="fine">An illustrative example, not a real conversation. It's for developers, maintainers and independent builders who already use AI agents; community organisers, small teams and facilitators may find it useful too.</p>
       <h3 id="install">Install</h3>
       <p>ItF is free. You need an existing Claude Code, Codex CLI or OpenCode setup. Your agent's model costs and privacy terms still apply.</p>
       <p>ItF supports exploration. It doesn't provide funding, find collaborators or certify impact. <a href="/itf#limits">Read the limits</a>.</p>
       <InstallCommands />
-      <p>ItF also has an optional MCP server: three read-only tools that let any agent search its reference library of cases and patterns. <a href="/itf#mcp">Set it up</a>.</p>
       <p class="actions">
         <a class="slab-ghost" href="/itf">How it works</a>
       </p>
@@ -136,8 +138,10 @@ const publishes = [
   .big { font-family: var(--display); font-weight: 500; font-size: var(--step-1); line-height: 1.3; max-width: 34ch; }
   .tag { margin-top: 14px; padding-top: 10px; font-weight: 600; max-width: 26ch; }
 
-  .helps { list-style: none; padding: 0; font-family: var(--display); font-weight: 700; font-size: var(--step-1); line-height: 1.3; }
-  .helps li { padding: 0.35em 0; border-bottom: 2px solid var(--red); }
+  .example { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 8px solid var(--red); }
+  .example > div { padding: 22px 24px; max-width: none; }
+  .example > div + div { border-left: 8px solid var(--red); }
+  .example h3 { margin-bottom: 0.4em; }
   .hosts { max-width: 560px; }
   .fine { font-size: 0.9rem; }
   .actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 0.4em; }
@@ -162,6 +166,8 @@ const publishes = [
     .head { position: static; }
     .sides { grid-template-columns: 1fr; }
     .sides li + li { border-left: 0; border-top: 8px solid var(--red); }
+    .example { grid-template-columns: 1fr; }
+    .example > div + div { border-left: 0; border-top: 8px solid var(--red); }
     .publishes div { grid-template-columns: 1fr; gap: 2px; }
     .lane h2 span { display: block; margin: 6px 0 0; }
   }
