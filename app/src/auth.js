@@ -8,6 +8,8 @@ export function createAuth({
   let clientPromise;
   let initPromise;
   let revision = 0;
+  let activeSubject = null;
+  const deletedSubjects = new Set();
   const subscribers = new Set();
 
   async function client() {
@@ -18,9 +20,18 @@ export function createAuth({
         fetch: boundedFetch,
         // Lifecycle hooks are constructor options in the pinned SDK.
         onSessionDeleted(sub) {
-          revision++;
-          initPromise = Promise.resolve(undefined);
+          deletedSubjects.add(sub);
+          if (sub === activeSubject) {
+            activeSubject = null;
+            revision++;
+            initPromise = Promise.resolve(undefined);
+          }
           for (const listener of subscribers) listener(sub);
+        },
+        onSessionUpdated(sub) {
+          // A successful callback cleans up the old session before storing the
+          // new one. Its later update supersedes that cleanup, not a later revoke.
+          deletedSubjects.delete(sub);
         },
       };
       return typeof metadata === 'string'
@@ -35,7 +46,10 @@ export function createAuth({
       const startedAt = revision;
       initPromise ||= client().then((instance) => instance.init());
       const result = await initPromise;
-      return startedAt === revision ? result?.session || null : null;
+      const session = result?.session || null;
+      if (startedAt !== revision || (session && deletedSubjects.has(session.sub))) return null;
+      activeSubject = session?.sub || null;
+      return session;
     },
     async signIn(input) {
       const instance = await client();
@@ -45,6 +59,8 @@ export function createAuth({
     async signOut(session) {
       await session.signOut();
       revision++;
+      activeSubject = null;
+      deletedSubjects.add(session.sub);
       initPromise = Promise.resolve(undefined);
     },
     onDeleted(listener) {
