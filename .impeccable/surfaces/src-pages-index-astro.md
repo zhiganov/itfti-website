@@ -7,7 +7,7 @@ related_targets: ["src/pages/itf.astro","src/pages/fti.astro"]
 
 # Landing page (itfti.org) with /itf and /fti
 
-Mode: Persuade. Audience: builders and funders, equally. Action: builders copy the install command on the page; funders read how the FtI file format and MCP server work (no contact route yet). Constraints: honest status everywhere (ItF experimental v0, FtI draft 0.1, no funder adoption); avoid startup-SaaS, charity/NGO, faux-Asian pastiche and any overclaiming. Chosen sketch: `.impeccable/mocks/decision/assigned-v2.html` (revised after Artem said the first version did not follow the logo).
+Mode: Persuade. Audience: builders and funders, equally. Action: builders copy the install command on the page; funders read the FtI publishing guide and can contact the project through the forms on `/fti` and `/fti/publish#contact`, or `hello@citizeninfra.org`. End-to-end form submission and email delivery remain unverified ([website #6](https://github.com/zhiganov/itfti-website/issues/6)). Constraints: honest status everywhere (ItF experimental v0, FtI draft 0.1, no funder adoption); avoid startup-SaaS, charity/NGO, faux-Asian pastiche and any overclaiming. Chosen sketch: `.impeccable/mocks/decision/assigned-v2.html` (revised after Artem said the first version did not follow the logo).
 
 ## Direction contract
 
