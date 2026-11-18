@@ -192,6 +192,8 @@ Five framed blocks spell I, t, F, t, I. Each is 52px square, with a 4px red bord
 ### Install Commands
 A tab per agent (Claude Code, Codex CLI, OpenCode) as 4px-bordered slab tabs, the selected one filled. Each panel shows the exact shell command from the ItF installation guide on the Red Wash ground with a filled Copy button, then the command to type in the agent. Without JavaScript all three panels show in sequence. Code scrolls sideways on phones rather than wrapping.
 
+Tabs and copy buttons are at least 44px high. At 720px and below, the three agent choices share one equal-width row; labels may wrap within their own column on narrow screens. Copy buttons sit in a 64px top gutter above the scrollable code on phones, including the shared CopyBlock used for JSON and MCP examples.
+
 ### Status Lane
 A heading link over a short line, topped by an 8px rule: solid for ItF, dashed for FtI.
 
