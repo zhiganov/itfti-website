@@ -4,7 +4,9 @@ A browser app for public personal profiles stored in the author's ATProto
 account. It reads Bluesky identity details separately. The existing Astro site
 has its own build and stays unchanged.
 
-**Status: first implementation, not deployed or real-account tested.**
+**Status: implementation integrated; real-account publication is not yet verified.**
+See [website #22](https://github.com/zhiganov/itfti-website/issues/22) for current
+hosting and release-verification evidence.
 The collection name is proposed. Before enabling publication on the public
 host, verify control of its namespace and actual PDS write/read behavior.
 Network Lexicon publication is a recommended interoperability step, not a

@@ -17,8 +17,9 @@ The needs spec, schema, publisher guide and fictional examples are CC0 1.0. This
 ## Profile app
 
 `app/` is an independently built ATProto profile app. It uses Bluesky identity
-details and stores impact content in the author's account. It has not been
-deployed or tested with real account writes. See [app/README.md](app/README.md)
+details and stores impact content in the author's account. See
+[website #22](https://github.com/zhiganov/itfti-website/issues/22) for current
+hosting and real-account verification, and [app/README.md](app/README.md)
 for development, the dependency advisory and the separate hosting gates.
 
 ## Logo
