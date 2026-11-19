@@ -6,6 +6,8 @@ const mcpSetup = `cd .claude/skills/impact-to-funding   # your ItF install folde
 npm ci --ignore-scripts --prefix mcp
 mkdir -p outputs
 node mcp/prepare.mjs --revision "$(git rev-parse HEAD)" --output outputs/library-snapshot.json`;
+const pluginInstall = `claude plugin marketplace add https://github.com/zhiganov/impact-to-funding.git
+claude plugin install itf@impact-to-funding`;
 const repo = "https://github.com/zhiganov/impact-to-funding";
 const starts = [
   {
@@ -45,6 +47,10 @@ const starts = [
       <p>Pick your agent, copy the command, and run it in your terminal. Conversation needs no signup, Node.js, MCP server or plugin. Your agent's model costs and privacy terms still apply.</p>
       <InstallCommands />
       <p>Claude Code and Codex CLI were each checked with one non-interactive run. OpenCode was install-tested with an older snapshot. Menus, desktop apps and usefulness were not tested.</p>
+      <h3 id="plugin" class="sub">Claude Code plugin</h3>
+      <p>Claude Code users can install ItF as a plugin instead. It brings the skill and the MCP server below together, so there is nothing to prepare by hand. Run these in your terminal:</p>
+      <CopyBlock code={pluginInstall} />
+      <p>Then type <code>/itf:impact-to-funding</code>. The plugin needs Claude Code 2.1.281 or later, and Node.js 22 or later for the MCP server. It changes only when you run <code>claude plugin update itf</code>. If you also installed the skill folder above, keep one of the two. The plugin was checked on macOS and Windows.</p>
     </div>
   </section>
 
@@ -52,8 +58,13 @@ const starts = [
     <h2 id="mcp-title" class="head">MCP server</h2>
     <div class="body">
       <p class="big">An optional, read-only MCP server over ItF's reference library.</p>
-      <p>It lets any MCP client search the library's cases, candidate patterns and lenses with three tools: <code>search_references</code>, <code>get_reference</code> and <code>library_info</code>. It runs locally, reads a snapshot you prepare from your installed copy, and needs no account or API key. You don't need it to use the skill.</p>
-      <p>It needs Node.js 22 or later, npm and Git. Prepare the snapshot once, from your install folder:</p>
+      <p>It lets any MCP client search the library's cases, candidate patterns and lenses with three tools: <code>search_references</code>, <code>get_reference</code> and <code>library_info</code>. It runs locally over a prepared snapshot of the library and needs no account or API key. You don't need it to use the skill. There are three ways to set it up.</p>
+      <h3 class="sub">With the Claude Code plugin</h3>
+      <p>The <a href="#plugin">plugin</a> includes the server and a prepared snapshot, and starts the server for you.</p>
+      <h3 class="sub">With <code>itf setup</code></h3>
+      <p>For OpenCode, in one project, or Claude Code, for one project, on macOS or Linux. <code>itf setup</code> prepares the server and a snapshot, shows you its plan before changing anything, registers the server and can undo it. It needs Node.js 22 or later, npm and Git. Commands are in the <a href="https://github.com/zhiganov/impact-to-funding/blob/main/docs/library-mcp-setup.md">setup guide</a>.</p>
+      <h3 class="sub">By hand</h3>
+      <p>For any agent that takes a local MCP server. You need Node.js 22 or later, npm and Git. Prepare the snapshot once, from your install folder:</p>
       <CopyBlock code={mcpSetup} />
       <p>Then add a stdio server to your agent's MCP settings: command <code>node</code>, arguments <code>&lt;install folder&gt;/mcp/server.mjs --snapshot &lt;install folder&gt;/outputs/library-snapshot.json</code>, using absolute paths. Details in the <a href="https://github.com/zhiganov/impact-to-funding/blob/main/mcp/README.md">MCP guide</a>.</p>
     </div>
@@ -97,6 +108,7 @@ const starts = [
   .big { font-family: var(--display); font-weight: 500; font-size: var(--step-2); line-height: 1.3; max-width: 26ch; }
   .tag { margin-top: 14px; padding-top: 10px; font-weight: 600; max-width: 26ch; }
   .actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 0.4em; }
+  .sub { margin-top: 0.9em; }
   .starts { list-style: none; padding: 0; display: grid; gap: 0; counter-reset: s; }
   .starts li { padding: 18px 0; border-top: 4px solid var(--red); max-width: none; }
   .starts h3 { margin-bottom: 10px; }
