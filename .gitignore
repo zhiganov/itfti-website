@@ -11,3 +11,6 @@ dist/
 .impeccable/review/
 .impeccable/questions/
 .impeccable/hook.cache.json
+
+# macOS Finder view metadata
+.DS_Store
