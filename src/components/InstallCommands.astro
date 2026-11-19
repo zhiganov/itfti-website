@@ -1,7 +1,7 @@
 ---
 // Install commands copied from the ItF installation guide (docs/install.md) and README.
-// Claude Code and Codex use the guide's guarded clone at the checked revision; OpenCode uses the
-// README's older, install-tested snapshot. Update these together with the guide.
+// Each host pins the newest source checked in it, as the guide does: Claude Code at v0.6.0,
+// Codex at 4566892 and OpenCode at the older fbb8993. Update these together with the guide.
 const revision = "4566892ad990131fb36f760e14c73e5f275600cc";
 const guarded = (target: string, installRevision = revision) => `target='${target}'
 revision='${installRevision}'
@@ -17,7 +17,7 @@ const hosts = [
   {
     id: "claude",
     name: "Claude Code",
-    command: guarded(".claude/skills/impact-to-funding"),
+    command: guarded(".claude/skills/impact-to-funding", "22baeceae63d8090aca1afb71ccf745e3335979b"),
     then: "Open Claude Code in the same project and type",
     invoke: "/impact-to-funding",
     note: "If the session was already open, run /reload-skills first.",
