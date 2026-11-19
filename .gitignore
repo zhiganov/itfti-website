@@ -14,3 +14,6 @@ dist/
 
 # macOS Finder view metadata
 .DS_Store
+
+# local harness wiring (Claude Code project hook)
+.claude/
