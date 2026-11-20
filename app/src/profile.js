@@ -5,6 +5,17 @@ import { COLLECTION, RECORD_KEY } from './config.js';
 const lexicons = new Lexicons([schema]);
 export const PROVENANCE = ['self-report', 'ai-assisted', 'peer-review', 'independent-evaluation'];
 export const REPORT_STATES = ['current', 'corrected', 'out-of-date', 'withdrawn'];
+// Display labels follow ItF's impact badge contract, so a report reads the same on a profile and on its card.
+const PROVENANCE_LABELS = {
+  'self-report': 'self-reported',
+  'ai-assisted': 'AI-assisted',
+  'peer-review': 'peer-reviewed',
+  'independent-evaluation': 'independently evaluated',
+};
+export const provenanceLabel = (value) => PROVENANCE_LABELS[value] || String(value).replaceAll('-', ' ');
+export const stateLabel = (value) => String(value).replaceAll('-', ' ');
+// Readers must see these states before following the report link.
+export const flaggedState = (value) => ['withdrawn', 'corrected'].includes(value);
 const segmenter = new Intl.Segmenter(undefined, { granularity: 'grapheme' });
 export const graphemes = (text) => [...segmenter.segment(text)].length;
 
