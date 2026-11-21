@@ -3,6 +3,20 @@ import Base from "../layouts/Base.astro";
 import InstallCommands from "../components/InstallCommands.astro";
 
 const repo = "https://github.com/zhiganov/impact-to-funding";
+const makes = [
+  ["Support briefs", "a case for a funder or supporter, with dated research from funders' own pages and their application rules."],
+  ["Claim checks", "each claim held to your evidence before anything goes public, with what you saw kept apart from what you hope for."],
+  ["Theories of change", "rebuilt from what you already have: reports, notes and records."],
+  ["Sponsorship", "GitHub Sponsors profiles and tiers, and a read-only check of your funding setup."],
+  ["A way in", "contributing your skills to existing organisations, if you don't have a project of your own."],
+  ["Impact cards", "a badge and card for an approved public report, plus a readability check and portable records."],
+];
+const together = [
+  { rule: "rule-solid", title: "Profiles", text: "Publish an impact profile from your own Bluesky or ATProto account, at app.itfti.org. Visitors can read it without signing in.", link: ["https://app.itfti.org", "Open profiles"] },
+  { rule: "rule-solid", title: "Mentors", text: "ItF helps you think of people you already know who could mentor you, and prepare a short request. A shared, opt-in mentor pool is planned." },
+  { rule: "rule-dash", title: "Guilds", text: "Members of a community see each other's profiles, contributions and requests for help in their community dashboard. Designed, not built yet." },
+  { rule: "rule-dash", title: "Matchmaking", text: "Organisations publish the skilled help they need and their budgets, and builders find work they can do. The format is public; matching isn't built yet.", link: ["/fti/needs", "The needs format"] },
+];
 const publishes = [
   ["Priorities", "the problems, communities and kinds of work it wants to support, and what it excludes."],
   ["Eligibility", "whether individuals, informal groups, organisations or fiscally sponsored projects can apply, and where."],
@@ -31,7 +45,7 @@ const publishes = [
       <p class="entry-note">ItF is free and open source.</p>
       <div class="lane rule-solid">
         <h2><a href="/itf">Impact to Funding</a> <span>builders · experimental</span></h2>
-        <p>An open-source skill for your AI agent: find where your skills help, build with others, and explain what would help the work continue.</p>
+        <p>An open-source skill for your AI agent. It helps you find where your skills help, make an honest case for support, and work with others.</p>
       </div>
       <div class="lane rule-dash">
         <h2><a href="/fti">Funding to Impact</a> <span>funders · draft 0.1</span></h2>
@@ -66,12 +80,16 @@ const publishes = [
         </div>
       </div>
       <p class="fine">An illustrative example, not a real conversation. It's for developers, maintainers and independent builders who already use AI agents; community organisers, small teams and facilitators may find it useful too.</p>
+      <h3>What it helps you make</h3>
+      <dl class="publishes">
+        {makes.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
+      </dl>
+      <p>Unlike a general chatbot, ItF won't invent or inflate impact. It keeps what you saw apart from what you claim, keeps uncertainty in view, and credits the people you worked with.</p>
       <h3 id="install">Install</h3>
-      <p>ItF is free. You need an existing Claude Code, Codex CLI or OpenCode setup. Your agent's model costs and privacy terms still apply.</p>
-      <p>ItF supports exploration. It doesn't provide funding, find collaborators or certify impact. <a href="/itf#limits">Read the limits</a>.</p>
+      <p>ItF is free. You need an existing Claude Code, Codex CLI or OpenCode setup. Your agent's model costs and privacy terms still apply. It's experimental: <a href="/itf#limits">read the limits</a>.</p>
       <InstallCommands />
       <p class="actions">
-        <a class="slab-ghost" href="/itf">How it works</a>
+        <a class="slab-ghost" href="/itf">How it works</a><a class="slab-ghost" href={repo}>ItF on GitHub</a>
       </p>
     </div>
   </section>
@@ -105,14 +123,20 @@ const publishes = [
     </div>
   </section>
 
-  <section class="course status grid" id="status" aria-labelledby="status-title">
-    <h2 id="status-title" class="head">What exists today</h2>
+  <section class="course together grid" id="together" aria-labelledby="together-title">
+    <div class="head">
+      <h2 id="together-title">Together</h2>
+      <p class="tag rule-solid">Builders don't work alone. Built on ATProto.</p>
+    </div>
     <div class="body">
+      <p class="big">Your work is part of a community. ItF is growing a social side to match.</p>
+      <p>It's built on ATProto, the open network behind Bluesky. Your records live in your own account, not on our servers, and any app on the network can read what you choose to publish.</p>
       <ul class="ledger">
-        <li class="rule-solid"><strong>Impact to Funding</strong> is published and open source. It offers conversation, optional templates, reference material and an optional local MCP server for its reference library. It doesn't find collaborators, provide funding or certify impact. Trials so far were small; we haven't tested how useful it is to people or whether it helps them raise money.</li>
-        <li class="rule-dash"><strong>Funding to Impact</strong> is at draft 0.1. The <a href="/fti/format">file format</a>, schemas, <a href="/fti/publish">publishing guide</a> and fictional examples are public under CC0. The validator and four-tool, read-only MCP server run locally; their code stays private. An experimental local import adapter has been checked against source profiles. Maintained live imports and current-call interpretation remain future work; the installed catalogue is fictional. No funder has adopted FtI yet, and there is no hosted service.</li>
+        {together.map((t) => (
+          <li class={t.rule}><strong>{t.title}.</strong> {t.text}{t.link && <> <a href={t.link[0]}>{t.link[1]}</a>.</>}</li>
+        ))}
       </ul>
-      <p class="actions"><a class="slab" href={repo}>ItF on GitHub</a></p>
+      <p class="fine">A solid rule means live today; a dashed rule means designed or planned.</p>
     </div>
   </section>
 </Base>

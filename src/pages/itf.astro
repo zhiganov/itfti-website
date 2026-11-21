@@ -9,6 +9,15 @@ node mcp/prepare.mjs --revision "$(git rev-parse HEAD)" --output outputs/library
 const pluginInstall = `claude plugin marketplace add https://github.com/zhiganov/impact-to-funding.git
 claude plugin install itf@impact-to-funding`;
 const repo = "https://github.com/zhiganov/impact-to-funding";
+const makes = [
+  ["Support briefs", "a case for a funder or supporter, with dated research from funders' own pages and their application rules."],
+  ["Claim checks", "each claim held to your evidence before anything goes public, with what you saw kept apart from what you hope for."],
+  ["Theories of change", "rebuilt from what you already have: reports, notes and records."],
+  ["Sponsorship", "GitHub Sponsors profiles and tiers, and a read-only check of your funding setup."],
+  ["A way in", "contributing your skills to existing organisations, if you don't have a project of your own."],
+  ["Impact cards", "a badge and card for an approved public report, plus a readability check and portable records."],
+  ["Mentors", "thinking of people you already know who could mentor you, and a short request to send them."],
+];
 const starts = [
   {
     title: "Find a useful contribution",
@@ -32,12 +41,24 @@ const starts = [
   <section class="intro grid" aria-labelledby="t">
     <div class="head">
       <h1 id="t">Impact to Funding</h1>
-      <p class="tag rule-solid">For builders. Experimental v0, open source.</p>
+      <p class="tag rule-solid">For builders. Experimental and open source. Latest release v0.6.0.</p>
     </div>
     <div class="body">
       <p class="big">Put your skills and experience towards real problems, and build a credible case for support.</p>
       <p>ItF is a skill for the AI agent you already use and are signed in to. Start with your situation: you don't need a theory of change, a project, evidence or a fundraising goal. If you're worried about work, you don't need to become a founder or work for free.</p>
+      <p>Unlike a general chatbot, ItF won't invent or inflate impact. It keeps what you saw apart from what you claim, keeps uncertainty in view, and credits the people you worked with. That's what makes a case credible to a funder.</p>
       <p class="actions"><a class="slab" href="#install">Install ItF</a><a class="slab-ghost" href={repo}>Source on GitHub</a></p>
+    </div>
+  </section>
+
+  <section class="course grid" aria-labelledby="makes">
+    <h2 id="makes" class="head">What it helps you make</h2>
+    <div class="body">
+      <dl class="publishes">
+        {makes.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
+      </dl>
+      <p>Most of this works in conversation alone. The badge and card, the readability check, portable records and the sponsorship check are optional local tools that need Node.js 22 or later.</p>
+      <p>ItF is also growing a social side, built on ATProto: profiles, mentors, guilds and matchmaking. <a href="/#together">See what's live and what's planned</a>.</p>
     </div>
   </section>
 
@@ -46,7 +67,7 @@ const starts = [
     <div class="body">
       <p>Pick your agent, copy the command, and run it in your terminal. Conversation needs no signup, Node.js, MCP server or plugin. Your agent's model costs and privacy terms still apply.</p>
       <InstallCommands />
-      <p>Each command installs the newest version checked in that agent. Claude Code gets v0.6.0; Codex CLI and OpenCode get older snapshots. Claude Code and Codex CLI were each checked with one non-interactive run, and OpenCode was install-tested. Menus, desktop apps and usefulness were not tested.</p>
+      <p>Each command installs the newest version checked in that agent. Claude Code gets v0.6.0; Codex CLI and OpenCode get older snapshots. Claude Code and Codex CLI were each checked with one non-interactive run, and OpenCode was install-tested. Menus and desktop apps weren't tested.</p>
       <h3 id="plugin" class="sub">Claude Code plugin</h3>
       <p>Claude Code users can install ItF as a plugin instead. It brings the skill and the MCP server below together, so there is nothing to prepare by hand. Run these in your terminal:</p>
       <CopyBlock code={pluginInstall} />
@@ -114,6 +135,10 @@ const starts = [
   .starts h3 { margin-bottom: 10px; }
   blockquote { margin: 0; padding: 14px 18px; background: var(--red-wash); font-size: 0.95rem; }
   .ledger { list-style: none; padding: 0; display: grid; gap: 20px; }
+  .publishes { display: grid; gap: 0; }
+  .publishes div { display: grid; grid-template-columns: 9.5em 1fr; gap: 16px; padding: 0.7em 0; border-bottom: 2px solid var(--red); }
+  .publishes dt { font-family: var(--display); font-weight: 700; }
+  .publishes dd { margin: 0; max-width: 60ch; }
   .ledger li { padding-top: 12px; }
   @media (max-width: 900px) {
     .head, .body { grid-column: 1 / -1; }
@@ -122,5 +147,6 @@ const starts = [
     thead { display: none; }
     tr { border-bottom: 2px solid var(--red); padding: 0.6em 0; }
     td { border: 0; padding: 0.15em 0; }
+    .publishes div { grid-template-columns: 1fr; gap: 2px; }
   }
 </style>
