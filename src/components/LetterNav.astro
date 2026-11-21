@@ -1,13 +1,13 @@
 ---
 // Navigation is the name: each of the five letters I-t-F-t-I opens one part of the site.
-interface Props { current: "home" | "itf" | "loop" | "fti" | "status" }
+interface Props { current: "home" | "itf" | "loop" | "fti" | "together" }
 const { current } = Astro.props;
 const letters = [
   { id: "home", glyph: "I", label: "Home", shortLabel: "Home", href: "/" },
   { id: "itf", glyph: "t", label: "Impact to Funding", shortLabel: "Builders", href: "/itf" },
   { id: "loop", glyph: "F", label: "How the two meet", shortLabel: "The loop", href: "/#loop" },
   { id: "fti", glyph: "t", label: "Funding to Impact", shortLabel: "Funders", href: "/fti" },
-  { id: "status", glyph: "I", label: "What exists today", shortLabel: "Status", href: "/#status" },
+  { id: "together", glyph: "I", label: "Together", shortLabel: "Together", href: "/#together" },
 ];
 ---
 <nav class="letters" aria-label="Site">
