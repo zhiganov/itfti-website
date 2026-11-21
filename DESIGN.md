@@ -197,6 +197,9 @@ Tabs and copy buttons are at least 44px high. At 720px and below, the three agen
 ### Status Lane
 A heading link over a short line, topped by an 8px rule: solid for ItF, dashed for FtI.
 
+### Exhibits
+Show real outputs rather than describing them. An exhibit is an image of something ItF or FtI actually produces, made from fictional data and captioned as fictional. An artefact keeps its own colours: the impact card's blue shows it's the product, not the page. A screenshot in the site's own red sits on the Red Wash ground so it isn't read as page content. No border or box: the seal stays the only frame. Captions are one short sentence.
+
 ### Shared Footer
 The close is a full-width seal-red field, outside the inset page wrapper, with paper text and generous spacing. A seven-column oversized statement sits opposite CIBC's four-column introduction; the same 12-column grid and gutters remain. At 900px and below, these stack in reading order. A lower ruled course carries the ItFtI wordmark and the builder, funder and organisation-needs links. Licence notes and the seal explanation close the section; there is no personal byline.
 
@@ -205,7 +208,7 @@ Footer display type uses its own local roles above, not a larger global heading 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** use only #890405 on #f7f5f2, with #5e0203 for hover.
+- **Do** use only #890405 on #f7f5f2, with #5e0203 for hover. Exhibits of real outputs keep their own colours.
 - **Do** mark what is built with a solid 8px rule, and drafts or planned work with a dashed 8px rule.
 - **Do** use the real seal logo asset as the focal image.
 - **Do** keep every page on the shared 12-column grid.

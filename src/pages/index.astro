@@ -4,28 +4,27 @@ import InstallCommands from "../components/InstallCommands.astro";
 
 const repo = "https://github.com/zhiganov/impact-to-funding";
 const makes = [
-  ["Support briefs", "a case for a funder or supporter, with dated research from funders' own pages and their application rules."],
-  ["Claim checks", "each claim held to your evidence before anything goes public, with what you saw kept apart from what you hope for."],
-  ["Theories of change", "rebuilt from what you already have: reports, notes and records."],
-  ["Sponsorship", "GitHub Sponsors profiles and tiers, and a read-only check of your funding setup."],
-  ["A way in", "contributing your skills to existing organisations, if you don't have a project of your own."],
-  ["Impact cards", "a badge and card for an approved public report, plus a readability check and portable records."],
+  ["Support briefs", "a case for support, researched on funders' own pages."],
+  ["Claim checks", "every claim held to your evidence."],
+  ["Theories of change", "rebuilt from what you already have."],
+  ["Sponsorship", "GitHub Sponsors profiles and tiers."],
+  ["A way in", "skills for existing organisations."],
+  ["Impact cards", "a badge and card for a public report."],
 ];
 const together = [
-  { rule: "rule-solid", title: "Profiles", text: "Publish an impact profile from your own Bluesky or ATProto account, at app.itfti.org. Visitors can read it without signing in.", link: ["https://app.itfti.org", "Open profiles"] },
-  { rule: "rule-solid", title: "Mentors", text: "ItF helps you think of people you already know who could mentor you, and prepare a short request. A shared, opt-in mentor pool is planned." },
-  { rule: "rule-dash", title: "Guilds", text: "Members of a community see each other's profiles, contributions and requests for help in their community dashboard. Designed, not built yet." },
-  { rule: "rule-dash", title: "Matchmaking", text: "Organisations publish the skilled help they need and their budgets, and builders find work they can do. The format is public; matching isn't built yet.", link: ["/fti/needs", "The needs format"] },
+  { rule: "rule-solid", title: "Profiles", text: "Your impact, from your own Bluesky account.", link: ["https://app.itfti.org", "app.itfti.org"] },
+  { rule: "rule-solid", title: "Mentors", text: "ItF helps you ask people you already know. A shared pool is planned." },
+  { rule: "rule-dash", title: "Guilds", text: "See each other's work and needs in your community's dashboard. Planned." },
+  { rule: "rule-dash", title: "Matchmaking", text: "Organisations post needs; builders find work. Format public, matching planned.", link: ["/fti/needs", "Needs format"] },
 ];
-const publishes = [
-  ["Priorities", "the problems, communities and kinds of work it wants to support, and what it excludes."],
-  ["Eligibility", "whether individuals, informal groups, organisations or fiscally sponsored projects can apply, and where."],
-  ["Support", "the type, typical amount, duration and eligible costs."],
-  ["Availability", "whether an opportunity is open, rolling, invitation-only, forecasted, closed or withdrawn."],
-  ["Process", "the official route, required materials, deadlines with time zones and reporting expectations."],
-  ["Evidence", "what applicants should show, including whether exploratory work without prior results can be supported."],
-  ["Freshness", "who published it, authoritative links, and when it was last reviewed."],
-];
+const manifest = `{
+  "profile": "fti.discovery/0.1-draft",
+  "publisher": { "name": "Example Fund", "website": "https://example.org" },
+  "entries": [{
+    "entryId": "maintenance-2027",
+    "intake": { "mode": "public_application", "cadence": "rolling" }
+  }]
+}`;
 ---
 <Base
   title="ItFtI: from impact to funding, and back"
@@ -37,7 +36,7 @@ const publishes = [
       alt="The ItFtI seal: the letters I, t, F, t, I form the walls of a maze, with an entrance at the bottom and an exit at the top." />
     <div class="copy">
       <h1 id="hero-title">Find the way from impact to funding.</h1>
-      <p class="lede">Many projects get lost before they reach support. ItFtI works on both ends of the maze: a skill that helps builders make their case, and a file format that lets funders say what they support.</p>
+      <p class="lede">A skill that helps builders make an honest case for support, and a file format that lets funders say what they support.</p>
       <div class="entry-actions">
         <a class="slab" href="#install"><span>Builders: <span class="action-phrase">install ItF</span></span></a>
         <a class="slab-ghost" href="/fti/publish"><span>Funders: publish <span class="action-phrase">with FtI</span></span></a>
@@ -45,11 +44,11 @@ const publishes = [
       <p class="entry-note">ItF is free and open source.</p>
       <div class="lane rule-solid">
         <h2><a href="/itf">Impact to Funding</a> <span>builders · experimental</span></h2>
-        <p>An open-source skill for your AI agent. It helps you find where your skills help, make an honest case for support, and work with others.</p>
+        <p>A skill for your AI agent.</p>
       </div>
       <div class="lane rule-dash">
         <h2><a href="/fti">Funding to Impact</a> <span>funders · draft 0.1</span></h2>
-        <p>A file format funders publish on their own website, so people and agents can see what they support before anyone applies. Looking for its first funders.</p>
+        <p>A file funders publish on their own site. Looking for its first funders.</p>
       </div>
     </div>
   </section>
@@ -57,36 +56,28 @@ const publishes = [
   <section class="course maze grid" id="maze" aria-labelledby="maze-title">
     <h2 id="maze-title" class="head">The maze</h2>
     <div class="body">
-      <p class="big">Useful work often stalls on the way to support. Builders lose time reading scattered, outdated or vague funding pages. Funders read applications that were never a fit.</p>
-      <p>ItFtI starts from both sides. From the builder's side, it helps people describe their work and what would help it continue. From the funder's side, it proposes a plain way to say what they support, before anyone spends time applying.</p>
+      <p class="big">Builders lose time on vague funding pages. Funders read applications that were never a fit.</p>
     </div>
   </section>
 
   <section class="course itf grid" id="itf" aria-labelledby="itf-title">
     <div class="head">
       <h2 id="itf-title">Impact to Funding</h2>
-      <p class="tag rule-solid">For builders. Available now as an experimental skill.</p>
+      <p class="tag rule-solid">For builders. Experimental, v0.6.0.</p>
     </div>
     <div class="body">
-      <p class="big">ItF is a skill for the AI agent you already use. Start from your own situation: no theory of change, project, evidence or fundraising goal is needed.</p>
-      <div class="example">
-        <div>
-          <h3>You begin with your situation</h3>
-          <p>“I maintain a small open-source tool that a few teams rely on. I have maybe five hours a week. Where could my skills be useful, and what would help this work continue?”</p>
-        </div>
-        <div>
-          <h3>ItF helps you develop</h3>
-          <p>A possible contribution, a clearer question, a smaller commitment or a decision to stop. It works from what you supply, marks assumptions, keeps the conversation private and contacts no one without your say-so.</p>
-        </div>
-      </div>
-      <p class="fine">An illustrative example, not a real conversation. It's for developers, maintainers and independent builders who already use AI agents; community organisers, small teams and facilitators may find it useful too.</p>
+      <p class="big">Start from your situation. ItF helps you make a case that holds up.</p>
+      <figure class="exhibit">
+        <img src="/examples/impact-card-fictional.svg" width="520" height="232"
+          alt="A fictional impact card for the Lantern repair guide. Printed and handed out 60 access guides: supported, self-reported. 12 of 15 readers asked said the guide helped: partly supported, self-reported. Households repaired appliances: not assessed." />
+        <figcaption>A fictional card made with ItF. It says what's supported, what's partly supported, and what nobody has checked.</figcaption>
+      </figure>
       <h3>What it helps you make</h3>
       <dl class="publishes">
         {makes.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
       </dl>
-      <p>Unlike a general chatbot, ItF won't invent or inflate impact. It keeps what you saw apart from what you claim, keeps uncertainty in view, and credits the people you worked with.</p>
       <h3 id="install">Install</h3>
-      <p>ItF is free. You need an existing Claude Code, Codex CLI or OpenCode setup. Your agent's model costs and privacy terms still apply. It's experimental: <a href="/itf#limits">read the limits</a>.</p>
+      <p>For Claude Code, Codex CLI or OpenCode. <a href="/itf#limits">Limits</a>.</p>
       <InstallCommands />
       <p class="actions">
         <a class="slab-ghost" href="/itf">How it works</a><a class="slab-ghost" href={repo}>ItF on GitHub</a>
@@ -98,10 +89,9 @@ const publishes = [
     <h2 id="loop-title" class="head">How the two meet</h2>
     <div class="body">
       <ol class="sides">
-        <li><h3>Impact → funding</h3><p>A builder works out what their contribution is, what difference it makes so far, and what support would help it continue.</p></li>
-        <li><h3>Funding → impact</h3><p>A funder states what it supports, who can apply, how much, by when and with what evidence, in a form people and agents can read.</p></li>
+        <li><h3>Impact → funding</h3><p>A builder says what they do and what would help it continue.</p></li>
+        <li><h3>Funding → impact</h3><p>A funder says what it supports, for whom, how much and by when.</p></li>
       </ol>
-      <p>When both sides speak plainly, fewer people get lost in the maze. ItF is meant to be one reader of what funders publish, not the only one and not a gatekeeper. The two parts can be used separately.</p>
     </div>
   </section>
 
@@ -111,32 +101,30 @@ const publishes = [
       <p class="tag rule-dash">For funders. Draft 0.1, looking for its first funders.</p>
     </div>
     <div class="body">
-      <p class="big">Before I apply, can I tell whether this funder supports work like mine, whether I'm eligible, and how to approach them?</p>
-      <p>FtI is a file format, <code>fti-manifest.json</code>, that a funder publishes on its own website. It's inspired by <a href="https://llmstxt.org/">llms.txt</a> and built on <a href="https://commongrants.org/">CommonGrants</a>: each opportunity is a CommonGrants record inside the FtI file. In it, a funder explains:</p>
-      <dl class="publishes">
-        {publishes.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
-      </dl>
-      <p>Funding interests are not open calls. Past awards don't mean applications are open now. Missing eligibility is unknown, not permission to apply.</p>
-      <p>An MCP server reads these files, so agents can find funders and open opportunities with four read-only tools: <code>find_funders</code>, <code>search_opportunities</code>, <code>get_entry</code> and <code>registry_info</code>. ItF is one of its intended readers, not the only one.</p>
+      <p class="big">Can I tell whether this funder supports work like mine, before I apply?</p>
+      <p>A funder publishes <code>fti-manifest.json</code> on its own site. People and agents read it. Built on <a href="https://commongrants.org/">CommonGrants</a>.</p>
+      <pre class="snippet"><code>{manifest}</code></pre>
       <p class="actions"><a class="slab" href="/fti/publish">Publish with FtI</a><a class="slab-ghost" href="/fti/format">The file format</a></p>
-      <p class="fine">Funders: <a href="/fti/publish#contact">tell us</a> if you'd like to be among the first to publish.</p>
     </div>
   </section>
 
   <section class="course together grid" id="together" aria-labelledby="together-title">
     <div class="head">
       <h2 id="together-title">Together</h2>
-      <p class="tag rule-solid">Builders don't work alone. Built on ATProto.</p>
+      <p class="tag rule-solid">Built on ATProto. Your records stay in your own account.</p>
     </div>
     <div class="body">
-      <p class="big">Your work is part of a community. ItF is growing a social side to match.</p>
-      <p>It's built on ATProto, the open network behind Bluesky. Your records live in your own account, not on our servers, and any app on the network can read what you choose to publish.</p>
+      <figure class="exhibit shot">
+        <img src="/examples/profile-fictional.png" width="900" height="650" loading="lazy"
+          alt="A fictional impact profile for Alex Example: what they're working on, areas of work, and a report marked independently evaluated." />
+        <figcaption>A fictional profile at app.itfti.org.</figcaption>
+      </figure>
       <ul class="ledger">
         {together.map((t) => (
-          <li class={t.rule}><strong>{t.title}.</strong> {t.text}{t.link && <> <a href={t.link[0]}>{t.link[1]}</a>.</>}</li>
+          <li class={t.rule}><strong>{t.title}.</strong> {t.text}{t.link && <> <a href={t.link[0]}>{t.link[1]}</a></>}</li>
         ))}
       </ul>
-      <p class="fine">A solid rule means live today; a dashed rule means designed or planned.</p>
+      <p class="fine">Solid: live. Dashed: planned.</p>
     </div>
   </section>
 </Base>
@@ -182,6 +170,12 @@ const publishes = [
 
   .ledger { list-style: none; padding: 0; display: grid; gap: 24px; }
   .ledger li { padding-top: 14px; }
+  .exhibit { margin: 0; display: grid; gap: 8px; }
+  .exhibit img { width: 100%; max-width: 560px; height: auto; display: block; }
+  .exhibit figcaption { font-size: 0.9rem; max-width: 60ch; }
+  .snippet { margin: 0; padding: 14px 16px; background: var(--red-wash); overflow-x: auto; font-size: 0.85rem; line-height: 1.5; }
+  .snippet code { background: none; padding: 0; }
+  .exhibit.shot img { background: var(--red-wash); padding: 18px; box-sizing: border-box; }
 
   @media (max-width: 900px) {
     .hero { min-height: 0; }
