@@ -94,7 +94,8 @@ has not been applied.
 
 On 2026-11-17, the operator temporarily accepted the residual browser-tab
 resource-exhaustion risk for the initial own-profile launch, with the existing
-response and record limits. The audit still reports 15 high package entries
+response and record limits. On 2026-11-21, after adding a guard that refuses
+JSON lists over 1,000 items, the operator extended it to an open launch. The audit still reports 15 high package entries
 from this one advisory. See the [assessment and scoped exception](../docs/reviews/impact-profiles/security-assessment.md).
 Website #23 stays open for a compatible upstream fix.
 

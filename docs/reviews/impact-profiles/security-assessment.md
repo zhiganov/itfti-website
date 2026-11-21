@@ -6,13 +6,17 @@ Tracking: [website #23](https://github.com/zhiganov/itfti-website/issues/23).
 
 ## Decision
 
-The operator temporarily accepts the residual browser-tab resource-exhaustion
-risk for the initial own-profile launch, with the existing response and record
-limits. This is a scoped exception, not a dependency fix or a passing audit.
+On 2026-11-17 the operator temporarily accepted the residual browser-tab
+resource-exhaustion risk for the initial own-profile launch, with the existing
+response and record limits.
 
-Keep #23 open for a compatible upstream update. Revisit the exception when a
-compatible patched release becomes available or before expanding the launch.
-Hosting, namespace and approved real-account verification remain release work.
+On 2026-11-21, after the measurement and array guard below, the operator
+extended the exception to an open launch. The guard limits the worst case to a
+short pause during sign-in, which doesn't depend on how many people use the app.
+
+This is a scoped exception, not a dependency fix or a passing audit. Keep #23
+open for a compatible upstream update, and revisit the exception when one is
+released.
 
 ## Advisory and compatible releases
 
@@ -71,8 +75,7 @@ Public profile pages don't use Zod. The app's fetch wrapper now refuses JSON
 responses with any list over 1,000 items. The worst input that passes it took
 0.13 s and kept about 11 MB.
 
-This exception still covers only the initial own-profile launch. Extending it
-is a separate decision.
+The decision above extends it to an open launch.
 
 ## Verification and limits
 
