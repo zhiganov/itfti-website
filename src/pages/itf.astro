@@ -2,51 +2,48 @@
 import Base from "../layouts/Base.astro";
 import InstallCommands from "../components/InstallCommands.astro";
 import CopyBlock from "../components/CopyBlock.astro";
-const mcpSetup = `cd .claude/skills/impact-to-funding   # your ItF install folder
-npm ci --ignore-scripts --prefix mcp
-mkdir -p outputs
-node mcp/prepare.mjs --revision "$(git rev-parse HEAD)" --output outputs/library-snapshot.json`;
 const pluginInstall = `claude plugin marketplace add https://github.com/zhiganov/impact-to-funding.git
 claude plugin install itf@impact-to-funding`;
 const repo = "https://github.com/zhiganov/impact-to-funding";
 const makes = [
-  ["Support briefs", "a case for a funder or supporter, with dated research from funders' own pages and their application rules."],
-  ["Claim checks", "each claim held to your evidence before anything goes public, with what you saw kept apart from what you hope for."],
-  ["Theories of change", "rebuilt from what you already have: reports, notes and records."],
-  ["Sponsorship", "GitHub Sponsors profiles and tiers, and a read-only check of your funding setup."],
-  ["A way in", "contributing your skills to existing organisations, if you don't have a project of your own."],
-  ["Impact cards", "a badge and card for an approved public report, plus a readability check and portable records."],
-  ["Mentors", "thinking of people you already know who could mentor you, and a short request to send them."],
+  ["Support briefs", "a case for support, researched on funders' own pages, with each funder's application rules."],
+  ["Claim checks", "every claim held to your evidence before anything goes public."],
+  ["Theories of change", "rebuilt from reports, notes and records you already have."],
+  ["Sponsorship", "GitHub Sponsors profiles and tiers, and a check of your funding setup."],
+  ["A way in", "your skills for existing organisations, if you don't have a project."],
+  ["Impact cards", "a badge and card for a public report you've approved."],
+  ["Mentors", "people you already know who could help, and a short request to send."],
 ];
 const starts = [
-  {
-    title: "Find a useful contribution",
-    prompt: "Help me explore where my skills and available time could be useful, including contributing to existing work. Use what I supply, mark assumptions, and keep this private. Do not contact anyone.",
-  },
-  {
-    title: "Develop shared work and learn",
-    prompt: "Help me describe my role in this shared project, check it against my capacity, and examine what we know about its effects. Preserve other contributors and disagreement. Do not collect or publish anything.",
-  },
-  {
-    title: "Explain what support would help",
-    prompt: "Help me prepare a private case for sustaining this work. Separate observations from proposals, use only known costs and commitments, and keep uncertainty visible. Do not invent impact, submit an application or contact a funder.",
-  },
+  { title: "Find a useful contribution", prompt: "Help me find where my skills and time could be useful. Keep this private and contact no one." },
+  { title: "Understand shared work", prompt: "Help me describe my part in this shared project and what we know about its effects." },
+  { title: "Make a case for support", prompt: "Help me prepare a private case for sustaining this work. Don't invent impact." },
 ];
 ---
 <Base
   title="Impact to Funding: an agent skill for builders · ItFtI"
-  description="Impact to Funding is an open-source skill for your AI agent. It helps you find where your skills are useful, build with others, learn what difference the work makes and explain what would help it continue."
+  description="Impact to Funding is an open-source skill for your AI agent. It helps you find where your skills are useful, make an honest case for support, and work with others."
   current="itf"
 >
   <section class="intro grid" aria-labelledby="t">
     <div class="head">
       <h1 id="t">Impact to Funding</h1>
-      <p class="tag rule-solid">For builders. Experimental and open source. Latest release v0.6.0.</p>
+      <p class="tag rule-solid">For builders. Experimental, v0.6.0. Open source.</p>
     </div>
     <div class="body">
-      <p class="big">Put your skills and experience towards real problems, and build a credible case for support.</p>
-      <p>ItF is a skill for the AI agent you already use and are signed in to. Start with your situation: you don't need a theory of change, a project, evidence or a fundraising goal. If you're worried about work, you don't need to become a founder or work for free.</p>
-      <p>Unlike a general chatbot, ItF won't invent or inflate impact. It keeps what you saw apart from what you claim, keeps uncertainty in view, and credits the people you worked with. That's what makes a case credible to a funder.</p>
+      <p class="big">Put your skills towards real problems, and make a case for support that holds up.</p>
+      <p>A skill for the AI agent you already use. Start from your situation: no theory of change, project or evidence needed.</p>
+      <div class="example">
+        <div>
+          <h3>You might write</h3>
+          <p>“Our guide changed how people repair things.”</p>
+        </div>
+        <div>
+          <h3>ItF helps you say</h3>
+          <p>“We handed out 60 guides. 12 of 15 readers we asked said it helped. We haven't checked whether repairs went up.”</p>
+        </div>
+      </div>
+      <p class="fine">A fictional example.</p>
       <p class="actions"><a class="slab" href="#install">Install ItF</a><a class="slab-ghost" href={repo}>Source on GitHub</a></p>
     </div>
   </section>
@@ -57,44 +54,30 @@ const starts = [
       <dl class="publishes">
         {makes.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
       </dl>
-      <p>Most of this works in conversation alone. The badge and card, the readability check, portable records and the sponsorship check are optional local tools that need Node.js 22 or later.</p>
-      <p>ItF is also growing a social side, built on ATProto: profiles, mentors, guilds and matchmaking. <a href="/#together">See what's live and what's planned</a>.</p>
+      <figure class="exhibit">
+        <img src="/examples/impact-card-fictional.svg" width="520" height="232" loading="lazy"
+          alt="A fictional impact card for the Lantern repair guide. Printed and handed out 60 access guides: supported, self-reported. 12 of 15 readers asked said the guide helped: partly supported, self-reported. Households repaired appliances: not assessed." />
+        <figcaption>A fictional impact card. Nothing is called proven, and the unchecked claim says so.</figcaption>
+      </figure>
+      <p>With others, too: profiles, mentors, guilds and matchmaking. <a href="/#together">What's live and what's planned</a>.</p>
     </div>
   </section>
 
   <section class="course grid" aria-labelledby="install">
     <h2 id="install" class="head">Install</h2>
     <div class="body">
-      <p>Pick your agent, copy the command, and run it in your terminal. Conversation needs no signup, Node.js, MCP server or plugin. Your agent's model costs and privacy terms still apply.</p>
+      <p>Pick your agent and run the command in your terminal.</p>
       <InstallCommands />
-      <p>Each command installs the newest version checked in that agent. Claude Code gets v0.6.0; Codex CLI and OpenCode get older snapshots. Claude Code and Codex CLI were each checked with one non-interactive run, and OpenCode was install-tested. Menus and desktop apps weren't tested.</p>
-      <h3 id="plugin" class="sub">Claude Code plugin</h3>
-      <p>Claude Code users can install ItF as a plugin instead. It brings the skill and the MCP server below together, so there is nothing to prepare by hand. Run these in your terminal:</p>
+      <h3 id="plugin" class="sub">Or the Claude Code plugin</h3>
       <CopyBlock code={pluginInstall} />
-      <p>Then type <code>/itf:impact-to-funding</code>. The plugin needs Claude Code 2.1.281 or later, and Node.js 22 or later for the MCP server. It changes only when you run <code>claude plugin update itf</code>. If you also installed the skill folder above, keep one of the two. The plugin was checked on macOS and Windows.</p>
-    </div>
-  </section>
-
-  <section class="course grid" id="mcp" aria-labelledby="mcp-title">
-    <h2 id="mcp-title" class="head">MCP server</h2>
-    <div class="body">
-      <p class="big">An optional, read-only MCP server over ItF's reference library.</p>
-      <p>It lets any MCP client search the library's cases, candidate patterns and lenses with three tools: <code>search_references</code>, <code>get_reference</code> and <code>library_info</code>. It runs locally over a prepared snapshot of the library and needs no account or API key. You don't need it to use the skill. There are three ways to set it up.</p>
-      <h3 class="sub">With the Claude Code plugin</h3>
-      <p>The <a href="#plugin">plugin</a> includes the server and a prepared snapshot, and starts the server for you.</p>
-      <h3 class="sub">With <code>itf setup</code></h3>
-      <p>For OpenCode, in one project, or Claude Code, for one project, on macOS or Linux. <code>itf setup</code> prepares the server and a snapshot, shows you its plan before changing anything, registers the server and can undo it. It needs Node.js 22 or later, npm and Git. Commands are in the <a href="https://github.com/zhiganov/impact-to-funding/blob/main/docs/library-mcp-setup.md">setup guide</a>.</p>
-      <h3 class="sub">By hand</h3>
-      <p>For any agent that takes a local MCP server. You need Node.js 22 or later, npm and Git. Prepare the snapshot once, from your install folder:</p>
-      <CopyBlock code={mcpSetup} />
-      <p>Then add a stdio server to your agent's MCP settings: command <code>node</code>, arguments <code>&lt;install folder&gt;/mcp/server.mjs --snapshot &lt;install folder&gt;/outputs/library-snapshot.json</code>, using absolute paths. Details in the <a href="https://github.com/zhiganov/impact-to-funding/blob/main/mcp/README.md">MCP guide</a>.</p>
+      <p>Then type <code>/itf:impact-to-funding</code>. It includes the reference-library MCP server and needs Node.js 22 or later. Keep the plugin or the skill folder, not both.</p>
+      <p class="fine">Claude Code gets v0.6.0; Codex CLI and OpenCode get older versions. <a href="https://github.com/zhiganov/impact-to-funding/blob/main/docs/install.md">Install guide</a> · <a href="https://github.com/zhiganov/impact-to-funding/blob/main/mcp/README.md">MCP server for other agents</a></p>
     </div>
   </section>
 
   <section class="course grid" aria-labelledby="start">
     <h2 id="start" class="head">Three ways to start</h2>
     <div class="body">
-      <p>After you invoke the skill, try one of these. They're starting points, not commands. A few sentences about your situation are enough.</p>
       <ol class="starts">
         {starts.map((s) => (
           <li>
@@ -103,7 +86,6 @@ const starts = [
           </li>
         ))}
       </ol>
-      <p>A useful result might be a possible contribution, a clearer question, a smaller commitment or a decision to stop. It doesn't have to be a report.</p>
     </div>
   </section>
 
@@ -111,13 +93,12 @@ const starts = [
     <h2 id="limits" class="head">Limits</h2>
     <div class="body">
       <ul class="ledger">
-        <li class="rule-solid"><strong>Private by default.</strong> A local file can still go to a remote model when your agent reads it. Use only material you may share with that provider.</li>
-        <li class="rule-solid"><strong>No action without your say-so.</strong> A draft doesn't authorise publishing, contacting people, applying or paying.</li>
-        <li class="rule-solid"><strong>No certification or ranking.</strong> Outputs and completed assessments don't prove impact.</li>
-        <li class="rule-dash"><strong>Limited evidence.</strong> Development trials were small and the examples are fiction. We haven't verified usefulness to people or fundraising results.</li>
+        <li class="rule-solid"><strong>Your agent's provider sees what it reads.</strong> Share only what you may.</li>
+        <li class="rule-solid"><strong>Nothing happens without you.</strong> No publishing, contacting, applying or paying.</li>
+        <li class="rule-solid"><strong>No certification.</strong> Outputs don't prove impact.</li>
+        <li class="rule-dash"><strong>Early.</strong> Trials were small. Usefulness and fundraising results aren't verified.</li>
       </ul>
-      <p>Original writing is CC BY-SA 4.0; code is MIT. ItF draws on public Moral Ambition principles and isn't affiliated with or endorsed by the School for Moral Ambition or Rutger Bregman.</p>
-      <p class="actions"><a class="slab" href={repo}>ItF on GitHub</a><a class="slab-ghost" href="/fti">Funding to Impact</a></p>
+      <p class="fine">Writing CC BY-SA 4.0, code MIT. Draws on public Moral Ambition principles; not affiliated with or endorsed by the School for Moral Ambition or Rutger Bregman.</p>
     </div>
   </section>
 </Base>
@@ -140,6 +121,14 @@ const starts = [
   .publishes dt { font-family: var(--display); font-weight: 700; }
   .publishes dd { margin: 0; max-width: 60ch; }
   .ledger li { padding-top: 12px; }
+  .example { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 8px solid var(--red); }
+  .example > div { padding: 22px 24px; max-width: none; }
+  .example > div + div { border-left: 8px solid var(--red); }
+  .example h3 { margin-bottom: 0.4em; }
+  .fine { font-size: 0.9rem; }
+  .exhibit { margin: 0; display: grid; gap: 8px; }
+  .exhibit img { width: 100%; max-width: 560px; height: auto; display: block; }
+  .exhibit figcaption { font-size: 0.9rem; max-width: 60ch; }
   @media (max-width: 900px) {
     .head, .body { grid-column: 1 / -1; }
     .head { position: static; }
@@ -148,5 +137,7 @@ const starts = [
     tr { border-bottom: 2px solid var(--red); padding: 0.6em 0; }
     td { border: 0; padding: 0.15em 0; }
     .publishes div { grid-template-columns: 1fr; gap: 2px; }
+    .example { grid-template-columns: 1fr; }
+    .example > div + div { border-left: 0; border-top: 8px solid var(--red); }
   }
 </style>
