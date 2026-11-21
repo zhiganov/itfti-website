@@ -2,43 +2,19 @@
 import Base from "../../layouts/Base.astro";
 import FunderForm from "../../components/FunderForm.astro";
 const steps = [
-  {
-    title: "Start from the funding page you already have",
-    body: "Your file points to your official pages, so they should answer the basics: what you fund and what you don't, who can apply, whether there's an application route right now, what support and deadlines apply, and when the information was last checked.",
-  },
-  {
-    title: "List what you fund today",
-    body: "Separate programmes from individual calls. For each one, say plainly whether people can apply: open, rolling, invitation-only, forecasted, or closed. If you have no open calls, or don't accept unsolicited proposals, say that too.",
-  },
-  {
-    title: "Write fti-manifest.json",
-    body: "Start from the example file and replace its content with yours: who you are, what the file covers, and one entry per call or programme. If you already publish CommonGrants records, link them instead of typing the data again.",
-  },
-  {
-    title: "Say what you don't know",
-    body: "\"Not specified\" is different from \"no restriction\". Leave a field out rather than guess. Your office address doesn't define who can apply, and a maximum award is not a promise.",
-  },
-  {
-    title: "Check the file",
-    body: "Run it through the schema with any JSON Schema validator, or send it to us and we'll check it for you.",
-  },
-  {
-    title: "Put it on your website",
-    body: "Upload the file anywhere on your site and link it from your funding page. If you publish an llms.txt file, link it from there too.",
-  },
-  {
-    title: "Tell us",
-    body: "Use the form below and include the file's address. We're looking for the first funders to publish, and we'll help you get it right.",
-  },
-  {
-    title: "Keep it current",
-    body: "When something changes, update the file and its revision. Set reviewedOn when someone has actually checked it. Keep closed calls in the file, marked as closed, instead of deleting them.",
-  },
+  ["Start from your funding page", "Your file points to it, so it should answer the basics."],
+  ["List what you fund today", "One entry per call or programme, each marked open, rolling, invitation-only, forecasted or closed."],
+  ["Write fti-manifest.json", "Start from the example. Already publish CommonGrants? Link it instead."],
+  ["Leave out what you don't know", "\"Not specified\" isn't \"no restriction\". Don't guess."],
+  ["Check it", "Use any JSON Schema validator, or send it to us."],
+  ["Put it on your site", "Link it from your funding page, and from llms.txt if you have one."],
+  ["Tell us", "Send the file's address with the form below."],
+  ["Keep it current", "Update the revision when things change. Mark closed calls closed; don't delete them."],
 ];
 ---
 <Base
   title="How to publish with FtI · ItFtI"
-  description="Eight plain steps for funders to publish an FtI file: start from your funding page, list what you fund, write fti-manifest.json, check it, put it on your website and tell us."
+  description="Eight short steps for funders to publish an FtI file: start from your funding page, list what you fund, write fti-manifest.json, check it, put it on your website and tell us."
   current="fti"
 >
   <section class="intro grid" aria-labelledby="t">
@@ -47,8 +23,8 @@ const steps = [
       <p class="tag rule-dash">For funding teams. No portal, no account.</p>
     </div>
     <div class="body">
-      <p class="big">Eight steps from your existing funding page to a file people and agents can read.</p>
-      <p>You'll need someone who can edit your website and a text editor. The file format is described on the <a href="/fti/format">format page</a>.</p>
+      <p class="big">From your funding page to a file people and agents can read.</p>
+      <p>You need a text editor and someone who can edit your website.</p>
       <p class="actions">
         <a class="slab" href="/examples/fti-manifest.example.json">Get the example file</a>
         <a class="slab-ghost" href="/fti/format">The format</a>
@@ -59,14 +35,14 @@ const steps = [
   <section class="course grid" aria-labelledby="steps">
     <h2 id="steps" class="head">Steps</h2>
     <ol class="body steps">
-      {steps.map((s) => (<li><h3>{s.title}</h3><p>{s.body}</p></li>))}
+      {steps.map(([t, b]) => (<li><h3>{t}</h3><p>{b}</p></li>))}
     </ol>
   </section>
 
   <section class="course grid" id="contact" aria-labelledby="help">
     <h2 id="help" class="head">Need help?</h2>
     <div class="body">
-      <p>FtI is at draft 0.1, and no funder has published with it yet. If you'd like to be among the first, write to us. We'll answer questions and check your file.</p>
+      <p>No funder has published yet. Be among the first, and we'll check your file.</p>
       <FunderForm id="publish-contact" />
     </div>
   </section>
