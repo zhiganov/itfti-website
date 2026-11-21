@@ -115,8 +115,11 @@ const manifest = `{
     </div>
     <div class="body">
       <figure class="exhibit shot">
-        <img src="/examples/profile-fictional.png" width="900" height="650" loading="lazy"
-          alt="A fictional impact profile for Alex Example: what they're working on, areas of work, and a report marked independently evaluated." />
+        <div class="window">
+          <div class="bar" aria-hidden="true"><span class="dots"><i></i><i></i><i></i></span><span class="url">app.itfti.org/profile/…</span></div>
+          <img src="/examples/profile-fictional.png" width="900" height="650" loading="lazy"
+            alt="A fictional impact profile for Alex Example: what they're working on, areas of work, and a report marked independently evaluated." />
+        </div>
         <figcaption>A fictional profile at app.itfti.org.</figcaption>
       </figure>
       <ul class="ledger">
@@ -175,7 +178,12 @@ const manifest = `{
   .exhibit figcaption { font-size: 0.9rem; max-width: 60ch; }
   .snippet { margin: 0; padding: 14px 16px; background: var(--red-wash); overflow-x: auto; font-size: 0.85rem; line-height: 1.5; }
   .snippet code { background: none; padding: 0; }
-  .exhibit.shot img { background: var(--red-wash); padding: 18px; box-sizing: border-box; }
+  .window { max-width: min(440px, calc(100% - 10px)); border: 3px solid var(--red); background: var(--paper); box-shadow: 10px 10px 0 var(--red-wash); }
+  .window .bar { display: flex; align-items: center; gap: 12px; padding: 7px 10px; background: var(--red); color: var(--paper); font-size: 0.8rem; }
+  .window .dots { display: flex; gap: 5px; }
+  .window .dots i { width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--paper); }
+  .window .url { flex: 1; padding: 2px 8px; background: color-mix(in srgb, var(--paper) 18%, transparent); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .exhibit .window img { max-width: 100%; }
 
   @media (max-width: 900px) {
     .hero { min-height: 0; }
