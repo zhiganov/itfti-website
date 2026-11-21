@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { makeRecord, validateRecord, httpsUrl, graphemes, recordUri, recordsEqual, validDid } from '../src/profile.js';
+import { makeRecord, validateRecord, httpsUrl, graphemes, recordUri, recordsEqual, validDid, PROVENANCE, REPORT_STATES, provenanceLabel, stateLabel, flaggedState } from '../src/profile.js';
 import { COLLECTION, SCOPE, authMetadata, clientMetadata } from '../src/config.js';
 
 const DID = 'did:plc:abcdefghijklmnopqrstuvwx';
@@ -76,4 +76,10 @@ test('OAuth metadata grants only the app collection and binds to the exact host'
   const local = new URL(authMetadata(new URL('http://127.0.0.1:4175/edit')));
   assert.equal(local.searchParams.get('scope'), SCOPE);
   assert.equal(local.searchParams.get('redirect_uri'), 'http://127.0.0.1:4175/oauth/callback');
+});
+
+test('report labels match the ItF impact badge contract', () => {
+  assert.deepEqual(PROVENANCE.map(provenanceLabel), ['self-reported', 'AI-assisted', 'peer-reviewed', 'independently evaluated']);
+  assert.deepEqual(REPORT_STATES.map(stateLabel), ['current', 'corrected', 'out of date', 'withdrawn']);
+  assert.deepEqual(REPORT_STATES.filter(flaggedState), ['corrected', 'withdrawn']);
 });

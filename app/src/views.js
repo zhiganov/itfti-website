@@ -1,5 +1,5 @@
 import { el, link } from './dom.js';
-import { httpsUrl } from './profile.js';
+import { httpsUrl, provenanceLabel, stateLabel, flaggedState } from './profile.js';
 
 export function identityView(did, identity, warning = '') {
   return el('section', { className: 'identity', 'aria-label': 'Bluesky identity' },
@@ -28,16 +28,8 @@ export function recordView(record) {
     ),
     reports.length > 0 && el('section', { className: 'work-section' },
       el('h2', {}, 'Reports & learning'),
-      el('ul', { className: 'reports' }, reports.map((report) =>
-        el('li', {},
-          link(httpsUrl(report.url), report.title || report.id, { className: 'report-title' }),
-          el('p', { className: 'report-context' },
-            `${report.provenance.replaceAll('-', ' ')} · ${report.state.replaceAll('-', ' ')} · revision ${report.revision}`,
-          ),
-          report.period && el('p', { className: 'hint' }, report.period),
-          report.statusUrl && link(httpsUrl(report.statusUrl), 'Check report status'),
-        ),
-      )),
+      el('p', { className: 'hint reports-note' }, 'Report bases are declared by the author; see each report for its review.'),
+      el('ul', { className: 'reports' }, reports.map(reportView)),
     ),
     (record.supportProfile || record.badge) && el('section', { className: 'work-section' },
       el('h2', {}, 'Support & further detail'),
@@ -46,5 +38,20 @@ export function recordView(record) {
         record.badge && el('li', {}, link(httpsUrl(record.badge), 'View my impact card')),
       ),
     ),
+  );
+}
+
+function reportView(report) {
+  const flagged = flaggedState(report.state);
+  const status = report.statusUrl && link(httpsUrl(report.statusUrl), 'Check report status', { className: 'report-status' });
+  return el('li', { className: flagged ? `report-flagged report-${report.state}` : undefined },
+    flagged && el('p', { className: 'report-flag' }, report.state === 'withdrawn' ? 'Withdrawn' : 'Corrected'),
+    flagged && status,
+    link(httpsUrl(report.url), report.title || report.id, { className: 'report-title' }),
+    el('p', { className: 'report-context' },
+      `${provenanceLabel(report.provenance)} · ${stateLabel(report.state)} · revision ${report.revision}`,
+    ),
+    report.period && el('p', { className: 'hint' }, report.period),
+    !flagged && status,
   );
 }
