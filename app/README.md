@@ -99,6 +99,20 @@ JSON lists over 1,000 items, the operator extended it to an open launch. The aud
 from this one advisory. See the [assessment and scoped exception](../docs/reviews/impact-profiles/security-assessment.md).
 Website #23 stays open for a compatible upstream fix.
 
+## Count published profiles
+
+```sh
+npm run published
+npm run published -- --json
+```
+
+The script asks an ATProto relay which accounts hold an `org.itfti.profile`
+record, then reads each record from its own account to confirm it. It prints
+the count, handles and profile links. It uses only public data and needs no
+sign-in. Use `--relay <url>` to ask a different relay.
+
+Behind an HTTPS proxy, Node 22 needs `NODE_USE_ENV_PROXY=1` to use it.
+
 ## Licence and conduct
 
 The original app package is [MIT licensed](LICENSE). This covers its code and
