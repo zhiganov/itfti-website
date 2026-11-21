@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { createApi } from '../src/api.js';
 import { makeRecord, recordUri } from '../src/profile.js';
-import { boundedFetch } from '../src/transport.js';
+import { boundedFetch, hasLongArray, MAX_ARRAY_ITEMS } from '../src/transport.js';
 
 const DID = 'did:plc:abcdefghijklmnopqrstuvwx';
 const other = 'did:plc:zyxwvutsrqponmlkjihgfedc';
@@ -78,4 +78,19 @@ test('bounded transport rejects declared and streamed oversize bodies and preser
   assert.equal(bounded.url, source.url);
   assert.equal(bounded.redirected, true);
   assert.deepEqual(await bounded.json(), { okay: true });
+});
+
+test('bounded transport rejects JSON with a list longer than the limit, at any depth', async () => {
+  const list = (n) => Array(n).fill({});
+  const fetchJson = (value) => boundedFetch('https://example.org', {}, async () => new Response(JSON.stringify(value)));
+  await assert.rejects(fetchJson({ id: 'did:web:example.org', service: list(MAX_ARRAY_ITEMS + 1) }), /unexpectedly long list/);
+  await assert.rejects(fetchJson({ a: { b: [[0], list(MAX_ARRAY_ITEMS + 1)] } }), /unexpectedly long list/);
+  await assert.rejects(fetchJson(Array(MAX_ARRAY_ITEMS + 1).fill(1)), /unexpectedly long list/);
+  const allowed = { service: list(MAX_ARRAY_ITEMS) };
+  assert.deepEqual(await (await fetchJson(allowed)).json(), allowed);
+  // Non-JSON and malformed bodies pass through unchanged for the caller to handle.
+  assert.equal(await (await boundedFetch('https://example.org', {}, async () => new Response('[not json'))).text(), '[not json');
+  assert.equal(await (await boundedFetch('https://example.org', {}, async () => new Response('plain text'))).text(), 'plain text');
+  assert.equal(hasLongArray({ deep: [[[Array(3).fill(0)]]] }, 2), true);
+  assert.equal(hasLongArray({ deep: [[[Array(2).fill(0)]]] }, 2), false);
 });
