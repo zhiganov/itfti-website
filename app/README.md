@@ -135,9 +135,9 @@ No site or DNS record is provisioned by this code. When hosting is approved:
    is chosen, publish it to an approved ATProto account and point
    `_lexicon.itfti.org` at that DID. A static schema file alone is not
    network publication. See the [official guide](https://atproto.com/guides/publishing-lexicons).
-7. Agree the operator/takedown contact and review this app's privacy page.
-   `src/moderation.js` provides host-level suppression by DID; it cannot
-   change a user's source record.
+7. Follow [OPERATIONS.md](OPERATIONS.md) for takedown requests and hiding a
+   profile. `src/moderation.js` provides host-level suppression by DID; it
+   cannot change a user's source record.
 8. With permission for a real account write, test OAuth, the approved record's
    write/read, signed-out viewing, an edit and deletion. Do not use a person's
    published profile as a disposable fixture.
