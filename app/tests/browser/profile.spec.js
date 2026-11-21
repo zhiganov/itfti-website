@@ -188,6 +188,8 @@ test('reports preserve contract metadata, unsafe links are rejected, and sign-ou
   await page.getByLabel('Public report URL').fill('https://example.org/learning');
   await page.getByLabel('Report ID', { exact: true }).fill('learning');
   await page.getByLabel('Revision', { exact: true }).fill('v1');
+  await expect(page.getByLabel('Report basis').locator('option')).toHaveText(['self-reported', 'AI-assisted', 'peer-reviewed', 'independently evaluated']);
+  await expect(page.getByLabel('Report status').locator('option')).toHaveText(['current', 'corrected', 'out of date', 'withdrawn']);
   await page.getByLabel('Report basis').selectOption('ai-assisted');
   await page.getByRole('button', { name: 'Review before publishing' }).click();
   await expect(page.getByText('AI-assisted · current · revision v1')).toBeVisible();

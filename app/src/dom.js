@@ -23,12 +23,12 @@ export function notice(text, error = false) {
   return el('p', { className: 'notice', role: error ? 'alert' : 'status', tabindex: '-1' }, text);
 }
 
-export function field(label, name, value = '', { help, multiline, options, ...props } = {}) {
+export function field(label, name, value = '', { help, multiline, options, optionLabel = (option) => option.replaceAll('-', ' '), ...props } = {}) {
   const id = name.replaceAll('.', '-');
   const control = options
     ? el('select', { id, name, ...props }, options.map((option) => el('option', {
       value: option, selected: option === value,
-    }, option.replaceAll('-', ' '))))
+    }, optionLabel(option))))
     : el(multiline ? 'textarea' : 'input', { id, name, value, ...props });
   if (help) control.setAttribute('aria-describedby', [...new Set([...(props['aria-describedby'] || '').split(' ').filter(Boolean), `${id}-help`])].join(' '));
   return el('div', { className: 'field' },

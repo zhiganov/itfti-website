@@ -6,7 +6,7 @@ import './styles.css';
 import { auth } from './auth.js';
 import { createApi } from './api.js';
 import { APP_ORIGIN } from './config.js';
-import { makeRecord, profilePath, recordUri, validDid, graphemes, recordsEqual, PROVENANCE, REPORT_STATES } from './profile.js';
+import { makeRecord, profilePath, recordUri, validDid, graphemes, recordsEqual, PROVENANCE, REPORT_STATES, provenanceLabel, stateLabel } from './profile.js';
 import { el, link, field, notice } from './dom.js';
 import { identityView, recordView } from './views.js';
 import { suppressedDids } from './moderation.js';
@@ -287,8 +287,8 @@ async function editor(main, version) {
         field('Revision', prefix + 'revision', report.revision, { required: true, maxlength: '64', help: 'The exact version this link describes.' }),
       ),
       el('div', { className: 'field-pair' },
-        field('Report basis', prefix + 'provenance', report.provenance || 'self-report', { options: PROVENANCE }),
-        field('Report status', prefix + 'state', report.state || 'current', { options: REPORT_STATES }),
+        field('Report basis', prefix + 'provenance', report.provenance || 'self-report', { options: PROVENANCE, optionLabel: provenanceLabel }),
+        field('Report status', prefix + 'state', report.state || 'current', { options: REPORT_STATES, optionLabel: stateLabel }),
       ),
       el('p', { className: 'hint' }, 'Describe the report’s actual review basis. Linking it here adds no review or certification.'),
       el('details', {},
