@@ -59,9 +59,20 @@ before the SDK receives them. Tests cover both length paths.
 
 The byte limit bounds input size, not validation's heap use. Zod can still
 allocate many error objects within that bound. The remaining concern is a slow
-or crashed visitor tab. Its worst-case memory use has not been measured.
+or crashed visitor tab. Its worst case was measured on 2026-11-21 (below).
 The advisory does not report credential disclosure or unauthorized writes;
 this assessment is not a claim about every possible dependency defect.
+
+## Measured worst case and array guard, 2026-11-21
+
+A [measurement](zod-measurement/README.md) found that the worst input is a
+hostile DID document during sign-in: about 1.3 GB and 10 seconds in one tab.
+Public profile pages don't use Zod. The app's fetch wrapper now refuses JSON
+responses with any list over 1,000 items. The worst input that passes it took
+0.13 s and kept about 11 MB.
+
+This exception still covers only the initial own-profile launch. Extending it
+is a separate decision.
 
 ## Verification and limits
 
