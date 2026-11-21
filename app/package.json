@@ -4,9 +4,7 @@
   "private": true,
   "license": "MIT",
   "type": "module",
-  "engines": {
-    "node": ">=22.12"
-  },
+  "engines": { "node": ">=22.12" },
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "vite build",
