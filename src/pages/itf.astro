@@ -6,8 +6,9 @@ const pluginInstall = `claude plugin marketplace add https://github.com/zhiganov
 claude plugin install itf@impact-to-funding`;
 const repo = "https://github.com/zhiganov/impact-to-funding";
 const makes = [
-  ["Support briefs", "a case for support, researched on funders' own pages, with each funder's application rules."],
   ["Claim checks", "every claim held to your evidence before anything goes public."],
+  ["Lessons", "source-linked cases, patterns and lenses from others' work, null results kept. Your agent can search them through a local MCP server."],
+  ["Support briefs", "a case for support, researched on funders' own pages, with open or closed status and the date checked."],
   ["Theories of change", "rebuilt from reports, notes and records you already have."],
   ["Sponsorship", "GitHub Sponsors profiles and tiers, and a check of your funding setup."],
   ["A way in", "your skills for existing organisations, if you don't have a project."],
@@ -49,7 +50,7 @@ const starts = [
   </section>
 
   <section class="course grid" aria-labelledby="makes">
-    <h2 id="makes" class="head">What it helps you make</h2>
+    <h2 id="makes" class="head">What it helps you do</h2>
     <div class="body">
       <dl class="publishes">
         {makes.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
