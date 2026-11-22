@@ -4,8 +4,9 @@ import InstallCommands from "../components/InstallCommands.astro";
 
 const repo = "https://github.com/zhiganov/impact-to-funding";
 const makes = [
-  ["Support briefs", "a case for support, researched on funders' own pages."],
-  ["Claim checks", "every claim held to your evidence."],
+  ["Claim checks", "what you did, kept apart from what it caused."],
+  ["Lessons", "how others' theories of change held up, null results included."],
+  ["Support briefs", "funders that fit, with open or closed status checked."],
   ["Theories of change", "rebuilt from what you already have."],
   ["Sponsorship", "GitHub Sponsors profiles and tiers."],
   ["A way in", "skills for existing organisations."],
@@ -66,13 +67,13 @@ const manifest = `{
       <p class="tag rule-solid">For builders. Experimental, v0.6.0.</p>
     </div>
     <div class="body">
-      <p class="big">Start from your situation. ItF helps you make a case that holds up.</p>
+      <p class="big">Claims that hold up, lessons from others' work, and funders that fit.</p>
       <figure class="exhibit">
         <img src="/examples/impact-card-fictional.svg" width="520" height="232"
           alt="A fictional impact card for the Lantern repair guide. Printed and handed out 60 access guides: supported, self-reported. 12 of 15 readers asked said the guide helped: partly supported, self-reported. Households repaired appliances: not assessed." />
         <figcaption>A fictional card made with ItF. It says what's supported, what's partly supported, and what nobody has checked.</figcaption>
       </figure>
-      <h3>What it helps you make</h3>
+      <h3>What it helps you do</h3>
       <dl class="publishes">
         {makes.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
       </dl>
