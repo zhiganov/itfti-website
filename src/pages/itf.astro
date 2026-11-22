@@ -55,11 +55,6 @@ const starts = [
       <dl class="publishes">
         {makes.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
       </dl>
-      <figure class="exhibit">
-        <img src="/examples/impact-card-fictional.svg" width="520" height="232" loading="lazy"
-          alt="A fictional impact card for the Lantern repair guide. Printed and handed out 60 access guides: supported, self-reported. 12 of 15 readers asked said the guide helped: partly supported, self-reported. Households repaired appliances: not assessed." />
-        <figcaption>A fictional impact card. Nothing is called proven, and the unchecked claim says so.</figcaption>
-      </figure>
       <p>With others, too: profiles, mentors, guilds and matchmaking. <a href="/#together">What's live and what's planned</a>.</p>
     </div>
   </section>
@@ -127,9 +122,6 @@ const starts = [
   .example > div + div { border-left: 8px solid var(--red); }
   .example h3 { margin-bottom: 0.4em; }
   .fine { font-size: 0.9rem; }
-  .exhibit { margin: 0; display: grid; gap: 8px; }
-  .exhibit img { width: 100%; max-width: 560px; height: auto; display: block; }
-  .exhibit figcaption { font-size: 0.9rem; max-width: 60ch; }
   @media (max-width: 900px) {
     .head, .body { grid-column: 1 / -1; }
     .head { position: static; }
