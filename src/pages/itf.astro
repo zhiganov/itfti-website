@@ -1,9 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
 import InstallCommands from "../components/InstallCommands.astro";
-import CopyBlock from "../components/CopyBlock.astro";
-const pluginInstall = `claude plugin marketplace add https://github.com/zhiganov/impact-to-funding.git
-claude plugin install itf@impact-to-funding`;
 const repo = "https://github.com/zhiganov/impact-to-funding";
 const makes = [
   ["Claim checks", "every claim held to your evidence before anything goes public."],
@@ -64,10 +61,7 @@ const starts = [
     <div class="body">
       <p>Pick your agent and run the command in your terminal.</p>
       <InstallCommands />
-      <h3 id="plugin" class="sub">Or the Claude Code plugin</h3>
-      <CopyBlock code={pluginInstall} />
-      <p>Then type <code>/itf:impact-to-funding</code>. It includes the reference-library MCP server and needs Node.js 22 or later. Keep the plugin or the skill folder, not both.</p>
-      <p class="fine">Claude Code gets v0.6.0; Codex CLI and OpenCode get older versions. <a href="https://github.com/zhiganov/impact-to-funding/blob/main/docs/install.md">Install guide</a> · <a href="https://github.com/zhiganov/impact-to-funding/blob/main/mcp/README.md">MCP server for other agents</a></p>
+      <p class="fine">Using another agent? ItF's <a href="https://github.com/zhiganov/impact-to-funding/blob/main/mcp/README.md">library server</a> works with any MCP client.</p>
     </div>
   </section>
 
