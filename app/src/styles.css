@@ -72,6 +72,9 @@ input::placeholder, textarea::placeholder { color: var(--ink); opacity: .8; }
 .sign-in { max-width: 620px; margin-top: 32px; }
 .explainer { margin-top: 36px; padding-top: 20px; border-top: 2px solid var(--ink); }
 .explainer h2 { margin-bottom: 16px; }
+.account-creation ol { padding-left: 24px; }
+.account-creation li + li { margin-top: 8px; }
+.account-creation > a { display: inline-block; margin-block: 8px 16px; font-weight: 600; }
 .heading-row { display: flex; gap: 24px; justify-content: space-between; align-items: start; margin-bottom: 36px; }
 .heading-row .text-button { flex-shrink: 0; }
 .heading-row h1 { outline-offset: 8px; }

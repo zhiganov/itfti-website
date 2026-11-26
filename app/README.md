@@ -49,6 +49,12 @@ Live OAuth and real PDS writes remain untested.
 - `/client-metadata.json`: generated OAuth metadata for the exact build origin.
 - `/lexicons/org.itfti.profile.json`: proposed profile schema for inspection.
 
+## Account creation
+
+Direct sign-in accepts an existing Bluesky handle or ATProto DID. The optional **Need an account?** section links to Bluesky's official sign-up in a new tab. The person returns with their new handle and approves only the `org.itfti.profile` collection. Creating an account or signing in publishes nothing.
+
+This is a provider handoff, not native account provisioning or an ItFtI-operated PDS. The provider's own terms and privacy policy cover sign-up. The live new-account verification remains a separate approval in [website #58](https://github.com/zhiganov/itfti-website/issues/58).
+
 The record is `at://<DID>/org.itfti.profile/self`. It adapts the profile draft
 in [ItF #102](https://github.com/zhiganov/impact-to-funding/issues/102), keeping
 its report basis and state values. Source discussion:

@@ -60,7 +60,7 @@ function home(main, version) {
       el('h1', {}, 'Your work.', el('br'), 'In your own account.'),
       el('p', { className: 'lede' }, 'A public place to explain what you work on, what you’re learning, and what would help it continue.'),
       link('/edit', 'Create or edit your profile', { className: 'button' }),
-      el('p', { className: 'hint' }, 'Use your existing Bluesky / ATProto account.'),
+      el('p', { className: 'hint' }, 'Use your existing Bluesky / ATProto account. New to ATProto? ', link('/edit#account-creation', 'Create an account')),
     ),
     el('section', { className: 'reading-column' },
       el('h2', {}, 'A profile you can take with you'),
@@ -160,12 +160,24 @@ function loginView(main, message = '') {
     autocapitalize: 'none', maxlength: '2048',
   }), button);
   main.append(form, status,
+    el('section', { className: 'explainer account-creation' },
+      el('h2', { id: 'account-creation', tabindex: '-1' }, 'Need an account?'),
+      el('p', {}, 'Create a Bluesky account to hold your identity and public impact record. You do not need to post or let ItFtI change your Bluesky profile.'),
+      el('ol', {},
+        el('li', {}, 'Open Bluesky’s official sign-up and complete its steps.'),
+        el('li', {}, 'Return here and enter your new handle, such as name.bsky.social.'),
+        el('li', {}, 'Approve access only to your ItFtI profile record.'),
+      ),
+      link('https://bsky.app/', 'Create an account on Bluesky'),
+      el('p', { className: 'hint' }, 'Bluesky handles sign-up and your password. Creating an account or signing in publishes nothing. Existing accounts on compatible ATProto providers can sign in directly above.'),
+    ),
     el('section', { className: 'explainer' },
       el('h2', {}, 'Only your impact record'),
       el('p', {}, 'The app asks to create, edit and delete its own profile record. Your Bluesky posts, follows, messages and profile are outside that permission.'),
       el('p', {}, 'Bluesky details are read publicly. Signing in alone publishes nothing.'),
       link('/privacy', 'Read about browser sessions and public records'),
     ));
+  if (window.location.hash === '#account-creation') main.querySelector('#account-creation')?.focus();
 }
 
 function fieldsFrom(record) {
@@ -471,7 +483,7 @@ function privacy(main) {
     el('p', {}, 'The OAuth library stores session credentials and signing keys in this browser’s IndexedDB. Sign out when you finish on a shared device. Clearing site data also removes local credentials; your account provider controls server-side grants.'),
     el('h2', {}, 'Who receives requests'),
     el('p', {}, 'This browser contacts your personal data server, your account’s authorization provider, the PLC directory for did:plc identities, and did:web websites when needed. Bluesky’s public API resolves handles and provides public names, avatars and bios. These services see your IP address and requested account identifiers. Avatars load from their image host.'),
-    el('p', {}, 'The hosting provider receives ordinary requests for the app files. ItFtI adds no analytics, advertising, tracking scripts or private-message access. Public profile responses are requested fresh rather than saved in application storage.'),
+    el('p', {}, 'The hosting provider receives ordinary requests for the app files. If you create an account, you do so on the account provider’s own site; its terms and privacy policy cover that sign-up. ItFtI adds no analytics, advertising, tracking scripts or private-message access. Public profile responses are requested fresh rather than saved in application storage.'),
     el('h2', {}, 'What publication means'),
     el('p', {}, 'Preview and approve the impact content before it is written. OAuth permission does not itself publish a profile. The app never changes your Bluesky bio, posts or follows. Names and bios shown alongside your impact record reflect the account’s current public Bluesky profile.'),
     el('p', {}, 'Unpublishing deletes the ItFtI record from your PDS. Refreshing this app then reads its absence. Other services may already have copied the public record; deletion cannot recall those copies.'),

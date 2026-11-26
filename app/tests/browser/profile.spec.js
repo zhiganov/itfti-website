@@ -372,6 +372,45 @@ test('official SDK initializes a signed-out loopback session without live accoun
   expect(errors).toEqual([]);
 });
 
+test('account creation offers an official provider handoff and preserves the return form', async ({ page, context }) => {
+  const errors = [];
+  page.on('pageerror', (error) => errors.push(error.message));
+  await context.route('https://**/*', (route) => route.abort());
+  const directory = process.env.ITF_SCREENSHOTS;
+  if (directory) await mkdir(directory, { recursive: true });
+  await page.goto('/');
+  await expect(page.getByRole('link', { name: 'Create an account', exact: true })).toHaveAttribute('href', '/edit#account-creation');
+  await page.getByRole('link', { name: 'Create an account', exact: true }).press('Enter');
+  const heading = page.getByRole('heading', { name: 'Need an account?', exact: true });
+  await expect(heading).toBeFocused();
+  await expect(page.getByRole('button', { name: 'Continue with Bluesky / ATProto' })).toBeVisible();
+  await page.goBack();
+  await expect(page).toHaveURL(/\/$/);
+  await page.goForward();
+  await expect(heading).toBeVisible();
+  for (const [name, width, height] of [['desktop', 1440, 1000], ['mobile', 390, 844]]) {
+    await page.setViewportSize({ width, height });
+    await page.goto('/edit#account-creation');
+    await expect(heading).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    if (directory) await page.screenshot({ path: `${directory}/account-creation-${name}.png`, fullPage: true });
+  }
+  const handle = page.getByLabel('Bluesky handle or ATProto DID');
+  await handle.fill('new-builder.example.org');
+  const signup = page.getByRole('link', { name: 'Create an account on Bluesky', exact: true });
+  await expect(signup).toHaveAttribute('href', 'https://bsky.app/');
+  await expect(signup).toHaveAttribute('target', '_blank');
+  await expect(signup).toHaveAttribute('rel', /noopener/);
+  await expect(signup).toHaveAttribute('rel', /noreferrer/);
+  const popupPromise = page.waitForEvent('popup');
+  await signup.press('Enter');
+  const popup = await popupPromise;
+  await popup.close();
+  await expect(handle).toHaveValue('new-builder.example.org');
+  await expect(page.getByRole('button', { name: 'Continue with Bluesky / ATProto' })).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
 test('desktop and mobile render the editor, review and public profile without overflow', async ({ page }) => {
   const state = await fixture(page);
   const directory = process.env.ITF_SCREENSHOTS;
