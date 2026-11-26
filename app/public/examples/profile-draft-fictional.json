@@ -1,0 +1,25 @@
+{
+  "format": "itf.profile-draft/0.1-local",
+  "changes": {
+    "summary": "I help the fictional Neighbourhood Repair Library maintain its public guides and learn which repairs people can repeat safely.",
+    "areas": [
+      "Repair and reuse",
+      "Public-interest technology"
+    ],
+    "supportProfile": "https://example.org/itf-manifest.json",
+    "badge": "https://example.org/itf-card.html",
+    "reports": [
+      {
+        "id": "repair-guide-learning-2026",
+        "title": "What changed after we watched people use the repair guide",
+        "url": "https://example.org/reports/repair-guide-learning-2026",
+        "revision": "v1.0",
+        "period": "2026 Q3",
+        "published": "2026-10-15T12:00:00Z",
+        "provenance": "self-report",
+        "state": "current",
+        "statusUrl": "https://example.org/reports/repair-guide-learning-2026/status"
+      }
+    ]
+  }
+}

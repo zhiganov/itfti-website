@@ -87,6 +87,10 @@ input::placeholder, textarea::placeholder { color: var(--ink); opacity: .8; }
 .editor-section { padding-top: 26px; margin-top: 32px; border-top: 2px solid var(--ink); }
 .editor-section h2 { margin-bottom: 18px; }
 .editor-section > p { margin-bottom: 24px; }
+.draft-import { margin-bottom: 40px; }
+.draft-import > .button { margin-top: 8px; }
+.draft-import input[type=file]::file-selector-button { border: 0; background: var(--ink); color: var(--paper); padding: 10px 14px; margin-right: 12px; font: 700 1rem var(--display); min-height: 44px; cursor: pointer; }
+.draft-import input[type=file]::file-selector-button:hover { background: var(--ink-hover); }
 fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
 .report-editor { border-top: 2px solid var(--ink); padding-top: 20px; margin-block: 28px; }
 .report-editor legend { padding-right: 12px; font: 700 1.3rem var(--display); }
