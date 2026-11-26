@@ -3,14 +3,14 @@ import Base from "../layouts/Base.astro";
 import InstallCommands from "../components/InstallCommands.astro";
 const repo = "https://github.com/zhiganov/impact-to-funding";
 const makes = [
-  ["Claim checks", "every claim held to your evidence before anything goes public."],
+  ["Claim checks", "every claim held to your evidence, and what counts against it, before anything goes public."],
   ["Lessons", "source-linked cases, patterns and lenses from others' work, null results kept. Your agent can search them through a local MCP server."],
   ["Support briefs", "a case for support, researched on funders' own pages, with open or closed status and the date checked."],
   ["Theories of change", "rebuilt from reports, notes and records you already have."],
   ["Sponsorship", "GitHub Sponsors profiles and tiers, and a check of your funding setup."],
   ["A way in", "your skills for existing organisations, if you don't have a project."],
   ["Impact cards", "a badge and card for a public report you've approved."],
-  ["Mentors", "people who could help, and a short request you send yourself."],
+  ["Mentors", "people who could help, including people you don't know yet, and a short request you send yourself."],
 ];
 const starts = [
   { title: "Find a useful contribution", prompt: "Help me find where my skills and time could be useful. Keep this private and contact no one." },
@@ -26,7 +26,7 @@ const starts = [
   <section class="intro grid" aria-labelledby="t">
     <div class="head">
       <h1 id="t">Impact to Funding</h1>
-      <p class="tag rule-solid">For builders. Experimental, v0.6.0. Open source.</p>
+      <p class="tag rule-solid">For builders. Experimental, v0.7.0. Open source.</p>
     </div>
     <div class="body">
       <p class="big">Put your skills towards real problems, and make a case for support that holds up.</p>

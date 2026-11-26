@@ -1,8 +1,8 @@
 ---
 // Short install commands, matching the ItF README and installation guide (docs/install.md).
-// Claude Code: the plugin. Codex and OpenCode: the skills CLI pinned to the v0.6.0 tag,
+// Claude Code: the plugin. Codex and OpenCode: the skills CLI pinned to the v0.7.0 tag,
 // with a one-line clone as the fallback. Update the tag here when a new release is checked.
-const tag = "v0.6.0";
+const tag = "v0.7.0";
 const repo = "https://github.com/zhiganov/impact-to-funding";
 const clone = (folder: string) => `git clone --depth 1 --branch ${tag} ${repo} ${folder}/impact-to-funding`;
 const hosts = [
@@ -57,7 +57,7 @@ claude plugin install itf@impact-to-funding`,
       {h.alt && <p class="fine">No Node.js? Clone the release instead: <code class="alt">{h.alt}</code></p>}
     </section>
   ))}
-  <p class="fine">The Codex and OpenCode commands install into this project only. Both agents were checked to find v0.6.0, without a model run. <a href="https://github.com/zhiganov/impact-to-funding/blob/main/docs/install.md">Installation guide</a>: exact checked commits, personal installs, updates.</p>
+  <p class="fine">The Codex and OpenCode commands install into this project only. Both agents were checked to find v0.7.0, without a model run. <a href="https://github.com/zhiganov/impact-to-funding/blob/main/docs/install.md">Installation guide</a>: exact checked commits, personal installs, updates.</p>
 </div>
 
 <style>
