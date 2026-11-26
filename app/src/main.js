@@ -18,7 +18,6 @@ let routeVersion = 0;
 let session = null;
 let dirty = false;
 let writing = false;
-let importing = false;
 let currentMain;
 let activeUrl = window.location.pathname + window.location.search + window.location.hash;
 
@@ -179,6 +178,7 @@ function fieldsFrom(record) {
 
 async function editor(main, version) {
   document.title = 'Edit your impact profile — ItFtI';
+  let importing = false;
   main.append(notice('Checking your sign-in…'));
   try { session = await auth.init(); } catch {
     if (version === routeVersion) loginView(main, 'Your sign-in could not be restored. Sign in again, or check that this host is configured for OAuth.');
@@ -269,7 +269,7 @@ async function editor(main, version) {
       importing = false;
       if (version === routeVersion && session === signedIn) {
         draw();
-        if (statusError) main.querySelector('[role=alert]')?.focus();
+        main.querySelector(statusError ? '[role=alert]' : '.editor-status [role=status]')?.focus();
       }
     }
   }
@@ -397,6 +397,7 @@ async function editor(main, version) {
     const counter = el('p', { className: 'hint', id: 'summary-count', 'aria-live': 'polite' }, `${graphemes(fields.summary)} / 300 characters`);
     form = el('form', { onInput: () => { dirty = true; }, onSubmit: (event) => {
       event.preventDefault();
+      if (writing || importing) return;
       collect();
       try {
         candidate = makeRecord(fields, loaded.record);
@@ -438,7 +439,7 @@ async function editor(main, version) {
           type: 'url', maxlength: '2048', help: 'A public card or itf-badge.json. Adding a link does not certify its claims.',
         }),
       ),
-      el('button', { type: 'submit', className: 'button' }, 'Review before publishing'),
+      el('button', { type: 'submit', className: 'button', disabled: writing || importing }, 'Review before publishing'),
       el('p', { className: 'hint' }, loaded.record ? 'Your published version stays unchanged until you approve the next one.' : 'This draft is kept in this tab only. Nothing is saved until you publish.'),
     ));
     body.append(importForm, form);

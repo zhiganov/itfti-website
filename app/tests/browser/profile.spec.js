@@ -211,6 +211,19 @@ function draftFile(changes) {
   };
 }
 
+async function delayFileText(page) {
+  await page.addInitScript(() => {
+    window.__fileReads = 0;
+    const original = File.prototype.text;
+    File.prototype.text = async function () {
+      await new Promise((resolve) => setTimeout(resolve, 250));
+      const text = await original.call(this);
+      window.__fileReads += 1;
+      return text;
+    };
+  });
+}
+
 test('JSON import preserves source fields and publishes only after review and approval', async ({ page }) => {
   const state = await fixture(page);
   state.record().futureField = 'preserve this compatible field';
@@ -225,16 +238,18 @@ test('JSON import preserves source fields and publishes only after review and ap
   }));
   await page.getByRole('button', { name: 'Import draft', exact: true }).press('Enter');
   await expect(page.getByRole('status')).toContainText('Draft imported into this tab');
+  await expect(page.getByRole('status')).toBeFocused();
   await expect(page.getByLabel('What are you working on?')).toHaveValue(importedSummary);
   await expect(page.getByLabel('Areas of work (optional)')).toHaveValue('Imported area');
   await expect(page.getByLabel('Support-profile URL (optional)')).toHaveValue('');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   expect(state.writes()).toBe(0);
-  await page.getByRole('button', { name: 'Review before publishing' }).click();
+  await page.getByRole('button', { name: 'Review before publishing' }).press('Enter');
   await expect(page.getByText(importedSummary, { exact: true })).toBeVisible();
   await expect(page.getByText('Imported fictional report', { exact: true })).toBeVisible();
-  await page.getByLabel('I approve this impact content for anyone to read.').check();
-  await page.getByRole('button', { name: 'Publish these changes' }).click();
+  await page.getByLabel('I approve this impact content for anyone to read.').focus();
+  await page.keyboard.press('Space');
+  await page.getByRole('button', { name: 'Publish these changes' }).press('Enter');
   await expect(page.getByRole('status')).toContainText('Published and read back');
   expect(state.record().createdAt).toBe(initial.createdAt);
   expect(state.record().futureField).toBe('preserve this compatible field');
@@ -304,6 +319,47 @@ test('an imported candidate still stops on a source conflict without replay', as
   await expect(page.getByRole('alert')).toContainText('changed elsewhere');
   await expect(page.getByRole('button', { name: 'Reload the source record' })).toBeVisible();
   expect(state.writes()).toBe(1);
+});
+
+test('review cannot collect disabled fields while a partial import is in flight', async ({ page }) => {
+  const state = await fixture(page);
+  await delayFileText(page);
+  await page.goto('/edit');
+  await page.getByLabel('Agent-prepared JSON draft (optional)').setInputFiles(draftFile({ summary: 'Only the summary changes.' }));
+  await page.getByRole('button', { name: 'Import draft', exact: true }).click();
+  const review = page.getByRole('button', { name: 'Review before publishing' });
+  await expect(review).toBeDisabled();
+  await page.locator('.editor-body form').last().evaluate((form) => form.requestSubmit());
+  await expect(page.getByRole('status')).toContainText('Draft imported into this tab');
+  await expect(page.getByLabel('What are you working on?')).toHaveValue('Only the summary changes.');
+  await expect(page.getByLabel('Areas of work (optional)')).toHaveValue(initial.areas.join('\n'));
+  await expect(page.getByLabel('Report title (optional)')).toHaveValue(initial.reports[0].title);
+  await expect(page.getByLabel('Report ID', { exact: true })).toHaveValue(initial.reports[0].id);
+  await expect(page.getByLabel('Revision', { exact: true })).toHaveValue(initial.reports[0].revision);
+  await review.press('Enter');
+  await expect(page.getByText(initial.reports[0].title, { exact: true })).toBeVisible();
+  expect(state.writes()).toBe(0);
+  expect(state.errors).toEqual([]);
+});
+
+test('a replacement editor stays enabled when an earlier import finishes', async ({ page }) => {
+  const state = await fixture(page);
+  await delayFileText(page);
+  await page.goto('/');
+  await page.getByRole('link', { name: 'Your profile', exact: true }).click();
+  await page.getByLabel('Agent-prepared JSON draft (optional)').setInputFiles(draftFile({ summary: 'Stale import result.' }));
+  await page.getByRole('button', { name: 'Import draft', exact: true }).click();
+  await expect(page.getByLabel('Agent-prepared JSON draft (optional)')).toBeDisabled();
+  await page.getByRole('link', { name: 'Your profile', exact: true }).click();
+  const summary = page.getByLabel('What are you working on?');
+  await expect(summary).toHaveValue(initial.summary);
+  await expect.poll(() => page.evaluate(() => window.__fileReads)).toBe(1);
+  await expect(summary).toBeEnabled();
+  await expect(summary).toHaveValue(initial.summary);
+  await expect(page.getByRole('button', { name: 'Review before publishing' })).toBeEnabled();
+  await expect(page.locator('.editor-status')).toBeEmpty();
+  expect(state.writes()).toBe(0);
+  expect(state.errors).toEqual([]);
 });
 
 test('official SDK initializes a signed-out loopback session without live account access', async ({ page }) => {
