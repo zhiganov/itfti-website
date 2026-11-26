@@ -4,7 +4,7 @@ import InstallCommands from "../components/InstallCommands.astro";
 
 const repo = "https://github.com/zhiganov/impact-to-funding";
 const makes = [
-  ["Claim checks", "what you did, kept apart from what it caused."],
+  ["Claim checks", "what you did, kept apart from what it caused, and what counts against it."],
   ["Lessons", "how others' theories of change held up, null results included."],
   ["Support briefs", "funders that fit, with open or closed status checked."],
   ["Theories of change", "rebuilt from what you already have."],
@@ -14,7 +14,7 @@ const makes = [
 ];
 const together = [
   { rule: "rule-solid", title: "Profiles", text: "Your impact, from your own Bluesky account. Real-account publishing is being checked.", link: ["https://app.itfti.org", "app.itfti.org"] },
-  { rule: "rule-solid", title: "Mentors", text: "ItF helps you draft a request to a mentor. You send it. A shared pool is planned." },
+  { rule: "rule-solid", title: "Mentors", text: "ItF helps you find mentors, including people you don't know yet, and draft a request you send. A shared pool is planned." },
   { rule: "rule-dash", title: "Guilds", text: "See each other's work and needs in your community's dashboard. Planned." },
   { rule: "rule-dash", title: "Matchmaking", text: "Organisations post needs; builders find work. Format public, matching planned.", link: ["/fti/needs", "Needs format"] },
 ];
@@ -64,7 +64,7 @@ const manifest = `{
   <section class="course itf grid" id="itf" aria-labelledby="itf-title">
     <div class="head">
       <h2 id="itf-title">Impact to Funding</h2>
-      <p class="tag rule-solid">For builders. Experimental, v0.6.0.</p>
+      <p class="tag rule-solid">For builders. Experimental, v0.7.0.</p>
     </div>
     <div class="body">
       <p class="big">Claims that hold up, lessons from others' work, and funders that fit.</p>
