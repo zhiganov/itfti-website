@@ -10,7 +10,8 @@
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1",
     "test": "node --test tests/*.test.js",
-    "test:browser": "playwright test"
+    "test:browser": "playwright test",
+    "published": "node scripts/published-profiles.mjs"
   },
   "dependencies": {
     "@atproto/lexicon": "0.7.19",

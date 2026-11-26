@@ -10,8 +10,8 @@ const initial = {
   createdAt: '2026-11-16T12:00:00.000Z',
 };
 
-async function fixture(page, { published = true, signedIn = true, failSave = false, failRead = false, sdkLifecycle = false } = {}) {
-  let record = published ? structuredClone(initial) : null;
+async function fixture(page, { published = true, signedIn = true, failSave = false, failRead = false, sdkLifecycle = false, reports } = {}) {
+  let record = published ? { ...structuredClone(initial), ...(reports ? { reports } : {}) } : null;
   let writes = 0;
   const errors = [];
   page.on('pageerror', (error) => errors.push(error.message));
@@ -105,6 +105,31 @@ test('anonymous public viewing, refresh, missing record and safe text', async ({
   expect(state.errors).toEqual([]);
 });
 
+test('report labels, withdrawn and corrected reports, and the self-declared note', async ({ page }) => {
+  const state = await fixture(page, { reports: [
+    { id: 'current', title: 'Current fictional report', url: 'https://example.org/current', revision: 'v2', provenance: 'independent-evaluation', state: 'current' },
+    { id: 'withdrawn', title: 'Withdrawn fictional report', url: 'https://example.org/withdrawn', revision: 'v1', provenance: 'ai-assisted', state: 'withdrawn', statusUrl: 'https://example.org/withdrawn/status' },
+    { id: 'corrected', title: 'Corrected fictional report', url: 'https://example.org/corrected', revision: 'v3', provenance: 'peer-review', state: 'corrected' },
+  ] });
+  await page.goto(path);
+  await expect(page.getByText('Report bases are declared by the author; see each report for its review.')).toBeVisible();
+  const items = page.locator('.reports > li');
+  await expect(items.nth(0)).toContainText('independently evaluated · current · revision v2');
+  await expect(items.nth(0).locator('.report-flag')).toHaveCount(0);
+  const withdrawn = items.nth(1);
+  await expect(withdrawn.locator('.report-flag')).toHaveText('Withdrawn');
+  await expect(withdrawn).toContainText('AI-assisted · withdrawn · revision v1');
+  const links = withdrawn.getByRole('link');
+  await expect(links.nth(0)).toHaveText('Check report status');
+  await expect(links.nth(0)).toHaveAttribute('href', 'https://example.org/withdrawn/status');
+  await expect(links.nth(1)).toHaveText('Withdrawn fictional report');
+  await expect(items.nth(2).locator('.report-flag')).toHaveText('Corrected');
+  await expect(items.nth(2)).toContainText('peer-reviewed · corrected · revision v3');
+  await mkdir('test-results', { recursive: true });
+  await page.screenshot({ path: 'test-results/report-states.png', fullPage: true });
+  expect(state.errors).toEqual([]);
+});
+
 test('publish requires review and explicit approval; edits, source read-back and unpublish work', async ({ page }) => {
   const state = await fixture(page, { published: false });
   await page.goto('/edit');
@@ -163,9 +188,11 @@ test('reports preserve contract metadata, unsafe links are rejected, and sign-ou
   await page.getByLabel('Public report URL').fill('https://example.org/learning');
   await page.getByLabel('Report ID', { exact: true }).fill('learning');
   await page.getByLabel('Revision', { exact: true }).fill('v1');
+  await expect(page.getByLabel('Report basis').locator('option')).toHaveText(['self-reported', 'AI-assisted', 'peer-reviewed', 'independently evaluated']);
+  await expect(page.getByLabel('Report status').locator('option')).toHaveText(['current', 'corrected', 'out of date', 'withdrawn']);
   await page.getByLabel('Report basis').selectOption('ai-assisted');
   await page.getByRole('button', { name: 'Review before publishing' }).click();
-  await expect(page.getByText('ai assisted · current · revision v1')).toBeVisible();
+  await expect(page.getByText('AI-assisted · current · revision v1')).toBeVisible();
   await page.getByRole('button', { name: 'Back to editing' }).click();
   await page.getByLabel('Support-profile URL (optional)').fill('http://example.org/private');
   await page.getByRole('button', { name: 'Review before publishing' }).click();

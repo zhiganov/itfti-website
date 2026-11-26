@@ -1,42 +1,40 @@
 ---
-// Install commands copied from the ItF installation guide (docs/install.md) and README.
-// Claude Code and Codex use the guide's guarded clone at the checked revision; OpenCode uses the
-// README's older, install-tested snapshot. Update these together with the guide.
-const revision = "4566892ad990131fb36f760e14c73e5f275600cc";
-const guarded = (target: string, installRevision = revision) => `target='${target}'
-revision='${installRevision}'
-if [ -e "$target" ] || [ -L "$target" ]; then
-  echo "Destination already exists; stop and inspect: $target"
-else
-  git clone https://github.com/zhiganov/impact-to-funding.git "$target" &&
-    git -C "$target" checkout --detach "$revision" &&
-    git -C "$target" rev-parse HEAD
-fi`;
-
+// Short install commands, matching the ItF README and installation guide (docs/install.md).
+// Claude Code: the plugin. Codex and OpenCode: the skills CLI pinned to the v0.7.0 tag,
+// with a one-line clone as the fallback. Update the tag here when a new release is checked.
+const tag = "v0.7.0";
+const repo = "https://github.com/zhiganov/impact-to-funding";
+const clone = (folder: string) => `git clone --depth 1 --branch ${tag} ${repo} ${folder}/impact-to-funding`;
 const hosts = [
   {
     id: "claude",
     name: "Claude Code",
-    command: guarded(".claude/skills/impact-to-funding"),
-    then: "Open Claude Code in the same project and type",
-    invoke: "/impact-to-funding",
-    note: "If the session was already open, run /reload-skills first.",
+    command: `claude plugin marketplace add ${repo}.git
+claude plugin install itf@impact-to-funding`,
+    step: "Run these in your terminal.",
+    then: "Open Claude Code and type",
+    invoke: "/itf:impact-to-funding",
+    note: "The plugin includes the library server, which needs Node.js 22 or later.",
   },
   {
     id: "codex",
     name: "Codex CLI",
-    command: guarded(".agents/skills/impact-to-funding"),
+    command: `npx skills add zhiganov/impact-to-funding#${tag}`,
+    step: "Run this in your terminal, from the project where you'll use ItF.",
     then: "Open Codex in the same project and type",
     invoke: "$impact-to-funding",
-    note: "You can also pick it from /skills.",
+    note: "",
+    alt: clone(".agents/skills"),
   },
   {
     id: "opencode",
     name: "OpenCode",
-    command: guarded(".opencode/skills/impact-to-funding", "fbb8993060254ef63f5157d3b9ddcbb8bb4cf19b"),
+    command: `npx skills add zhiganov/impact-to-funding#${tag}`,
+    step: "Run this in your terminal, from the project where you'll use ItF.",
     then: "In OpenCode, in the same project, type",
     invoke: "@impact-to-funding",
-    note: "This is an older snapshot, the one tested in OpenCode. It lacks some newer guidance. Use an empty destination.",
+    note: "",
+    alt: clone(".opencode/skills"),
   },
 ];
 ---
@@ -50,15 +48,16 @@ const hosts = [
   {hosts.map((h) => (
     <section class="panel" id={`panel-${h.id}`} role="tabpanel" aria-labelledby={`tab-${h.id}`} data-panel>
       <h3 class="panel-name">{h.name}</h3>
-      <p class="step">Run this in your terminal, from the project where you'll use ItF. You need Git.</p>
+      <p class="step">{h.step}</p>
       <div class="code">
         <pre><code>{h.command}</code></pre>
         <button type="button" class="copy" data-copy={h.command}>Copy</button>
       </div>
       <p class="step">{h.then} <code>{h.invoke}</code>. {h.note}</p>
+      {h.alt && <p class="fine">No Node.js? Clone the release instead: <code class="alt">{h.alt}</code></p>}
     </section>
   ))}
-  <p class="fine">Installs into this project only and changes no global settings. If something already exists at the destination, it stops instead of overwriting. Full guide, personal installs and updates: <a href="https://github.com/zhiganov/impact-to-funding/blob/main/docs/install.md">installation guide</a>.</p>
+  <p class="fine">The Codex and OpenCode commands install into this project only. Both agents were checked to find v0.7.0, without a model run. <a href="https://github.com/zhiganov/impact-to-funding/blob/main/docs/install.md">Installation guide</a>: exact checked commits, personal installs, updates.</p>
 </div>
 
 <style>
@@ -110,6 +109,7 @@ const hosts = [
   }
   .copy:hover { background: var(--red-deep); }
   .fine { font-size: 0.9rem; max-width: 70ch; }
+  .alt { overflow-wrap: anywhere; }
   @media (max-width: 720px) {
     .tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .tabs button { min-width: 0; margin-right: 0; padding-inline: 6px; border-right: 0; }

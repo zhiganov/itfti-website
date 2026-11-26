@@ -119,9 +119,24 @@ has not been applied.
 
 On 2026-11-17, the operator temporarily accepted the residual browser-tab
 resource-exhaustion risk for the initial own-profile launch, with the existing
-response and record limits. The audit still reports 15 high package entries
+response and record limits. On 2026-11-21, after adding a guard that refuses
+JSON lists over 1,000 items, the operator extended it to an open launch. The audit still reports 15 high package entries
 from this one advisory. See the [assessment and scoped exception](../docs/reviews/impact-profiles/security-assessment.md).
 Website #23 stays open for a compatible upstream fix.
+
+## Count published profiles
+
+```sh
+npm run published
+npm run published -- --json
+```
+
+The script asks an ATProto relay which accounts hold an `org.itfti.profile`
+record, then reads each record from its own account to confirm it. It prints
+the count, handles and profile links. It uses only public data and needs no
+sign-in. Use `--relay <url>` to ask a different relay.
+
+Behind an HTTPS proxy, Node 22 needs `NODE_USE_ENV_PROXY=1` to use it.
 
 ## Licence and conduct
 
@@ -160,9 +175,9 @@ No site or DNS record is provisioned by this code. When hosting is approved:
    is chosen, publish it to an approved ATProto account and point
    `_lexicon.itfti.org` at that DID. A static schema file alone is not
    network publication. See the [official guide](https://atproto.com/guides/publishing-lexicons).
-7. Agree the operator/takedown contact and review this app's privacy page.
-   `src/moderation.js` provides host-level suppression by DID; it cannot
-   change a user's source record.
+7. Follow [OPERATIONS.md](OPERATIONS.md) for takedown requests and hiding a
+   profile. `src/moderation.js` provides host-level suppression by DID; it
+   cannot change a user's source record.
 8. With permission for a real account write, test OAuth, the approved record's
    write/read, signed-out viewing, an edit and deletion. Do not use a person's
    published profile as a disposable fixture.

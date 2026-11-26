@@ -111,6 +111,10 @@ details[open] summary { margin-bottom: 16px; }
 .reports li:first-child { padding-top: 0; }
 .report-title { font-weight: 600; font-size: 1.125rem; }
 .report-context { margin-top: 8px; font-size: .875rem; }
+.reports-note { margin-bottom: 18px; }
+.report-flag { display: block; width: fit-content; margin-bottom: 10px; padding: 2px 10px; border: 2px solid var(--ink); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; font-size: .8125rem; }
+.report-flagged .report-status { display: block; margin-bottom: 8px; font-weight: 600; }
+.report-flagged .report-title { font-weight: 400; }
 .plain-links { padding-left: 20px; }
 .plain-links li + li { margin-top: 12px; }
 .publication-confirmation, .unpublish-section { margin-top: 44px; padding-top: 24px; border-top: 4px solid var(--ink); }

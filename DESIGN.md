@@ -187,7 +187,7 @@ Red, 2px underline, 0.2em offset. Hover is deep red. Focus is a 3px red outline 
 Red Wash ground, monospace at 0.9em, small padding, no radius.
 
 ### Navigation (Letter Nav)
-Five framed blocks spell I, t, F, t, I. Each is 52px square, with a 4px red border and Zilla Slab 700 at 30px. The current page is filled red with paper text. Hover fills too. Destination captions are always visible below the blocks. The site name "itfti.org" sits at the opposite end. On phones the blocks are 44px with a 3px border, and five equal columns show the concise labels Home, Builders, The loop, Funders and Status. Every anchor has a persistent accessible name containing both its concise label and full destination name where these differ; hiding a responsive caption must not remove that name. Navigation uses ordinary links and works without JavaScript.
+Five framed blocks spell I, t, F, t, I. Each is 52px square, with a 4px red border and Zilla Slab 700 at 30px. The current page is filled red with paper text. Hover fills too. Destination captions are always visible below the blocks. The site name "itfti.org" sits at the opposite end. On phones the blocks are 44px with a 3px border, and five equal columns show the concise labels Home, Builders, The loop, Funders and Together. Every anchor has a persistent accessible name containing both its concise label and full destination name where these differ; hiding a responsive caption must not remove that name. Navigation uses ordinary links and works without JavaScript.
 
 ### Install Commands
 A tab per agent (Claude Code, Codex CLI, OpenCode) as 4px-bordered slab tabs, the selected one filled. Each panel shows the exact shell command from the ItF installation guide on the Red Wash ground with a filled Copy button, then the command to type in the agent. Without JavaScript all three panels show in sequence. Code scrolls sideways on phones rather than wrapping.
@@ -197,6 +197,9 @@ Tabs and copy buttons are at least 44px high. At 720px and below, the three agen
 ### Status Lane
 A heading link over a short line, topped by an 8px rule: solid for ItF, dashed for FtI.
 
+### Exhibits
+Show real outputs rather than describing them. An exhibit is an image of something ItF or FtI actually produces, made from fictional data and captioned as fictional. An artefact with its own colours keeps them, so it reads as the product, not the page. A screenshot of the app shares the site's type and colours, so on its own it reads as page text. It goes in a window instead: a 3px seal-red border, a solid seal-red bar with the app's address in paper, and a Red Wash offset shadow. Show it at about half size, so its text is smaller than the page's. This window is the one exception to the seal being the only frame; artefacts with their own colours need no frame. Captions are one short sentence.
+
 ### Shared Footer
 The close is a full-width seal-red field, outside the inset page wrapper, with paper text and generous spacing. A seven-column oversized statement sits opposite CIBC's four-column introduction; the same 12-column grid and gutters remain. At 900px and below, these stack in reading order. A lower ruled course carries the ItFtI wordmark and the builder, funder and organisation-needs links. Licence notes and the seal explanation close the section; there is no personal byline.
 
@@ -205,7 +208,7 @@ Footer display type uses its own local roles above, not a larger global heading 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** use only #890405 on #f7f5f2, with #5e0203 for hover.
+- **Do** use only #890405 on #f7f5f2, with #5e0203 for hover. Exhibits of real outputs keep their own colours.
 - **Do** mark what is built with a solid 8px rule, and drafts or planned work with a dashed 8px rule.
 - **Do** use the real seal logo asset as the focal image.
 - **Do** keep every page on the shared 12-column grid.
