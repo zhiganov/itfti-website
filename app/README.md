@@ -84,7 +84,7 @@ The draft wrapper is:
 
 Every `changes` field is optional, but at least one is required. Supplied fields replace the corresponding editor fields. Omitted fields stay unchanged. Use an empty string to clear `supportProfile` or `badge`, and an empty array to clear `areas` or `reports`. Reports use the same fields as the profile editor.
 
-The wrapper accepts no account identifiers, timestamps, credentials or unknown fields. Drafts are limited to 48,000 UTF-8 bytes. The app still reads the current source, preserves `createdAt` and compatible unknown fields, applies its normal validation and uses the loaded CID on publication. Importing changes only the current tab.
+The wrapper accepts no account identifiers, record-managed timestamps, credentials or unknown fields. Drafts are limited to 48,000 UTF-8 bytes. The app still reads the current source, preserves `createdAt` and compatible unknown fields, applies its normal validation and uses the loaded CID on publication. Importing changes only the current tab.
 
 See the [fictional JSON example](public/examples/profile-draft-fictional.json). It is also available at `/examples/profile-draft-fictional.json` on the running app.
 
