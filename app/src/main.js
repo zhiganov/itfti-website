@@ -7,6 +7,7 @@ import { auth } from './auth.js';
 import { createApi } from './api.js';
 import { APP_ORIGIN } from './config.js';
 import { makeRecord, profilePath, recordUri, validDid, graphemes, recordsEqual, PROVENANCE, REPORT_STATES } from './profile.js';
+import { applyProfileDraft, DRAFT_MAX_BYTES, parseProfileDraft } from './draft.js';
 import { el, link, field, notice } from './dom.js';
 import { identityView, recordView } from './views.js';
 import { suppressedDids } from './moderation.js';
@@ -17,6 +18,7 @@ let routeVersion = 0;
 let session = null;
 let dirty = false;
 let writing = false;
+let importing = false;
 let currentMain;
 let activeUrl = window.location.pathname + window.location.search + window.location.hash;
 
@@ -212,7 +214,7 @@ async function editor(main, version) {
   let form;
 
   function signOutButton() {
-    return el('button', { className: 'text-button', disabled: writing, onClick: async () => {
+    return el('button', { className: 'text-button', disabled: writing || importing, onClick: async () => {
       if (dirty && !window.confirm('Discard this draft and sign out?')) return;
       try {
         await auth.signOut(signedIn);
@@ -243,8 +245,37 @@ async function editor(main, version) {
     };
   }
 
+  async function importDraft(file) {
+    if (!file || writing || importing || mustReload || session !== signedIn) return;
+    collect();
+    if (dirty && !window.confirm('Replace the fields supplied by this draft? Other unsaved fields stay unchanged.')) return;
+    importing = true;
+    statusText = 'Reading the profile draft…';
+    statusError = false;
+    draw();
+    try {
+      if (file.size > DRAFT_MAX_BYTES) throw new Error(`The profile draft is too large. Keep it under ${DRAFT_MAX_BYTES.toLocaleString('en')} bytes.`);
+      const changes = parseProfileDraft(await file.text());
+      if (version !== routeVersion || session !== signedIn) return;
+      fields = applyProfileDraft(fields, changes);
+      candidate = null;
+      deleting = false;
+      dirty = true;
+      statusText = 'Draft imported into this tab. Check the fields, then review before publishing.';
+    } catch (error) {
+      statusText = error.message;
+      statusError = true;
+    } finally {
+      importing = false;
+      if (version === routeVersion && session === signedIn) {
+        draw();
+        if (statusError) main.querySelector('[role=alert]')?.focus();
+      }
+    }
+  }
+
   async function perform(action) {
-    if (writing || mustReload || session !== signedIn) return;
+    if (writing || importing || mustReload || session !== signedIn) return;
     writing = true;
     statusText = action === 'delete' ? 'Deleting your impact record…' : 'Saving your approved record…';
     statusError = false;
@@ -340,17 +371,29 @@ async function editor(main, version) {
         className: 'button', type: 'button', disabled: true,
         onClick: () => perform('publish'),
       }, loaded.record ? 'Publish these changes' : 'Publish my impact profile');
-      const approval = el('input', { type: 'checkbox', disabled: writing, onChange: (event) => {
+      const approval = el('input', { type: 'checkbox', disabled: writing || importing, onChange: (event) => {
         confirmButton.disabled = !event.target.checked || writing;
       } });
       body.append(el('label', { className: 'checkbox-label' }, approval, 'I approve this impact content for anyone to read.'),
         el('div', { className: 'actions' }, confirmButton,
-          el('button', { className: 'button secondary', disabled: writing, onClick: () => {
+          el('button', { className: 'button secondary', disabled: writing || importing, onClick: () => {
             candidate = null; draw(); main.querySelector('h1').focus();
           } }, 'Back to editing')));
       if (writing) body.querySelectorAll('button, input').forEach((control) => { control.disabled = true; });
       return;
     }
+    const draftInput = field('Agent-prepared JSON draft (optional)', 'profile-draft', '', {
+      type: 'file', accept: '.json,application/json', required: true, disabled: writing || importing,
+      help: 'Use itf.profile-draft/0.1-local. Import changes this tab only; nothing is saved or published.',
+    });
+    const importForm = el('form', { className: 'editor-section draft-import', onSubmit: (event) => {
+      event.preventDefault();
+      importDraft(draftInput.querySelector('input').files[0]);
+    } },
+    el('h2', {}, 'Import a profile draft'),
+    el('p', {}, 'Apply fields prepared by your agent, then check them here before publishing. ', link('/examples/profile-draft-fictional.json', 'Fictional JSON example', { target: '_blank', rel: 'noopener noreferrer' })),
+    draftInput,
+    el('button', { type: 'submit', className: 'button secondary', disabled: writing || importing }, importing ? 'Importing…' : 'Import draft'));
     const counter = el('p', { className: 'hint', id: 'summary-count', 'aria-live': 'polite' }, `${graphemes(fields.summary)} / 300 characters`);
     form = el('form', { onInput: () => { dirty = true; }, onSubmit: (event) => {
       event.preventDefault();
@@ -366,7 +409,7 @@ async function editor(main, version) {
         statusRegion.querySelector('[role=alert]').focus();
       }
     } },
-    el('fieldset', { disabled: writing },
+    el('fieldset', { disabled: writing || importing },
       el('legend', { className: 'sr-only' }, 'Impact content'),
       field('What are you working on?', 'summary', fields.summary, {
         multiline: true, rows: '5', required: true, maxlength: '3000', 'aria-describedby': 'summary-help summary-count',
@@ -398,18 +441,18 @@ async function editor(main, version) {
       el('button', { type: 'submit', className: 'button' }, 'Review before publishing'),
       el('p', { className: 'hint' }, loaded.record ? 'Your published version stays unchanged until you approve the next one.' : 'This draft is kept in this tab only. Nothing is saved until you publish.'),
     ));
-    body.append(form);
+    body.append(importForm, form);
     if (loaded.record) {
       body.append(el('section', { className: 'unpublish-section' },
         el('h2', {}, 'Unpublish this profile'),
         el('p', {}, 'Delete your ItFtI profile record from your account. Your Bluesky profile and linked reports stay where they are.'),
-        !deleting ? el('button', { className: 'text-button', disabled: writing, onClick: () => {
+        !deleting ? el('button', { className: 'text-button', disabled: writing || importing, onClick: () => {
           collect(); deleting = true; draw();
         } }, 'Unpublish…') : el('div', {},
           el('p', {}, 'This removes the source record. Copies already held elsewhere may remain.'),
           el('div', { className: 'actions' },
-            el('button', { className: 'button', disabled: writing, onClick: () => perform('delete') }, 'Delete my impact record'),
-            el('button', { className: 'button secondary', disabled: writing, onClick: () => { collect(); deleting = false; draw(); } }, 'Keep it published'),
+            el('button', { className: 'button', disabled: writing || importing, onClick: () => perform('delete') }, 'Delete my impact record'),
+            el('button', { className: 'button secondary', disabled: writing || importing, onClick: () => { collect(); deleting = false; draw(); } }, 'Keep it published'),
           )),
       ));
     }

@@ -63,6 +63,31 @@ initial reads disable editing. An uncertain write locks further changes until
 the source is reloaded. A successful write is followed by a public read-back.
 Unpublishing deletes only this app's record.
 
+## Agent-prepared drafts
+
+The editor imports a local JSON draft from an agent. The person still reviews and approves the public record before anything is written.
+
+The draft wrapper is:
+
+```json
+{
+  "format": "itf.profile-draft/0.1-local",
+  "changes": {
+    "summary": "A replacement summary",
+    "areas": ["One area", "Another area"],
+    "supportProfile": "https://example.org/itf-manifest.json",
+    "badge": "https://example.org/itf-card.html",
+    "reports": []
+  }
+}
+```
+
+Every `changes` field is optional, but at least one is required. Supplied fields replace the corresponding editor fields. Omitted fields stay unchanged. Use an empty string to clear `supportProfile` or `badge`, and an empty array to clear `areas` or `reports`. Reports use the same fields as the profile editor.
+
+The wrapper accepts no account identifiers, timestamps, credentials or unknown fields. Drafts are limited to 48,000 UTF-8 bytes. The app still reads the current source, preserves `createdAt` and compatible unknown fields, applies its normal validation and uses the loaded CID on publication. Importing changes only the current tab.
+
+See the [fictional JSON example](public/examples/profile-draft-fictional.json). It is also available at `/examples/profile-draft-fictional.json` on the running app.
+
 ## Security and privacy
 
 The official `@atproto/oauth-client-browser` SDK handles discovery, PKCE, PAR,
