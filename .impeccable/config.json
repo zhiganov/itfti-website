@@ -5,7 +5,17 @@
     "ignoreFiles": [
       ".impeccable/mocks/decision/**"
     ],
-    "ignoreValues": []
+    "ignoreValues": [
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "src/pages/index.astro"
+        ],
+        "createdAt": "2026-11-27T16:55:24.029Z",
+        "reason": "Not accent stripes: 8px dividers between the two halves of fully framed two-sided panels (.example, .sides), which DESIGN.md allows"
+      }
+    ]
   },
   "hook": {
     "enabled": true,
