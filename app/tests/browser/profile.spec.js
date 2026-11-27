@@ -10,8 +10,8 @@ const initial = {
   createdAt: '2026-11-16T12:00:00.000Z',
 };
 
-async function fixture(page, { published = true, signedIn = true, failSave = false, failRead = false, sdkLifecycle = false, reports } = {}) {
-  let record = published ? { ...structuredClone(initial), ...(reports ? { reports } : {}) } : null;
+async function fixture(page, { published = true, signedIn = true, failSave = false, failRead = false, sdkLifecycle = false, reports, summary, description } = {}) {
+  let record = published ? { ...structuredClone(initial), ...(reports ? { reports } : {}), ...(summary ? { summary } : {}) } : null;
   let writes = 0;
   const errors = [];
   page.on('pageerror', (error) => errors.push(error.message));
@@ -25,7 +25,7 @@ async function fixture(page, { published = true, signedIn = true, failSave = fal
     };
     else if (url.includes('getProfile')) data = {
       did: DID, displayName: 'Alex Example', handle: 'fictional.example.org',
-      description: 'Fictional person used only for interface tests.',
+      description: description || 'Fictional person used only for interface tests.',
     };
     else if (url.includes('resolveHandle')) data = { did: DID };
     else if (url.includes('getRecord')) {
@@ -101,6 +101,30 @@ test('anonymous public viewing, refresh, missing record and safe text', async ({
   await expect(page.getByRole('link', { name: '@fictional.example.org' })).toHaveAttribute('href', `https://bsky.app/profile/${encodeURIComponent(DID)}`);
   await page.getByRole('button', { name: 'Refresh from source' }).click();
   await expect(page.getByText(initial.summary)).toBeVisible();
+  expect(state.writes()).toBe(0);
+  expect(state.errors).toEqual([]);
+});
+
+test('links in the bio and summary are clickable; other text stays plain', async ({ page }) => {
+  const state = await fixture(page, {
+    description: 'Fictional bio. Guides at example.org/guides, with @friend.example.org. Not a link: javascript:alert(1)',
+    summary: 'I help a fictional repair group (https://example.org/repair). Version 0.7.0, e.g. the guide.',
+  });
+  await page.goto(path);
+  const bio = page.locator('.bio');
+  const summary = page.locator('.work-summary');
+  await expect(bio).toHaveText('Fictional bio. Guides at example.org/guides, with @friend.example.org. Not a link: javascript:alert(1)');
+  await expect(bio.getByRole('link')).toHaveCount(2);
+  await expect(bio.getByRole('link', { name: 'example.org/guides' })).toHaveAttribute('href', 'https://example.org/guides');
+  const mention = bio.getByRole('link', { name: '@friend.example.org' });
+  await expect(mention).toHaveAttribute('href', 'https://bsky.app/profile/friend.example.org');
+  await expect(mention).toHaveAttribute('rel', 'nofollow noopener noreferrer ugc');
+  await expect(mention).toHaveAttribute('target', '_blank');
+  await expect(summary.getByRole('link')).toHaveCount(1);
+  await expect(summary.getByRole('link', { name: 'https://example.org/repair' })).toHaveAttribute('href', 'https://example.org/repair');
+  await expect(page.locator('a[href^="javascript"]')).toHaveCount(0);
+  await mkdir('test-results', { recursive: true });
+  await page.locator('main').screenshot({ path: 'test-results/profile-text-links.png' });
   expect(state.writes()).toBe(0);
   expect(state.errors).toEqual([]);
 });

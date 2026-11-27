@@ -1,4 +1,5 @@
 import { el, link } from './dom.js';
+import { linkSegments } from './linkify.js';
 import { httpsUrl, provenanceLabel, stateLabel, flaggedState } from './profile.js';
 
 export function identityView(did, identity, warning = '') {
@@ -11,10 +12,19 @@ export function identityView(did, identity, warning = '') {
     el('div', {},
       el('h2', { className: 'person-name' }, identity?.displayName || identity?.handle || 'ATProto account'),
       link(`https://bsky.app/profile/${encodeURIComponent(did)}`, identity?.handle ? `@${identity.handle}` : 'View on Bluesky'),
-      identity?.description && el('p', { className: 'bio' }, identity.description),
+      identity?.description && el('p', { className: 'bio' }, linkedText(identity.description)),
       warning && el('p', { className: 'hint' }, warning),
     ),
   );
+}
+
+const USER_LINK_REL = 'nofollow noopener noreferrer ugc';
+
+// Links typed into free text open in a new tab and carry no endorsement.
+export function linkedText(text) {
+  return linkSegments(text).map((segment) => (segment.href
+    ? link(segment.href, segment.text, { target: '_blank', rel: USER_LINK_REL })
+    : segment.text));
 }
 
 export function recordView(record) {
@@ -22,7 +32,7 @@ export function recordView(record) {
   return el('div', { className: 'record' },
     el('section', { className: 'work-section' },
       el('h2', {}, 'What I’m working on'),
-      el('p', { className: 'work-summary' }, record.summary),
+      el('p', { className: 'work-summary' }, linkedText(record.summary)),
       record.areas?.length && el('ul', { className: 'areas', 'aria-label': 'Areas of work' },
         record.areas.map((area) => el('li', {}, area))),
     ),
